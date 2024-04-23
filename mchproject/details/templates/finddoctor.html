@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Doctor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        background-color: #ffffff; 
+    }
+
+    .navbar-brand {
+        color: #063C5B !important;
+        font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+        padding-right: 20px; 
+        padding-left: 20px; 
+        color: #063C5B;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: auto;
+    }
+
+    .navbar-nav {
+        width: 80%; 
+        justify-content: center; 
+    }
+
+    footer {
+        background-color: #063C5B;
+        color: #fff; /* Text color */
+        padding: 20px;
+    }
+
+    .footer-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .footer-section {
+        display: flex;
+        flex-direction: column;
+        margin-left: 30%;
+    }
+
+    .footer-section h3 {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section li {
+        margin-bottom: 10px;
+    }
+
+    .footer-section a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .footer-section a:hover {
+        color: #f8f9fa;
+    }
+
+    footer1 {
+        color:white;
+        padding: 20px;
+        text-align: center;
+    } 
+
+    #finddoc {
+        height: 15rem;
+    }
+
+    .app img {
+        display: block;
+        margin: 0 auto;
+        max-width: 200px; 
+        height: auto;
+    }
+
+    label {
+        font-size: 20px; 
+        margin-bottom: 10px; 
+        display: block; 
+        font-weight: 600;
+        color: #063C5B; /* Label color */
+    }
+
+    select, input {
+        width: 100%; 
+        padding: 10px; 
+        font-size: 16px; 
+        font-weight: 500;
+        border-radius: 5px; 
+        border: 1px solid #ccc; /* Border color */
+        box-sizing: border-box; 
+        margin-top: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #063C5B;
+        color: #fff; /* Text color */
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #042c41;
+    }
+</style>
+</head>
+<body>
+    <!-------------Navbar------------------> 
+    <nav class="navbar">
+        <div class="container border-bottom border-2 pb-2">
+            <a class="navbar-brand" href="#">
+                <h1>M-CARE</h1>
+            </a>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="{% url 'finddoctor' %}">Find a Doctor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="{% url 'appointment' %}">Appointment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aboutus'%}">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container text-center p-5 border-bottom border-1">
+        <h1>Find a Doctor</h1>
+        <h5>Our find a doctor tool assists you in choosing from our diverse pool of health specialists. Discover better health & wellness by using our doctor ratings & reviews to make your choice.</h5>
+    </div>
+    
+    <div class="container d-flex mt-5">
+        <form method="post" class="p-3 w-100">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between" style="width: 100%;">
+                <div style="width: 100%;">
+                    <label for="location">Select Your Location:</label>
+                    <select id="location" name="location">
+                        <option value="" disabled selected>Select Your Location</option> 
+                        {% for value in locations %}
+                        <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>&nbsp;
+                <div style="width: 100%;">
+                    <label for="department">Select Department:</label>
+                    <select id="department" name="department">
+                        <option value="" disabled selected>Select Your Department</option> 
+                        {% for value in departments %}
+                        <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <div class="container p-3 d-flex">
+        <div class="first w-50 pt-5">
+            <p>Choosing the right doctor can be difficult. How do you know that you can believe the ratings you see online? 
+              M-Care Clinic is committed to helping you find the right physician for you with ratings you can trust.</p>
+        </div>
+        <div class="second w-50 p-3">
+            <img id='finddoc' src="{% static "/image/searchdoctor.jpg" %}">
+        </div> 
+    </div>
+
+    <div class="app">
+        <h2 class='text-center'>M-CARE APP</h2>
+        <br>
+        <a href="#"><img src="{% static "/image/appstore.png" %}" alt="appstore"></a>&nbsp;
+        <a href="#"><img src="{% static "/image/playstore.png" %}" alt="playstore"></a>
+        <h3 class='text-center p-3'>Download the app now</h3>
+    </div>
+
+    <footer>
+        <div class="footer-container w-70">
+            <div class="footer-section">
+                <h3>Actions</h3>
+                <ul>
+                    <li><a href="#">Appointments & Access</a></li>
+                    <li><a href="#">Accepted Insurance</a></li>
+                    <li><a href="#">Events Calendar</a></li>
+                    <li><a href="#">Financial Assistance</a></li>
+                    <li><a href="#">Pay Your Bill Online</a></li>
+                    <li><a href="#">Price Transparency</a></li>
+                    <li><a href="#">Refer a Patient</a></li>
+                    <li><a href="#">Phone Directory</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>About M-Care</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Locations</a></li>
+                    <li><a href="#">Quality & Patient Safety</a></li>
+                    <li><a href="#">Patient Experience</a></li>
+                    <li><a href="#">Research & Innovations</a></li>
+                    <li><a href="#">Send Us Feedback</a></li>
+                    <li><a href="#">Copyright, Reprint & Licensing</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    
+    <footer1>
+        <p class='text-dark'>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+    </footer1>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

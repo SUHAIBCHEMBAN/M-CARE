@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #063C5B;
+        }
+        .navbar {
+            background-color: #ffffff; 
+        }
+        .navbar-brand {
+            color: #063C5B !important;
+        }
+        .navbar-nav .nav-link {
+            padding-right: 20px; 
+            padding-left: 20px; 
+            color: #000000;
+            margin-left: 10px;
+        }
+        
+        .navbar-nav .nav-item {
+            margin-left: auto;
+        }
+        
+        .navbar-nav {
+            width: 80%; 
+            justify-content: center; 
+        }
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #000;
+        }
+
+        footer1 {
+            color:white;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-------------Navbar------------------> 
+
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container border-bottom border-5 pb-2">
+          <a class="navbar-brand" href="#">
+            <h1>M-CARE</h1>
+          </a>
+        </div>
+      </nav>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'finddoctor' %}" >Find a Doctor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'appointment'%}">Appointment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aboutus'%}">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <!--------------Footer------------------>
+
+<footer>
+    <div class="footer-container">
+      <div class="footer-section ml-5">
+        <h3>Actions</h3>
+        <ul>
+          <li><a href="#">Appointments & Access</a></li>
+          <li><a href="#">Accepted Insurance</a></li>
+          <li><a href="#">Events Calendar</a></li>
+          <li><a href="#">Financial Assistance</a></li>
+          <li><a href="#">Pay Your Bill Online</a></li>
+          <li><a href="#">Price Transparency</a></li>
+          <li><a href="#">Refer a Patient</a></li>
+          <li><a href="#">Phone Directory</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>About M-Care</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Locations</a></li>
+          <li><a href="#">Quality & Patient Safety</a></li>
+          <li><a href="#">Patient Experience</a></li>
+          <li><a href="#">Research & Innovations</a></li>
+        </ul>
+        <ul>
+          <li><a href="#">Send Us Feedback</a></li>
+          <li><a href="#">Copyright, Reprint & Licensing</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  
+<footer1>
+    <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+</footer>
+
+<!----------js link---------->
+    
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>
