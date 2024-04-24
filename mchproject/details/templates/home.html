@@ -183,7 +183,9 @@
 </div>
 
 <!------------Cards-------------->
-
+{% if user %}
+<h1 class='text-center text-danger m-3'>Hello, {{ user.username }}</h1>
+{% endif %} 
 <div class="container w-75 pt-5 pb-5">
 <div class="cards d-flex  pt-3">
 <div class="card ml-5" style="width: 18rem;">

@@ -4,6 +4,8 @@ from django.views.decorators.cache import never_cache
 from datetime import datetime, time
 from django.core.cache import cache
 from .models import Doctor,Booking,Hospital
+from accounts.models import MyUser
+
 
 
 # Create your views here.
@@ -23,7 +25,11 @@ def home(request):
     Returns:
     - Renders the home page template with the username.
     """
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = None
+    return render(request, 'home.html', {'user': user})
 
 
 
@@ -112,6 +118,7 @@ def appointment(request):
 
 
 # this user booking views.py function
+# @login_required
 @never_cache
 def booking(request):
     """
@@ -130,46 +137,50 @@ def booking(request):
     Returns:
         Renders the booking form with doctors or error message based on validation results.
     """
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        doctor_id = request.POST.get('doctor')
-        booking_time_str = request.POST.get('booking_time')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            address = request.POST.get('address')
+            doctor_id = request.POST.get('doctor')
+            booking_time_str = request.POST.get('booking_time')
 
-        try:
-            booking_time = datetime.strptime(booking_time_str, '%H:%M').time()
-        except ValueError:
-            error_message = "Invalid time format"
-            return render(request, 'booking.html', {'error_message': error_message})
+            try:
+                booking_time = datetime.strptime(booking_time_str, '%H:%M').time()
+            except ValueError:
+                error_message = "Invalid time format"
+                return render(request, 'booking.html', {'error_message': error_message})
         
-        doctor = Doctor.objects.get(id=doctor_id)
+            doctor = Doctor.objects.get(id=doctor_id)
         
-        # Check if the selected time is within the doctor's working hours
-        if not (doctor.start_time <= booking_time <= doctor.end_time):
-            error_message = "Selected time is not within doctor's working hours"
-            return render(request, 'booking.html', {'error_message': error_message})
+            # Check if the selected time is within the doctor's working hours
+            if not (doctor.start_time <= booking_time <= doctor.end_time):
+                error_message = "Selected time is not within doctor's working hours"
+                return render(request, 'booking.html', {'error_message': error_message})
         
-        # Check if the doctor is already booked at the selected time
-        existing_booking = Booking.objects.filter(doctor=doctor, booking_time=booking_time).exists()
-        if existing_booking:
-            error_message = f"This time slot is already booked for Dr{doctor.name}. Please select another time."
-            return render(request, 'booking.html', {'error_message': error_message})
+            # Check if the doctor is already booked at the selected time
+            existing_booking = Booking.objects.filter(doctor=doctor, booking_time=booking_time).exists()
+            if existing_booking:
+                error_message = f"This time slot is already booked for Dr{doctor.name}. Please select another time."
+                return render(request, 'booking.html', {'error_message': error_message})
         
-        # Check if the doctor has available slots for booking
-        available_slot = 5
-        total_bookings = Booking.objects.filter(doctor=doctor).count()
-        if total_bookings >= available_slot:
-            error_message = f"Dr {doctor.name} has reached the maximum number of bookings. Please select another doctor."
-            return render(request, 'booking.html', {'error_message': error_message})
+            # Check if the doctor has available slots for booking
+            available_slot = 5
+            total_bookings = Booking.objects.filter(doctor=doctor).count()
+            if total_bookings >= available_slot:
+                error_message = f"Dr {doctor.name} has reached the maximum number of bookings. Please select another doctor."
+                return render(request, 'booking.html', {'error_message': error_message})
 
-        # If everything is fine, create the booking
-        booking = Booking(name=name, address=address, doctor=doctor, booking_time=booking_time)
-        booking.save()  
-        return redirect('booking_success')
+            # If everything is fine, create the booking
+            booking = Booking(name=name, address=address, doctor=doctor, booking_time=booking_time)
+            booking.save()  
+            return redirect('booking_success')
     
+        else:
+            doctors = Doctor.objects.all() 
+            return render(request, 'booking.html', {'doctors': doctors})
     else:
-        doctors = Doctor.objects.all() 
-        return render(request, 'booking.html', {'doctors': doctors})
+        # messages.info(request, 'You need to be logged in to access the booking page.')
+        return redirect('user_login')
 
 
 

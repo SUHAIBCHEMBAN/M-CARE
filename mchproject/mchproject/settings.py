@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accounts.middleware.RestrictAdminUserInFrontend',
 ]
 
 ROOT_URLCONF = 'mchproject.urls'
@@ -140,5 +141,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'shuhaibc2004@gmail.com' 
 EMAIL_HOST_PASSWORD = 'zwra otta kpzg kubz'
+DEFAULT_FROM_EMAIL = 'shuhaibc2004@gmail.com'
 
 
+# AUTH_USER_MODEL = 'accounts.MyUser'
