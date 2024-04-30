@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('',views.home,name='home'),
     path('finddoctor/',views.find_doctor,name='finddoctor'),
-    path('appointment/',views.appointment,name='appointment'),
+    path('doctors/',views.doctors,name='doctors'),  
     path('booking/',views.booking,name='booking'),
     path('bookingsuccess/',views.booking_success,name='booking_success'),
     path('aboutus/',views.aboutus,name='aboutus'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('indian/',views.indian,name='indian'),
     path('uae/',views.uae,name='uae'),
     path('canada/',views.canada,name='canada'),
+    path('api/departments/<int:location_id>/', views.get_departments_for_location, name='get_departments_for_location'),
 ]   

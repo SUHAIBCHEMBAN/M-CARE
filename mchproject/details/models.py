@@ -1,54 +1,56 @@
 from django.db import models
+from datetime import time
 
-
-# Create your models here.
-
-class Doctor(models.Model):
-
-    """
-    Model representing a doctor.
-
-    """
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    department = models.CharField(max_length=100)
-    charge = models.IntegerField(default=200)    
-    start_time = models.TimeField(default='08:00')
-    end_time = models.TimeField(default='12:00')
-    
+class Countries(models.Model):
+    name = models.CharField(max_length=100)  
 
     def __str__(self):
+        return self.name
 
-        """
-        Return a string representation of the doctor.
-        """
-        return 'Dr ' + self.name + ' - (' + self.department + ')' + ' - (' + self.location + ')'
-    
+
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey(Countries, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} - {self.country}"
+
+
+class Department(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Doctor(models.Model):
+    name = models.CharField(max_length=100)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    charge = models.IntegerField(default=200)
+    start_time = models.TimeField(default=time(hour=8))  
+    end_time = models.TimeField(default=time(hour=12))  
+
+    def __str__(self):
+        return f"Dr {self.name} - ({self.department.name}) - ({self.location.name})"
+
 
 class Booking(models.Model):
-
-    """
-    Model represending  a Booking
-    """
-
-    
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=150)
-    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     booking_time = models.TimeField(verbose_name="Booking Time")
 
     def __str__(self):
-        
-        """
-        Return a string representation of the booking
-        """
-        return self.name 
+        return f"{self.name} - {self.doctor.name} - {self.booking_time}"  
+
 
 class Hospital(models.Model):
-    title = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    street = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
+    country = models.ForeignKey(Countries, on_delete=models.CASCADE)
+    address = models.TextField()
+    contact_number = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='hospitals', default='default_image.jpg')
 
     def __str__(self):
-        return self.title
+        return self.name

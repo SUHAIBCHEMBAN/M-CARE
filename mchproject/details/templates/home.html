@@ -136,7 +136,7 @@
         padding: 10px;
         color: white;
         }
-
+    
     </style>
     
 </head>
@@ -144,10 +144,11 @@
 
     <!-------------Navbar------------------> 
 
-    <nav class="navbar bg-body-tertiary ">
-        <div class="container border-bottom border-5 pb-2">
+    <nav class="navbar">
+        <div class="container border-bottom border-5 pb-2 ">
           <a class="navbar-brand" href="#">
             <h1>M-CARE</h1>
+             <a class="btn btn-danger" href="{% url 'logout' %}" >Logout</a>
           </a>
         </div>
       </nav>
@@ -166,11 +167,12 @@
                         <a class="nav-link" href="{% url 'finddoctor' %}" >Find a Doctor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'appointment'%}">Appointment</a>
+                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus'%}">About Us</a>
+                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
                     </li>
+                    <a class="btn btn-primary w-25 ml-5" href="{% url 'booking' %}" >Make an Appointment</a>
                 </ul>
             </div>
         </div>
@@ -183,12 +185,12 @@
 </div>
 
 <!------------Cards-------------->
-{% if user %}
+{% comment %} {% if User %}
 <h1 class='text-center text-danger m-3'>Hello, {{ user.username }}</h1>
-{% endif %} 
+{% endif %}  {% endcomment %}
 <div class="container w-75 pt-5 pb-5">
 <div class="cards d-flex  pt-3">
-<div class="card ml-5" style="width: 18rem;">
+<div class="card ml-5" style="width: 20rem;">
     <img src="{% static "/image/doctor.png" %}" class="card-img-top" alt="..." style='height:12rem;'>
     <div class="card-body" style='height:50%;'>
       <h5 class="card-title">Our Doctors</h5>
@@ -197,7 +199,7 @@
     </div>
   </div>
 
-  <div class="card ml-5 " style="width: 18rem;">
+  <div class="card ml-5 " style="width: 20rem;">
     <img src="{% static "/image/booknow.png" %}" class="card-img-top" alt="..."  style='height:12rem; width:80%;'>
     <div class="card-body">
       <h5 class="card-title">Appointment</h5>
@@ -206,7 +208,7 @@
     </div>
   </div>
 
-  <div class="card ml-5" style="width: 18rem;">
+  <div class="card ml-5" style="width: 20rem;">
     <img src="{% static "/image/logo.jpg" %}" class="card-img-top" alt="..." style='height:12rem;'>
     <div class="card-body">
       <h5 class="card-title">Our App</h5>
@@ -231,7 +233,7 @@
     </div>
 
     <div class="card ml-4" style="width: 20rem;">
-        <a href=" {% url 'uae' %}">
+        <a href=" {% url 'uae' %}" >
             <img src="{% static "/image/hospital2.jfif" %}"  class="card-img-top" alt="...">
         </a>
         <div class="card-body">
@@ -255,7 +257,7 @@
 </p></div>
 
 <!--------------Footer------------------>
-
+{% comment %} <a class="btn btn-primary w-25 align-bottom " href="{% url 'booking' %}" style =" position: fixed;bottom: 2%;left: 50%;transform: translateX(-50%); height:3rem;" >Make an Appointment</a> {% endcomment %}
 <footer>
     <div class="footer-container">
       <div class="footer-section ml-5">

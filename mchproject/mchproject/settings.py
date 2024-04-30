@@ -36,9 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+    'accounts',
+    # 'register',
     'customadmin',
     'details',
-    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'accounts.middleware.RestrictAdminUserInFrontend',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'accounts.middlewares.Customadminpanel',
 ]
 
 ROOT_URLCONF = 'mchproject.urls'
@@ -79,7 +82,7 @@ WSGI_APPLICATION = 'mchproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'mcarehospital',
+        'NAME':'mcare',
         'HOST':'localhost',
         'PORT':'5432',
         'USER':'postgres',
@@ -138,10 +141,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587  
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = True    
 EMAIL_HOST_USER = 'shuhaibc2004@gmail.com' 
 EMAIL_HOST_PASSWORD = 'zwra otta kpzg kubz'
-DEFAULT_FROM_EMAIL = 'shuhaibc2004@gmail.com'
 
 
-# AUTH_USER_MODEL = 'accounts.MyUser'
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/media/'
+
+
+#INTERNAL_IPS to your localhost IP address
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+# AUTH_USER_MODEL = 'accounts.User'
+

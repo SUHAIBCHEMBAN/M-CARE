@@ -1,97 +1,85 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .models import MyUser
-from .forms import UserRegistrationForm,OTPForm
-from django.core.mail import send_mail
 import random
-
-
-
+from django.shortcuts import redirect, render
+from django.contrib.auth import get_user_model, login as auth_login, logout
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
 
 def user_login(request):
     """
-    login view.
+    View function for user login.
 
-    Handles user registration and sends OTP to the user's email for verification.
-    
-    Parameters:
-    - request: The HTTP request object.
-    
-    Returns:
-    - If the form is valid, redirects to verify_otp page.
-    - Otherwise, renders the signup page template with the form.
+    If the user is already authenticated, redirect to the booking page.
+    If the request method is POST, check if the user with the provided email exists.
+    If the user exists, send an OTP and redirect to OTP verification page.
+    If the user doesn't exist, create a new user and redirect to OTP verification page.
     """
-    user = None 
-
+    if request.user.is_authenticated:
+        return redirect('booking')
+    
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            existing_user = MyUser.objects.filter(email=email).first()
-            if existing_user:
-                otp = ''.join([str(random.randint(0,9)) for _ in range(6)])
-                existing_user.otp = otp
-                existing_user.save()
-                send_mail(
-                    'M-CARE HOSPITAL',
-                    f'Your OTP is: {otp}',
-                    'your_email@example.com',
-                    [existing_user.email],
-                    fail_silently=False,
-                )
-            else:
-                user = form.save(commit=False)
-                otp = ''.join([str(random.randint(0,9)) for _ in range(6)])
-                user.otp = otp
-                user.save()
+        email = request.POST.get('email')
+        request.session['email'] = email
+        username = request.POST.get('username')
+        
+        user = get_user_model().objects.filter(email=email).first()
+        if user:
+            otp = ''.join(random.choices('0123456789', k=6))
+            request.session['otp'] = otp
+            mail_subject = 'M-CARE HOSPITAL'
+            message = f'Your OTP is: {otp}'
+            send_mail(mail_subject, message, 'your_email@example.com', [email])
+            return redirect('verify_otp')          
+        else:   
+            user = get_user_model().objects.create_user(username=username, email=email)
+            return redirect('verify_otp')
 
-                if user:
-                    # Send OTP to user's email
-                    send_mail(
-                        'M-CARE HOSPITAL',
-                        f'Your OTP is: {otp}',
-                        'your_email@example.com',
-                        [user.email],
-                        fail_silently=False,
-                    )
-            return redirect('verify_otp',user_id=existing_user.id if existing_user else user.id)
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'user_login.html', {'form': form})
+    return render(request, 'login.html')
 
 
-
-    
-def verify_otp(request, user_id):
+def verify_otp(request):
     """
-    Verify OTP view.
+    View function for OTP verification.
 
-    Verifies the OTP entered by the user.
-    
-    Parameters:
-    - request: The HTTP request object.
-    - user_id: The ID of the user.
-    
-    Returns:
-    - If the OTP is correct, logs in the user and renders the booking page.
-    - Otherwise, renders the verify OTP page with the form.
+    If the OTP is not in session, redirect to the login page.
+    If the request method is POST, verify the entered OTP.
+    If the OTP matches, authenticate the user and redirect to the booking page.
+    If the OTP doesn't match, render the OTP verification page with an error message.
     """
-    try:
-        user = MyUser.objects.get(id=user_id)
-    except MyUser.DoesNotExist:
-        return redirect('home')  # Redirect to home page if user does not exist
-
+    if 'otp' not in request.session:
+        # OTP not generated, redirect to login
+        return redirect('login')
+    
     if request.method == 'POST':
-        form = OTPForm(request.POST)
-        if form.is_valid():
-            otp_entered = form.cleaned_data['otp']
-            if otp_entered == user.otp:
-                user.is_verified = True
-                user.save()
-                login(request, user)
-                return redirect('booking')  # Redirect to booking page after successful OTP verification
-    else:
-        form = OTPForm()
+        # Get entered OTP
+        entered_otp = request.POST.get('otp')
+        
+        # Get stored OTP from session
+        stored_otp = request.session.get('otp')
+        
+        if entered_otp == stored_otp:
+            # OTP matched, remove OTP from session
+            del request.session['otp']
+            
+            # Authenticate and login user
+            email = request.session.get('email')
+            user = get_object_or_404(get_user_model(), email=email)
+            auth_login(request, user)
+            
+            # Redirect to success page
+            return redirect('booking')
+        else:
+            # OTP didn't match, render OTP verification page with error
+            return render(request, 'otp_verification.html', {'error': 'Invalid OTP'})
+    
+    return render(request, 'otp_verification.html')
 
-    return render(request, 'verify_otp.html', {'form': form})
 
+def user_logout(request):
+    """
+    View function for user logout.
+
+    If the user is authenticated, logout and redirect to the home page.
+    """
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('home')
