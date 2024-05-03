@@ -1,9 +1,15 @@
 import random
-from django.shortcuts import redirect, render
-from django.contrib.auth import get_user_model, login as auth_login, logout
+from .forms import ProfileForm
+from .models import UserProfile
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render ,get_object_or_404
+from django.contrib.auth import get_user_model, login as auth_login, logout
 
+
+# this my user_login views function
+@never_cache
 def user_login(request):
     """
     View function for user login.
@@ -36,6 +42,8 @@ def user_login(request):
     return render(request, 'login.html')
 
 
+# this my verify_otp views function
+@never_cache
 def verify_otp(request):
     """
     View function for OTP verification.
@@ -66,7 +74,7 @@ def verify_otp(request):
             auth_login(request, user)
             
             # Redirect to success page
-            return redirect('booking')
+            return redirect('success')
         else:
             # OTP didn't match, render OTP verification page with error
             return render(request, 'otp_verification.html', {'error': 'Invalid OTP'})
@@ -74,6 +82,8 @@ def verify_otp(request):
     return render(request, 'otp_verification.html')
 
 
+# this my user_logout views function
+@never_cache
 def user_logout(request):
     """
     View function for user logout.
@@ -83,3 +93,73 @@ def user_logout(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('home')
+
+
+# this add another account function
+def add_login(request):
+    """
+    Log out the user if authenticated, otherwise redirect to login page.
+
+    Args:
+        request: HTTP request object.
+
+    Returns:
+        Redirect to the login page.
+    """
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('login')
+    return redirect('login')
+
+
+# this login success page render function
+def login_success(request):
+    """
+    Render function for the login success page.
+
+    Parameters:
+    - request: The HTTP request object.
+
+    Returns:
+    - Renders the success.html template.
+    """
+    return render(request,'success.html')
+
+
+# this my user profile views function
+def profile(request):
+    """
+    Render function for the user profile page.
+
+    If the user is authenticated, the function retrieves the user's profile information.
+    If the request method is POST, it handles profile picture uploads and username updates.
+    Renders the profile.html template with the profile form and user information.
+
+    Parameters:
+    - request: The HTTP request object.
+
+    Returns:
+    - Renders the profile.html template with the profile form and user information.
+    """
+    if request.user.is_authenticated:
+        try:
+            profile_instance = request.user.userprofile
+        except UserProfile.DoesNotExist:
+            profile_instance = UserProfile(user=request.user)
+            profile_instance.save()
+
+        if request.method == 'POST':
+            if 'profile_picture' in request.FILES:  # Check if profile picture is being uploaded
+                form = ProfileForm(request.POST, request.FILES, instance=profile_instance)
+                if form.is_valid():
+                    form.save()
+            elif 'username' in request.POST:  # Check if username is being updated
+                new_username = request.POST['username']
+                request.user.username = new_username
+                request.user.save()
+            return redirect('profile')
+        else:
+            form = ProfileForm(instance=profile_instance)
+        return render(request, 'profile.html', {'form': form, 'user': request.user})
+    else:
+        return render(request, 'profile.html')

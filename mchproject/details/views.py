@@ -1,18 +1,11 @@
-from django.shortcuts import render,redirect,get_object_or_404
-# from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import never_cache
+from constants import *
 from datetime import datetime
 from django.core.cache import cache
+from django.http import JsonResponse
+from django.views.decorators.cache import never_cache
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Doctor,Booking,Hospital,Countries,Location,Department
-from constants import (
-    INVALID_TIME_FORMAT_ERROR,
-    DOCTOR_WORKING_HOURS_ERROR,
-    BOOKED_TIME_SLOT_ERROR,
-    MAX_BOOKING_REACHED_ERROR,
-    LOGIN_REQUIRED_ERROR,
-    NO_DOCTOR_FOUND_MESSAGE
-)
-# Create your views here.
 
 # this home views.py function
 @never_cache  
@@ -28,8 +21,10 @@ def home(request):
     Returns:
     - Renders the home page template with the username.
     """
-    return render(request, 'home.html',)
+    user = request.user 
+    return render(request, 'home.html',{'user': user})
 
+# this my doctors views function
 @never_cache
 def doctors(request):
     """
@@ -49,6 +44,7 @@ def doctors(request):
     return render(request, 'doctor.html', {'doctors': doctors})
 
 
+# this my find_doctor views function
 @never_cache
 def find_doctor(request):   
     """
@@ -103,17 +99,29 @@ def find_doctor(request):
         return render(request, 'filtered_doctors.html', {'doctors': doctors})
     
     # If request method is not POST, populate context with locations and departments
-    context = {
-        'locations': Location.objects.all(),  
-        'departments': Department.objects.all()  
-    }
+    else:
+        hospital_id = request.GET.get('hospital_id')
+        locations = Location.objects.all()
+        selected_location = None
+        if hospital_id:
+            try:
+                hospital = Hospital.objects.get(id=hospital_id)
+                selected_location = hospital.location
+            except ObjectDoesNotExist:
+                error_message = "Hospital does not exist."
+                return render(request, 'finddoctor.html', {'error_message': error_message})
+
+        context = {
+            'locations': Location.objects.all(),  
+            'selected_location': selected_location,
+            'departments': Department.objects.all()  
+        }
     
     # Render template with context
     return render(request, 'finddoctor.html', context)
     
 
 # this user booking views.py function
-# @login_required
 @never_cache
 def booking(request):
     """
@@ -171,31 +179,19 @@ def booking(request):
             return redirect('booking_success')
     
         else:
-            doctors = Doctor.objects.all() 
-            return render(request, 'booking.html', {'doctors': doctors})
+            doctor_id = request.GET.get('doctor_id')
+            doctors = Doctor.objects.all()
+            selected_doctor = None
+            if doctor_id:
+                try:
+                    selected_doctor = Doctor.objects.get(id=doctor_id)
+                except Doctor.DoesNotExist:
+                    error_message = "The selected doctor does not exist."
+                    return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
+            return render(request, 'booking.html', {'doctors': doctors, 'selected_doctor': selected_doctor})
     else:
-        # messages.info(request, 'You need to be logged in to access the booking page.')
         error_message = LOGIN_REQUIRED_ERROR
         return redirect('login')
-
-
-
-# this success message veiws.py function
-@never_cache
-def booking_success(request):
-    """
-    View to render the booking success page.
-
-    Renders the 'booking_success.html' template.
-
-    Args:
-        request (HttpRequest): The request object.
-
-    Returns:
-        HttpResponse: Rendered HTML template for booking success.
-    """
-    return render(request, 'booking_success.html')
-
 
 
 # this aboutus veiws.py function
@@ -314,10 +310,18 @@ def canada(request):
     canada_hospitals = Hospital.objects.filter(country=canada)
     return render(request, 'canada_hospital_list.html', {'canada_hospitals': canada_hospitals})
 
-
-from django.http import JsonResponse
-
+# this json get view function
 def get_departments_for_location(request, location_id):
+    """
+    Get departments associated with a location and return them as JSON.
+
+    Args:
+        request: HTTP request object.
+        location_id: ID of the location.
+
+    Returns:
+        JSON response containing department IDs and names for the specified location.
+    """
     location = Location.objects.get(pk=location_id)
     departments = Department.objects.filter(location=location)
     data = [{'id': department.id, 'name': department.name} for department in departments]

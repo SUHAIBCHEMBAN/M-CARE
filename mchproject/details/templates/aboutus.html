@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,116 +6,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
         body {
-            background-color: #063C5B;
+            background-color: #f7f7fb;
+            color:blue;
         }
-        .navbar {
-            background-color: #ffffff; 
+        .nav-link {
+            font-size: 1.1rem;
         }
-        .navbar-brand {
-            color: #063C5B !important;
-        }
-        .navbar-nav .nav-link {
-            padding-right: 20px; 
-            padding-left: 20px; 
-            color: #000000;
-            margin-left: 10px;
-        }
-        
-        .navbar-nav .nav-item {
-            margin-left: auto;
-        }
-        
-        .navbar-nav {
-            width: 80%; 
-            justify-content: center; 
-        }
-
-        
         footer {
-            background-color: #f1f1f1;
-            padding: 20px;
+            background-color: #f8f9fa; 
         }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+        
+        footer h3 {
+            font-weight: bold;
+        } 
+        
+        footer ul{
+            padding-left:5%; 
+            list-style-type: none;
         }
-
-        footer-section {
-            display: flex;
-            flex-direction: column;
+        
+        footer li {
+            margin-bottom: 10px; 
         }
-
-        .footer-section h2 {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: #333;
+        
+        footer a {
+            color: #333; 
             text-decoration: none;
+            font-size:100%;
         }
-
-        .footer-section a:hover {
+        
+        footer a:hover {
             color: #000;
+            text-decoration:none;
+        }
+        
+        .footer1 {
+            background-color:#063C5B;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
         }
 
-        footer1 {
-            color:white;
-            padding: 20px;
-            text-align: center;
+        @media (max-width: 767px) {
+            .navbar-brand {
+                font-size: 1.2rem; 
+            }
+        
+            .nav-link {
+                font-size: 1rem;
+            }
         }
 </style>
 </head>
 <body>
-    <!-------------Navbar------------------> 
 
-    <nav class="navbar bg-body-tertiary">
-        <div class="container border-bottom border-5 pb-2">
-          <a class="navbar-brand" href="#">
-            <h1>M-CARE</h1>
-          </a>
-        </div>
-      </nav>
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-------------Navbar------------------> 
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container border-bottom p-4">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <h1>M-CARE</h1> 
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}" >Find a Doctor</a>
+                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus'%}">About Us</a>
+                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
                     </li>
                 </ul>
+                <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
             </div>
         </div>
     </nav>
 
-    {% comment %} <!------------Contant-----------------> {% endcomment %}
+     <!------------Contant----------------> 
 
-    <div class="container p-5">
+    <div class="container p-5 border-bottom">
         <h3 class="text-center ">WELCOME TO M-CARE HOSPITAL</h3>
         <pre class="text-center mt-4">
         At M-Care, we are dedicated to providing compassionate
@@ -154,42 +135,72 @@
    
     <!--------------Footer------------------>
 
-<footer>
-    <div class="footer-container">
-      <div class="footer-section ml-5">
-        <h3>Actions</h3>
-        <ul>
-          <li><a href="#">Appointments & Access</a></li>
-          <li><a href="#">Accepted Insurance</a></li>
-          <li><a href="#">Events Calendar</a></li>
-          <li><a href="#">Financial Assistance</a></li>
-          <li><a href="#">Pay Your Bill Online</a></li>
-          <li><a href="#">Price Transparency</a></li>
-          <li><a href="#">Refer a Patient</a></li>
-          <li><a href="#">Phone Directory</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h3>About M-Care</h3>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Locations</a></li>
-          <li><a href="#">Quality & Patient Safety</a></li>
-          <li><a href="#">Patient Experience</a></li>
-          <li><a href="#">Research & Innovations</a></li>
-        </ul>
-        <ul>
-          <li><a href="#">Send Us Feedback</a></li>
-          <li><a href="#">Copyright, Reprint & Licensing</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  
-<footer1>
-    <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
-</footer>
+    <footer class="bg-light">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h3 class="p-2">Actions</h3>
+                        <ul><br>
+                            <li><a href="#">Appointments & Access</a></li>
+                            <li><a href="#">Accepted Insurance</a></li>
+                            <li><a href="#">Events Calendar</a></li>
+                            <li><a href="#">Financial Assistance</a></li>
+                            <li><a href="#">Pay Your Bill Online</a></li>
+                            <li><a href="#">Refer a Patient</a></li>
+                            <li><a href="#">Virtual Second Opinions</a></li>
+                            <li><a href="#">Virtual Visits</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h3 class="p-2">About M-Care</h3>
+                        <ul><br>
+                            <li><a href="#">100 Years of M-CARE Clinic</a></li>
+                            <li><a href="#">Locations</a></li>
+                            <li><a href="#">Quality & Patient Safety</a></li>
+                            <li><a href="#">Office of Diversity & Inclusion</a></li>
+                            <li><a href="#">Patient Experience</a></li>
+                            <li><a href="#">Research & Innovations</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">For Employees</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h3 class="p-2">Site Information</h3>
+                        <ul><br>
+                            <li><a href="#">Send Us Feedback</a></li>
+                            <li><a href="#">Site Map</a></li>
+                            <li><a href="#">About this Website</a></li>
+                            <li><a href="#">Copyright, Reprint & Licensing</a></li>
+                            <li><a href="#">Website Terms of Use</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Notice of Privacy Practices</a></li>
+                            <li><a href="#">Non-Discrimination Notice</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h3 class="p-2">Blog and News</h3>
+                        <ul> <br>
+                            <li><a href="#">Consult QD</a></li>
+                            <li><a href="#">Health Essentials</a></li>
+                            <li><a href="#">Newsroom</a></li>
+                            <li><a href="#">MyMCARClinic</a></li>
+                            <li><a href="#">MyChart</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <footer class="bg-primary py-3  text-white text-center">
+        <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+    </footer>
 
 
    <!-- ------------------------js link--------------------------------- -->

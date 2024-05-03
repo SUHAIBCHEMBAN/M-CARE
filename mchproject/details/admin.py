@@ -3,15 +3,24 @@ from .models import Countries, Location, Department, Doctor, Booking, Hospital
 
 
 class CountryAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the Countries model.
+    """
     list_display = ('id', 'name')  
 
 
 class LocationAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the Location model.
+    """
     list_display = ('id', 'name', 'country')  
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')  
+    """
+    Admin configuration for the Department model.
+    """
+    list_display = ('id', 'name','location')  
 
 
 class DoctorAdmin(admin.ModelAdmin):
@@ -29,7 +38,10 @@ class BookingAdmin(admin.ModelAdmin):
 
 
 class HospitalAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'country', 'address', 'contact_number', 'image')  
+    """
+    Admin configuration for the Hospital model.
+    """
+    list_display = ('id', 'name', 'country','location','address', 'contact_number', 'image')  
     
 
 # Registering admin classes

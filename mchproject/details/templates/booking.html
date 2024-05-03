@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
         body {
         background-color: #f8f9fa;
@@ -15,13 +17,11 @@
         height:5rem;
         }
         .navbar-brand {
-        {% comment %} color: #063C5B !important; {% endcomment %}
         color:white;
         }
         .navbar-nav .nav-link {
         padding-right: 20px; 
         padding-left: 20px; 
-        {% comment %} color: #000000; {% endcomment %}
         color:#ffffff;
         margin-left: 10px;
         }
@@ -81,7 +81,7 @@
           background-color: #ffffff;
           border-radius: 10px; 
           padding: 30px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+          box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); 
           margin-top: 50px;
         }
     </style>
@@ -90,13 +90,6 @@
 
     <!-------------Navbar------------------> 
 
-    {% comment %} <nav class="navbar bg-body-tertiary ">
-        <div class="container border-bottom border-5 pb-2">
-          <a class="navbar-brand" href="#">
-            <h1>M-CARE</h1>
-          </a>
-        </div>
-      </nav> {% endcomment %}
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -126,7 +119,9 @@
 
     <div class="container w-50 mt-5 mb-5">
       <h2 class='text-center'>Make An Appointment</h2>
-     
+      {% if selected_doctor %}
+        <p>Selected Doctor ID: {{ selected_doctor.id }}</p>
+      {% endif %}
       <form method="post">
           {% csrf_token %}
           <div class="form-group mt-5">
@@ -139,7 +134,11 @@
               <select class="form-control" id="doctor" name="doctor" required>
                 <option value="" disabled selected>Select Your Doctor</option> 
                   {% for doctor in doctors %}
-                      <option value="{{ doctor.id }}">Dr {{ doctor.name }} - {{ doctor.department }} - {{ doctor.location}}</option>
+                      {% if selected_doctor and selected_doctor.id == doctor.id %}
+                        <option value="{{ doctor.id }}"  selected>Dr {{ doctor.name }} - {{ doctor.department }} - {{ doctor.location}}</option>
+                      {% else %}
+                        <option value="{{ doctor.id }}">Dr. {{ doctor.name }} - {{ doctor.department }} - {{ doctor.location }}</option>
+                      {% endif %}
                   {% endfor %}
               </select>
           </div>

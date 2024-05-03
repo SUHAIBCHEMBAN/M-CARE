@@ -1,6 +1,4 @@
-
-<!-- templates/admin_signin/login.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <style>
-        /* Add your custom styles here */
+    
         body {
             background-color: #f8f9fa;
         }
@@ -22,7 +20,7 @@
         .form-control {
             margin-bottom: 10px;
         }
-        .error-message {
+        .error-message{
             color: red;
         }
         .form-container {
@@ -38,31 +36,29 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container w-50 ">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="form-container">
+                <div class="form-container w-50 mt-5">
                     <h2 class="form-title">Admin Login</h2>
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="id_username">Username</label>
-                            <input type="text" name="username" id="id_username" class="form-control" placeholder="Enter your username">
+                            <input type="text" name="username" id="id_username" class="form-control" placeholder="Username">
                         </div>
                         <div class="form-group">
                             <label for="id_password">Password</label>
-                            <input type="password" name="password" id="id_password" class="form-control" placeholder="Enter your password">
+                            <input type="password" name="password" id="id_password" class="form-control" placeholder="Password">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
                     </form>
                     {% if form.non_field_errors %}
-                        <p class="error-message" style="color: red;">{{ form.non_field_errors }}</p>
+                        <p class="error-message">{{ form.non_field_errors }}</p>
                     {% endif %}
                 </div>
             </div>
         </div>
-    </div>
 
     <!--  --------------------js link----------------------- -->
 

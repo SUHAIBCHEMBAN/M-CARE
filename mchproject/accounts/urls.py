@@ -1,8 +1,11 @@
 from django.urls import path
-from .views import user_login, verify_otp,user_logout
+from . import views
 
 urlpatterns = [
-    path('login/', user_login, name='login'),
-    path('verify/', verify_otp, name='verify_otp'),
-    path('logout/', user_logout,name='logout'),
+    path('login/', views.user_login, name='login'),
+    path('verify/', views.verify_otp, name='verify_otp'),
+    path('logout/', views.user_logout,name='logout'),
+    path('profile/',views.profile,name='profile'),
+    path('addlogin/',views.add_login,name='add_login'),
+    path('success/',views.login_success,name='success'),
 ]

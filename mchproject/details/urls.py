@@ -7,7 +7,6 @@ urlpatterns = [
     path('finddoctor/',views.find_doctor,name='finddoctor'),
     path('doctors/',views.doctors,name='doctors'),  
     path('booking/',views.booking,name='booking'),
-    path('bookingsuccess/',views.booking_success,name='booking_success'),
     path('aboutus/',views.aboutus,name='aboutus'),
     path('bookingdetails/',views.booking_details,name='booking_details'),
     path('cancelbooking/<int:booking_id>/',views.cancel_booking,name='cancel_booking'),

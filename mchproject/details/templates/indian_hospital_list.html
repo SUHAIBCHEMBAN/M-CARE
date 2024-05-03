@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>India</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
         body {
             background-color: #063C5B;
@@ -148,50 +149,81 @@
         <img src="{{hospital.image.url}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">M-CARE</h5>
-          <p class="card-text">{{ hospital.country }}</p>
+          <p class="card-text">{{ hospital.location }}</p>
           <address class="card-text">{{ hospital.address }}</address>
           <p class="card-text">{{ hospital.contact_number }}</p>
-          <a href="{% url 'finddoctor' %}"  class="btn btn-primary">Book Now</a>
+          <a href="{% url 'finddoctor' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
         </div>
       </div>
       {% endfor %}
     </div>      
 
 
-    <!--------------Footer------------------>
+<!--------------Footer------------------>
 
-<footer>
-    <div class="footer-container">
-      <div class="footer-section ml-5">
-        <h3>Actions</h3>
-        <ul>
-          <li><a href="#">Appointments & Access</a></li>
-          <li><a href="#">Accepted Insurance</a></li>
-          <li><a href="#">Events Calendar</a></li>
-          <li><a href="#">Financial Assistance</a></li>
-          <li><a href="#">Pay Your Bill Online</a></li>
-          <li><a href="#">Price Transparency</a></li>
-          <li><a href="#">Refer a Patient</a></li>
-          <li><a href="#">Phone Directory</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h3>About M-Care</h3>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Locations</a></li>
-          <li><a href="#">Quality & Patient Safety</a></li>
-          <li><a href="#">Patient Experience</a></li>
-          <li><a href="#">Research & Innovations</a></li>
-        </ul>
-        <ul>
-          <li><a href="#">Send Us Feedback</a></li>
-          <li><a href="#">Copyright, Reprint & Licensing</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
+<footer class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <h3 class="p-2">Actions</h3>
+                    <ul><br>
+                        <li><a href="#">Appointments & Access</a></li>
+                        <li><a href="#">Accepted Insurance</a></li>
+                        <li><a href="#">Events Calendar</a></li>
+                        <li><a href="#">Financial Assistance</a></li>
+                        <li><a href="#">Pay Your Bill Online</a></li>
+                        <li><a href="#">Refer a Patient</a></li>
+                        <li><a href="#">Virtual Second Opinions</a></li>
+                        <li><a href="#">Virtual Visits</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <h3 class="p-2">About M-Care</h3>
+                    <ul><br>
+                        <li><a href="#">100 Years of M-CARE Clinic</a></li>
+                        <li><a href="#">Locations</a></li>
+                        <li><a href="#">Quality & Patient Safety</a></li>
+                        <li><a href="#">Office of Diversity & Inclusion</a></li>
+                        <li><a href="#">Patient Experience</a></li>
+                        <li><a href="#">Research & Innovations</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">For Employees</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <h3 class="p-2">Site Information</h3>
+                    <ul><br>
+                        <li><a href="#">Send Us Feedback</a></li>
+                        <li><a href="#">Site Map</a></li>
+                        <li><a href="#">About this Website</a></li>
+                        <li><a href="#">Copyright, Reprint & Licensing</a></li>
+                        <li><a href="#">Website Terms of Use</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Notice of Privacy Practices</a></li>
+                        <li><a href="#">Non-Discrimination Notice</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <h3 class="p-2">Blog and News</h3>
+                    <ul> <br>
+                        <li><a href="#">Consult QD</a></li>
+                        <li><a href="#">Health Essentials</a></li>
+                        <li><a href="#">Newsroom</a></li>
+                        <li><a href="#">MyMCARClinic</a></li>
+                        <li><a href="#">MyChart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
+</footer>
   
 <footer1>
     <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>

@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'accounts',
-    # 'register',
     'customadmin',
     'details',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -51,8 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accounts.middleware.RestrictAdminUserInFrontend',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'accounts.middlewares.Customadminpanel',
 ]
 
 ROOT_URLCONF = 'mchproject.urls'
@@ -146,14 +146,11 @@ EMAIL_HOST_USER = 'shuhaibc2004@gmail.com'
 EMAIL_HOST_PASSWORD = 'zwra otta kpzg kubz'
 
 
-MEDIA_ROOT = BASE_DIR / 'uploads'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-#INTERNAL_IPS to your localhost IP address
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
 
-# AUTH_USER_MODEL = 'accounts.User'
 
