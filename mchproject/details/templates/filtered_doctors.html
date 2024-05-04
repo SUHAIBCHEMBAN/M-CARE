@@ -9,40 +9,31 @@
     <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color:rgb(233, 228, 228);
             font-family: Arial, sans-serif;
         }
         
         .card {
-            background-color: #ffffff
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            border: none;
         }
         
         .card:hover {
-            transform: translateY(-25px);
-        }
-        
-        .card-img-top {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            height: 200px;
-            object-fit: cover;
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s;
         }
         
         .card-title {
-            color: #063C5B;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem; 
+            font-weight: bold; 
         }
         
         .card-text {
             font-size: 1rem;
             color: #6c757d;
-            color: #495057;
+        }
+        .card img {
+            object-fit:cover;
         }
         
         .btn-primary {
@@ -70,7 +61,7 @@
             {% for doctor in doctors %}
             <div class="col mb-4">
                 <div class="card">
-                    <img src="{% static '/image/doctor.png' %}" class="card-img-top" alt="Doctor Image"> 
+                    <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Somthing Went Wrong" style="height: 15rem;">
                     <div class="card-body">
                         <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
                         <p class="card-text text-center">{{ doctor.location }}</p>

@@ -34,7 +34,7 @@ class BookingAdmin(admin.ModelAdmin):
     """
     Admin configuration for the Booking model.
     """
-    list_display = ('id', 'name', 'address', 'doctor', 'booking_time')  
+    list_display = ('id', 'name', 'address', 'doctor', 'booking_time','user')  
 
 
 class HospitalAdmin(admin.ModelAdmin):

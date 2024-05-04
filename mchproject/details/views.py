@@ -174,7 +174,7 @@ def booking(request):
                 return render(request, 'booking.html', {'error_message': error_message})
 
             # If everything is fine, create the booking
-            booking = Booking(name=name, address=address, doctor=doctor, booking_time=booking_time)
+            booking = Booking(name=name, address=address, doctor=doctor, booking_time=booking_time,user=request.user)
             booking.save()  
             return redirect('booking_success')
     
@@ -228,9 +228,10 @@ def booking_details(request):
     - Rendered HttpResponse object containing the booking details
       displayed on the 'bookingdetails.html' template.
     """
-
-    bookings = Booking.objects.all()
-    return render(request,'bookingdetails.html',{'bookings':bookings})
+    if request.user.is_authenticated:
+        bookings = Booking.objects.filter(user=request.user)
+        return render(request,'bookingdetails.html',{'bookings':bookings})
+    return render(request,'login.html')
 
 
 

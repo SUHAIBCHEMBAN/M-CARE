@@ -17,7 +17,7 @@
             font-size: 1.1rem;
         }
         
-        .card {
+        {% comment %} .card {
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -41,7 +41,31 @@
         .card-text {
             color: #495057;
             margin-bottom: 15px;
+        } {% endcomment %}
+
+        .card {
+            border: none;
+            margin: 10px;
+            padding: 20px;
         }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s;
+        }
+        
+        .card-title {
+            color: #063C5B;
+            font-size: 1.2rem; 
+            font-weight: bold; 
+        }
+        
+        .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
         .btn-cancel {
             background-color: #dc3545;
             border-color: #dc3545;
@@ -127,7 +151,7 @@
         {% for booking in bookings %}
         <div class="col-lg-4 mb-4">
             <div class="card">
-                <p class='text-danger'>ID:{{ booking.id }}</p>
+                {% comment %} <p class='text-danger'>ID:{{ booking.id }}</p> {% endcomment %}
                 <h5 class="card-title">{{ booking.name }}</h5>
                 <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6>
                 <p class="card-text"><strong>Address:{{ booking.address }}</strong></p>

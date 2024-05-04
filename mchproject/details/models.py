@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import time
+from django.contrib.auth.models import User
 
 
 class Countries(models.Model):
@@ -70,6 +71,7 @@ class Booking(models.Model):
     address = models.CharField(max_length=150)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     booking_time = models.TimeField(verbose_name="Booking Time")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         """
