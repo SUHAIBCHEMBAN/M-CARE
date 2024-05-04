@@ -8,76 +8,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
-        body {
-        background-color: #f8f9fa;
-        font-family: sans-serif;  
-        }
-        .navbar {
-        background-color:#063C5B;
-        height:5rem;
-        }
-        .navbar-brand {
-        color:white;
-        }
-        .navbar-nav .nav-link {
-        padding-right: 20px; 
-        padding-left: 20px; 
-        color:#ffffff;
-        margin-left: 10px;
-        }
+          body {
+                background-color: #f7f7fb;
+                color:blue;
+               }
     
-        .navbar-nav .nav-item {
-        margin-left: auto;
-        }
-    
-        .navbar-nav {
-        width: 90%; 
-        justify-content: center; 
-        }
-        footer {
-          background-color: #f1f1f1;
-          padding: 20px;
-        }
-
-        .footer-container {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px;
-        }
-
-        footer-section {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .footer-section h2 {
-          margin-bottom: 10px;
-        }
-
-        .footer-section ul {
-          list-style: none;
-          padding: 0;
-        }
-
-        .footer-section li {
-          margin-bottom: 10px;
-        }
-
-        .footer-section a {
-          color: #333;
-          text-decoration: none;
-        }
-
-        .footer-section a:hover {
-          color: #000;
-        }
-
-        footer1 {
-          color:white;
-          padding: 15px;
-          text-align: center;
-        }    
-        .container {
+        .nav-link {
+          font-size: 1.1rem;
+          }  
+        .container{
           background-color: #ffffff;
           border-radius: 10px; 
           padding: 30px;
@@ -89,39 +28,39 @@
 <body>
 
     <!-------------Navbar------------------> 
-
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link " href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
-                    </li>
-                    <li class="nav-item">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container mt-0">
+          <a class="navbar-brand" href="{% url 'home' %}">
+              <h1>M-CARE</h1> 
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
+                  </li>
+                  <li class="nav-item">
                       <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+                  </li>
+              </ul>
+              <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
+          </div>
+      </div>
     </nav>
 
-{% comment %} <!------------------Booking Form-------------------> {% endcomment %}
+    <!---------------Booking Form------------------> 
 
     <div class="container w-50 mt-5 mb-5">
       <h2 class='text-center'>Make An Appointment</h2>
-      {% if selected_doctor %}
-        <p>Selected Doctor ID: {{ selected_doctor.id }}</p>
-      {% endif %}
       <form method="post">
           {% csrf_token %}
           <div class="form-group mt-5">

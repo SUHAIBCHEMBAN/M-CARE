@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,13 +18,12 @@
         }
         .card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-            transition: transform 0.3s;
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s;
         }
         
         .card-title {
@@ -66,6 +65,7 @@
         
         footer li {
             margin-bottom: 10px; 
+            font-weight: bold;
         }
         
         footer a {
@@ -124,7 +124,7 @@
                 {% for doctor in doctors %}
                 <div class="col mb-4">
                     <div class="card">
-                        <img src="{% static '/image/doctor.png' %}" class="card-img-top" alt="Doctor Image"> 
+                        <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Somthing Went Wrong" style="height: 15rem;">
                         <div class="card-body">
                             <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
                             <p class="card-text text-center">{{ doctor.location }}</p>

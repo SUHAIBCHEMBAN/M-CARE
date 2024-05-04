@@ -27,7 +27,7 @@ class DoctorAdmin(admin.ModelAdmin):
     """
     Admin configuration for the Doctor model.
     """
-    list_display = ('id', 'name', 'location', 'department', 'charge', 'start_time', 'end_time')  
+    list_display = ('id', 'name', 'location', 'department', 'charge', 'start_time', 'end_time','pic')  
 
 
 class BookingAdmin(admin.ModelAdmin):

@@ -9,28 +9,12 @@
     <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}"> 
     <style>
         body {
-            background-color: #063C5B;
-        }
-        .navbar {
-            background-color: #ffffff; 
-        }
-        .navbar-brand {
-            color: #063C5B !important;
-        }
-        .navbar-nav .nav-link {
-            padding-right: 20px; 
-            padding-left: 20px; 
-            color: #000000;
-            margin-left: 10px;
+            background-color: #f7f7fb;
+            color:blue;
         }
         
-        .navbar-nav .nav-item {
-            margin-left: auto;
-        }
-        
-        .navbar-nav {
-            width: 80%; 
-            justify-content: center; 
+        .nav-link {
+            font-size: 1.1rem;
         }
         .card {
             background-color: #ffffff;
@@ -58,93 +42,83 @@
             margin-bottom: 15px;
         }
         footer {
-            background-color: #f1f1f1;
-            padding: 20px;
+            background-color: #f8f9fa; 
         }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+        
+        footer h3 {
+            font-weight: bold;
+        } 
+        
+        footer ul{
+            padding-left:5%; 
+            list-style-type: none;
         }
-
-        footer-section {
-            display: flex;
-            flex-direction: column;
+        
+        footer li {
+            margin-bottom: 10px; 
+            font-weight:bold;
         }
-
-        .footer-section h2 {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: #333;
+        
+        footer a {
+            color: #333; 
             text-decoration: none;
+            font-size:100%;
         }
-
-        .footer-section a:hover {
+        
+        footer a:hover {
             color: #000;
+            text-decoration:none;
         }
-
-        footer1 {
-            color:white;
-            padding: 20px;
+        
+        .footer1 {
+            background-color:#063C5B;
+            color: white;
+            padding: 20px 0;
             text-align: center;
         }
-    </style>
+    </style>   
 </head>
 <body>
 
     <!-------------Navbar------------------> 
     
-
-    <nav class="navbar bg-body-tertiary ">
-        <div class="container border-bottom border-5 pb-2">
-          <a class="navbar-brand" href="#">
-            <h1>M-CARE</h1>
-          </a>
-        </div>
-      </nav>
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container border-bottom p-4">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <h1>M-CARE</h1> 
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}" >Find a Doctor</a>
+                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus'%}">About Us</a>
+                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
                     </li>
                 </ul>
+                <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
             </div>
         </div>
     </nav>
+    <h2 class='text-center m-5'>M-CARE in Emirates</h2>
+
+
     <!--------------Details------------------>
 
-    <h2 class='text-center m-5'>M-CARE in Emirates</h2>
-    <div class="container p-5 d-flex">
+    <div class="container p-2 d-flex border-bottom">
         {% for hospital in uae_hospitals %}
+        <div class="col-md-4">
         <div class="card" style="width: 18rem;">
-            <img src="{{hospital.image.url}}" class="card-img-top" alt="nothing">
+            <img src="{{hospital.image.url}}" class="card-img-top" alt="Somthing Went Wrong" style="height: 10rem;">
             <div class="card-body">
               <h5 class="card-title">M-CARE</h5>
               <p class="card-text">{{ hospital.location }}</p>
@@ -153,15 +127,14 @@
               <a href="{% url 'finddoctor' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
             </div>
           </div>
+          </div>
           {% endfor %}
         </div>  
-
-
 
     <!--------------Footer------------------>
 
     <footer class="bg-light">
-        <div class="container">
+        <div class="container mt-4">
             <div class="row">
                 <div class="col-md-3">
                     <div class="text-center">
@@ -224,9 +197,9 @@
         </div>
     </footer>
   
-<footer1>
-    <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
-</footer>
+    <footer class="bg-primary py-3  text-white text-center">
+        <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+    </footer>
 
 <!----------js link---------->
     

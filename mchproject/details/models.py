@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import time
 
+
 class Countries(models.Model):
     """
     Model representing countries.
@@ -46,6 +47,7 @@ class Doctor(models.Model):
     """
     Model representing doctors.
     """
+    pic = models.ImageField(upload_to='docimg',default='default_image.jpg')
     name = models.CharField(max_length=100)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)

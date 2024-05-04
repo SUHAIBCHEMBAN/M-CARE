@@ -21,13 +21,12 @@ body {
 
 .card {
     border: none;
-    border-radius: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.3s;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s;
 }
 
 .card-title {
@@ -57,6 +56,7 @@ footer ul{
 
 footer li {
     margin-bottom: 10px; 
+    font-weight:bold;
 }
 
 footer a {
@@ -148,13 +148,13 @@ button span{
             </div>
           </div>
           <div class="carousel-item">
-            <img src="{% static 'image/wall3.jpg' %}" class="d-block w-100" alt="...">
+            <img src="{% static 'image/Wallpeppar3.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="text-secondary">"At M-Care Hospital, we're not just treating patients; we're nurturing hope and healing every step of the way."</h1>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="{% static 'image/wall4.jpg' %}" class="d-block w-100" alt="...">
+            <img src="{% static 'image/Wallpeppar3.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="text-secondary">"Compassionate Care, Trusted Excellence: M-Care Hospital, where your well-being is our priority, always."</h1>
             </div>
@@ -167,7 +167,7 @@ button span{
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card align-center">
-                    <img src="{% static "/image/doctor.png" %}" class="card-img-top" alt="...">
+                    <img src="{% static "/image/doc.png" %}" class="card-img-top" alt="..." style="height:17.5rem;">
                     <div class="card-body">
                         <h5 class="card-title">Our Doctors</h5>
                         <p class="card-text">Our specialized doctors are available. Book Now!</p>
@@ -206,7 +206,7 @@ button span{
             <div class="col-md-4">
                 <div class="card">
                     <a href="{% url 'indian' %}">
-                        <img src="{% static "/image/tenth.jpg" %}" class="card-img-top" alt="...">
+                        <img src="{% static "/image/tenth.jpg" %}" class="card-img-top" alt="..." style="height:15rem;">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">M-CARE IN INDIA</h5>
@@ -217,7 +217,7 @@ button span{
             <div class="col-md-4">
                 <div class="card">
                     <a href="{% url 'uae' %}">
-                        <img src="{% static "/image/seventh one.jpg" %}" class="card-img-top" alt="...">
+                        <img src="{% static "/image/seventh one.jpg" %}" class="card-img-top" alt="..."  style="height:15rem;">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">M-CARE IN UAE</h5>
@@ -228,7 +228,7 @@ button span{
             <div class="col-md-4">
                 <div class="card">
                     <a href="{% url 'canada' %}">
-                        <img src="{% static "/image/sixth one.jpg" %}" class="card-img-top" alt="...">
+                        <img src="{% static "/image/sixth one.jpg" %}" class="card-img-top" alt="..."  style="height:15rem;">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">M-CARE IN CANADA</h5>

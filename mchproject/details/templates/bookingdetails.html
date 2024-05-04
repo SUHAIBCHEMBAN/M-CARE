@@ -10,6 +10,7 @@
     <style>
         body {
             background-color: #f7f7fb;
+            color:blue;
         }
         
         .nav-link {
@@ -64,7 +65,8 @@
         }
         
         footer li {
-            margin-bottom: 10px; 
+            margin-bottom: 10px;
+            font-weight: bold; 
         }
         
         footer a {
@@ -121,7 +123,7 @@
     <!------------------user booking details----------------------> 
 
     <h2 class='text-center mt-4 text-dark'>Booking Details</h2>
-    <div class="container p-4 d-flex flex-wrap justify-content-center">
+    <div class="container p-4 d-flex flex-wrap justify-content-center border-bottom">
         {% for booking in bookings %}
         <div class="col-lg-4 mb-4">
             <div class="card">
@@ -140,7 +142,7 @@
     <!--------------Footer------------------>
 
     <footer class="bg-light">
-        <div class="container">
+        <div class="container mt-4">
             <div class="row">
                 <div class="col-md-3">
                     <div class="text-center">
