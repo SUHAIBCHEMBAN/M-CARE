@@ -1,3 +1,4 @@
+import json
 from constants import *
 from datetime import datetime
 from django.core.cache import cache
@@ -174,9 +175,18 @@ def booking(request):
                 return render(request, 'booking.html', {'error_message': error_message})
 
             # If everything is fine, create the booking
-            booking = Booking(name=name, address=address, doctor=doctor, booking_time=booking_time,user=request.user)
-            booking.save()  
-            return redirect('booking_success')
+            # booking = Booking.objects.create(name=name, address=address, doctor=doctor, booking_time=booking_time, user=request.user)
+            # booking.save()
+
+            # Store booking data in session for payment processing
+            request.session['booking_data'] = {
+                'name': name,
+                'address': address,
+                'doctor_id': doctor_id,
+                'booking_time': booking_time_str,
+            }
+
+            return redirect('payment_page')
     
         else:
             doctor_id = request.GET.get('doctor_id')
@@ -186,11 +196,10 @@ def booking(request):
                 try:
                     selected_doctor = Doctor.objects.get(id=doctor_id)
                 except Doctor.DoesNotExist:
-                    error_message = "The selected doctor does not exist."
+                    error_message = DOCTOR_NOT
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
             return render(request, 'booking.html', {'doctors': doctors, 'selected_doctor': selected_doctor})
     else:
-        error_message = LOGIN_REQUIRED_ERROR
         return redirect('login')
 
 

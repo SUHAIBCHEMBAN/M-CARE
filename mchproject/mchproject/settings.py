@@ -22,9 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-*$2nk8(m25!!lrtoxmo9^5y*(yoe047yb2ahb%9xz(ifrp@14+'
 
+
+INTERNAL_IPS = ['127.0.0.1', '::1'] 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 
 # Application definition
@@ -51,8 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'accounts.middleware.RestrictAdminUserInFrontend',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'accounts.middleware.RestrictAdminUserInFrontend',
 ]
 
 ROOT_URLCONF = 'mchproject.urls'
@@ -144,11 +146,10 @@ EMAIL_HOST_USER = 'shuhaibc2004@gmail.com'
 EMAIL_HOST_PASSWORD = 'zwra otta kpzg kubz'
 
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+RAZORPAY_API_KEY = 'rzp_test_hzVAqG2EQyxAr2'
+RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
 
 

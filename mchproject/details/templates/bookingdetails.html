@@ -16,33 +16,6 @@
         .nav-link {
             font-size: 1.1rem;
         }
-        
-        {% comment %} .card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .card-title {
-            color: #063C5B;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .card-subtitle {
-            color: #6c757d;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-        .card-text {
-            color: #495057;
-            margin-bottom: 15px;
-        } {% endcomment %}
-
         .card {
             border: none;
             margin: 10px;
@@ -127,9 +100,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
                     </li>
                     <li class="nav-item">
@@ -151,7 +121,6 @@
         {% for booking in bookings %}
         <div class="col-lg-4 mb-4">
             <div class="card">
-                {% comment %} <p class='text-danger'>ID:{{ booking.id }}</p> {% endcomment %}
                 <h5 class="card-title">{{ booking.name }}</h5>
                 <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6>
                 <p class="card-text"><strong>Address:{{ booking.address }}</strong></p>

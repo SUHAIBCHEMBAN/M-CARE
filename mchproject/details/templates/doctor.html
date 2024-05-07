@@ -99,9 +99,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
                     </li>
                     <li class="nav-item">
@@ -128,7 +125,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
                             <p class="card-text text-center">{{ doctor.location }}</p>
-                            <p class="card-text text-center">{{ doctor.department }} Department</p>
+                            <p class="card-text text-center">Department - {{ doctor.department }}</p>
                             <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
                             <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
                             <div class="text-center">
