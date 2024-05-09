@@ -54,7 +54,8 @@ class Doctor(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     charge = models.IntegerField(default=200)
     start_time = models.TimeField(default=time(hour=8))  
-    end_time = models.TimeField(default=time(hour=12))  
+    end_time = models.TimeField(default=time(hour=12)) 
+    slot = models.IntegerField(default=20) 
 
     def __str__(self):
         """
@@ -72,6 +73,7 @@ class Booking(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     booking_time = models.TimeField(verbose_name="Booking Time")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # status = models.CharField(max_length=50,default='Pending')
 
     def __str__(self):
         """

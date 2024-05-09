@@ -147,9 +147,15 @@ def booking(request):
             address = request.POST.get('address')
             doctor_id = request.POST.get('doctor')
             booking_time_str = request.POST.get('booking_time')
-
+            
+            # check if the selected time a validtime format or not 
             try:
                 booking_time = datetime.strptime(booking_time_str, '%H:%M').time()
+
+            # check if the user selected time a even number time or not 
+                if booking_time.minute % 2 == 1:
+                    error_message = CORROCT_TIME
+                    return render(request, 'booking.html', {'error_message': error_message})
             except ValueError:
                 error_message = INVALID_TIME_FORMAT_ERROR
                 return render(request, 'booking.html', {'error_message': error_message})
@@ -168,7 +174,7 @@ def booking(request):
                 return render(request, 'booking.html', {'error_message': error_message})
         
             # Check if the doctor has available slots for booking
-            available_slot = 5
+            available_slot = doctor.slot
             total_bookings = Booking.objects.filter(doctor=doctor).count()
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)

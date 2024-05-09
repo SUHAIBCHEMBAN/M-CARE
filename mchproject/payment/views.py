@@ -6,7 +6,7 @@ import razorpay
 from constants import *
 
 
-def doc_payment(request):
+def doctor_payment(request):
     """
     View function to handle doctor payment processing.
 
@@ -19,6 +19,7 @@ def doc_payment(request):
     Returns:
         HTTP response rendering the payment page or an error page if any exception occurs.
     """
+
     # Retrieve booking data from session
     booking_data = request.session.get('booking_data')
     if not booking_data:
@@ -31,6 +32,7 @@ def doc_payment(request):
         doctor = Doctor.objects.get(id=doctor_id)
         doctor_name = doctor.name
         doctor_charge = doctor.charge
+        department = doctor.department
 
         user_name = booking_data.get('name')
         user_address = booking_data.get('address')
@@ -67,6 +69,7 @@ def doc_payment(request):
         'user_name': user_name,
         'user_address': user_address,
         'booking_time': booking_time,
+        'department':department,
     }
     return render(request, 'payment.html', context)
 
@@ -104,75 +107,3 @@ def booking_success(request):
     del request.session['booking_data']
 
     return render(request, 'booking_success.html', {'booking': booking})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# import razorpay
-# from details.models import Booking
-# from django.shortcuts import render,redirect
-# from django.views.decorators.cache import never_cache
-
-# from mchproject.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY
-
-
-# def doc_payment(request):
-
-#     booking_id = request.session.get('booking_id')
-#     if not booking_id:
-#         return redirect('booking')  
-
-#     booking = Booking.objects.get(id=booking_id)
-
-    
-#     amount = booking.doctor.charge 
-
-#     client = razorpay.Client(auth=(RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY))
-
-#     DATA = {
-#         "amount": amount * 100,  
-#         "currency": "INR",
-#         "receipt": "receipt#1",
-#         "notes": {
-#             "key1": "value3",
-#             "key2": "value2"
-#         }
-#     }
-#     payment_order = client.order.create(data=DATA)
-#     payment_order_id = payment_order['id']
-#     context = {
-#         'api_key': RAZORPAY_API_KEY,
-#         'order_id': payment_order_id,
-#         'booking': booking
-#     }
-#     return render(request, 'payment.html', context)
-
-
-
-
-
-# this success message veiws.py function
-# @never_cache
-# def booking_success(request):
-#     """
-#     View to render the booking success page.
-
-#     Renders the 'booking_success.html' template.
-
-#     Args:
-#         request (HttpRequest): The request object.
-
-#     Returns:
-#         HttpResponse: Rendered HTML template for booking success.
-#     """
-#     return render(request, 'booking_success.html')

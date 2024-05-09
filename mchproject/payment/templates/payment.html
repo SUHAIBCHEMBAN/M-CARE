@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
+    <title>M-CARE CLINIC Doctor Booking Payment</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}" />
+    <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}" />
     <style>
         body {
             background-color: #f7f7fa;
@@ -38,27 +38,32 @@
 <h2 class="text-center mt-4 text-dark">Payment Details</h2>
 <div class="container p-4 d-flex flex-wrap justify-content-center">
     <div class="col-lg-4 mb-4">
-        <div class="card text-center p-5">
+        <div class="card text-center p-4">
             <h5 class="card-title">Mr/ Mis . {{ user_name }}</h5>
             <br />
             <h6 class="card-subtitle mb-2">
                 Dr {{ doctor_name }}
             </h6>
             <br />
+            <h6 class="card-subtitle mb-2">
+                Department: {{ department }}
+            </h6>
+            <br />
             <p class="card-text">
-                <strong>Address:{{ user_address }} </strong>
+                <strong>Address: {{ user_address }} </strong>
             </p>
             <br />
             <p class="card-text">
-                <strong>Booking Time:{{ booking_time }} </strong>
+                <strong>Booking Time: {{ booking_time }} </strong>
             </p>
             <br />
             <p class="card-text text-danger">
                 <strong>Doctor Charge:  {{ doctor_charge }} </strong>
             </p>
             <br />
-            <form action="{% url 'booking_success' %}" method="post">
+            <form action="{% url 'booking_success' %}" method="post" id="paying">
                 {% csrf_token %}
+                <a href="{% url 'booking' %}" class="btn btn-secondary custom-btn">Cancel</a> &nbsp;
                 <button type="submit" id="rzp-button1" class="btn btn-success">Pay</button>
             </form>
         </div>
@@ -69,33 +74,37 @@
 <!-- JS Links -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-    var options = {
-        key: '{{api_key}}', // Enter the Key ID generated from the Dashboard
-        amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: "INR",
-        name: "M-CARE CLINIC", //your business name
-        description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: '{{order_id}}', //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
-        prefill: {
-            //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-            name: "Gaurav Kumar", //your customer's name
-            email: "gaurav.kumar@example.com",
-            contact: "9000090000", //Provide the customer's phone number for better conversion rates
-        },
-        notes: {
-            address: "Razorpay Corporate Office",
-        },
-        theme: {
-            color: "#3399cc",
-        },
+    bookingform = document.getElementById('paying')
+    let options = {
+      "key": "{{ api_key }}",
+      "name": "M-CARE CLINIC",
+      "description": "Test Transaction",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVf1cxyBQAmtMjPaOYN6rkIOsVSku6LmYPgA&s",
+      "order_id": "{{ order_id }}", 
+      "handler": function (response){
+      alert(response.razorpay_payment_id);
+      alert(response.razorpay_order_id);
+      alert(response.razorpay_signature);
+      bookingform.submit();
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
     };
-    var rzp1 = new Razorpay(options);
-    document.getElementById("rzp-button1").onclick = function (e) {
-        rzp1.open();
-        e.preventDefault();
-    };
+    let rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+      rzp1.open();
+      e.preventDefault();
+    }
 </script>
 
 

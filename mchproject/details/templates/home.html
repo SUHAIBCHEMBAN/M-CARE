@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>M-CARE Multi National Clinic</title>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -12,11 +12,15 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-    <link rel="icon" type="image/png" href="{% static 'image/M CARE.jfif' %}" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{% static 'image/M-CARE logo.png' %}"
+    />
     <style>
       body {
         background-color: #f7f7fa;
-        color: blue;
+        /* color: blue; */
       }
 
       .nav-link {
@@ -60,11 +64,12 @@
 
       footer li {
         margin-bottom: 10px;
-        font-weight: bold;
+        {% comment %} font-weight: bold; {% endcomment %}
       }
 
       footer a {
-        color: #333;
+        {% comment %} color: #333; {% endcomment %}
+        color:gray;
         text-decoration: none;
         font-size: 100%;
       }
@@ -83,10 +88,17 @@
 
       .btn {
         border: none;
-        border-radius: none;
-        color: black;
+        border-radius:50px;
+        background-color:rgb(93, 93, 243);
+        color: white;
         font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
           "Lucida Sans", Arial, sans-serif;
+      }
+
+      .btn:hover{
+        color:white;
+        background-color:green;
+        {% comment %} width:50%; {% endcomment %}
       }
 
       /* Responsive adjustments */
@@ -180,9 +192,10 @@
             src="{% static 'image/wall0.jpg' %}"
             class="d-block w-100"
             alt="..."
+            style="height: 500px"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-secondary">
+            <h1 class="text-dark">
               "Empowering Health, Enriching Lives: M-Care Hospital, where every
               heartbeat matters and every smile counts."
             </h1>
@@ -193,9 +206,10 @@
             src="{% static 'image/wall1.jpg' %}"
             class="d-block w-100"
             alt="..."
+            style="height: 500px"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-secondary">
+            <h1 class="text-dark">
               "At M-Care Hospital, we're not just treating patients; we're
               nurturing hope and healing every step of the way."
             </h1>
@@ -206,9 +220,10 @@
             src="{% static 'image/wall2.jpg' %}"
             class="d-block w-100"
             alt="..."
+            style="height: 500px"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-secondary">
+            <h1 class="text-dark">
               "Compassionate Care, Trusted Excellence: M-Care Hospital, where
               your well-being is our priority, always."
             </h1>
@@ -224,10 +239,10 @@
           <div class="card align-center">
             <img src="{% static "/image/doc.jpg" %}" class="card-img-top"
             alt="...">
-            <div class="card-body">
+            <div class="card-body text-center">
               <h5 class="card-title">Our Doctors</h5>
               <p class="card-text">Our specialized doctors are available</p>
-              <a href="{% url 'doctors' %}" class="btn btn-primary"
+              <a href="{% url 'doctors' %}" class="btn"
                 >Find Doctor</a
               >
             </div>
@@ -238,10 +253,10 @@
           <div class="card">
             <img src="{% static "/image/bookinglogo.jpg" %}"
             class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class="card-body text-center">
               <h5 class="card-title">Appointment</h5>
               <p class="card-text">Schedule your appointment now.</p>
-              <a href="{% url 'booking' %}" class="btn btn-primary">Book Now</a>
+              <a href="{% url 'booking' %}" class="btn">Book Now</a>
             </div>
           </div>
         </div>
@@ -250,10 +265,10 @@
           <div class="card">
             <img src="{% static "/image/locations.jpg" %}" class="card-img-top "
             alt="..." >
-            <div class="card-body">
+            <div class="card-body text-center">
               <h5 class="card-title">Our Locations</h5>
               <p class="card-text">Click and Find the M-CARE Near You</p>
-              <a href="#loc" class="btn btn-primary">Find Location</a>
+              <a href="#loc" class="btn">Find Location</a>
             </div>
           </div>
         </div>
