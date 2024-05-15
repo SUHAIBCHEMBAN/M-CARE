@@ -9,122 +9,211 @@
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
         body {
-            background-color: #f7f7fb;
-            color:blue;
+          background-color: #f7f7fa;
+          color:#008080;
         }
+  
         
-        .nav-link {
-            font-size: 1.1rem;
-        }
+      .nav-link {
+        font-size: 1.2rem;
+        color: #fff;
+        text-decoration: none; 
+        position: relative; 
+        transition: color 0.3s; 
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #fff; 
+        transition: width 0.3s; 
+    }
+    
+    .nav-link:hover {
+        color: #fff; 
+    }
+    .nav-link:hover::after {
+        width: 100%; 
+    }
+  
         .card {
-            border: none;
-            margin: 10px;
-            padding: 20px;
+          border:solid 0.1px #0002;
+          border-radius:5px;
+          box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
         }
-        
+  
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-            transition: transform 0.3s;
+          transform: translateY(-5px);
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s;
         }
-        
+  
         .card-title {
-            color: #063C5B;
-            font-size: 1.2rem; 
-            font-weight: bold; 
+          font-size: 1.2rem;
+          font-weight: bold;
         }
-        
+  
         .card-text {
-            font-size: 1rem;
-            color: #6c757d;
+          font-size: 1rem;
+          color: #008080;
         }
-
-        .btn-cancel {
-            background-color: #dc3545;
-            border-color: #dc3545;
+        .card img {
+          object-fit: cover;
         }
-        .btn-cancel:hover {
-            background-color: #c82333;
-            border-color: #bd2130;
-        }
-
         footer {
-            background-color: #f8f9fa; 
+          background-color: #f8f9fa;
         }
-        
+  
         footer h3 {
-            font-weight: bold;
-        } 
-        
-        footer ul{
-            padding-left:5%; 
-            list-style-type: none;
+          color:#008080;
         }
-        
+  
+        footer ul {
+          padding-left: 5%;
+          list-style-type: none;
+        }
+  
         footer li {
-            margin-bottom: 10px;
-            font-weight: bold; 
+          margin-bottom: 10px;
         }
-        
+  
         footer a {
-            color: #333; 
-            text-decoration: none;
-            font-size:100%;
+          color:gray;
+          text-decoration: none;
+          font-size: 100%;
         }
-        
+  
         footer a:hover {
-            color: #000;
-            text-decoration:none;
+          color: #000;
+          text-decoration: none;
         }
-        
-        .footer1 {
-            background-color:#063C5B;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
+  
+        footer {
+          background-color:#008080;
+          color: white;
+          padding: 20px 0;
+          text-align: center;
         }
-    </style>
+  
+        .btn {
+          border: none;
+          border-radius:50px;
+          background-color:#008080;
+          color: white;
+          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+            "Lucida Sans", Arial, sans-serif;
+        }
+        #top{
+          background-color:#fff;
+          color:#008080;
+        }
+  
+        .btn:hover{
+          color:#008080;
+          background-color:white;
+          border:solid 1px #008080;
+          width: 40%;
+        }
+  
+        .bg-dark-opacity {
+          background-color: rgba(0, 0, 0, 0.5); 
+          padding: 10px;
+          border-radius: 10px; 
+      }
+      .btn-cancel {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    .btn-cancel:hover {
+        border-color: #bd2130;
+        color:#dc3545;
+    }
+        @media (max-width: 767px) {
+          .navbar-brand {
+            font-size: 1.2rem;
+          }
+  
+          .nav-link {
+            font-size: 1rem;
+          }
+  
+          .card {
+            margin-bottom: 20px;
+          }
+        }
+      </style>
 </head>
 <body> 
 
-    <!-------------Navbar------------------> 
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container border-bottom p-4">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <h1>M-CARE</h1> 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-                    </li>
-                </ul>
-                <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
-            </div>
+    <!-------------Navbar------------------>
+    <nav class="navbar navbar-expand-lg  sticky-top" style="height:6rem; background-color:#008080;">
+        <div class="container">
+          <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color:#fff"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+              </li>
+            </ul>
+            <a class="btn btn-primary ml-3" href="{% url 'booking' %}" id="top"
+              >Make an Appointment</a>
+            </ul>
+          </div>
         </div>
-    </nav>
+     
+  
+        {% if user.userprofile.profile_picture %}
+        <a
+          class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center"
+          href="{% url 'profile' %}"
+          style="width: 40px; height: 40px"
+        >
+          <img
+            src="{{ user.userprofile.profile_picture.url }}"
+            class="rounded-circle"
+            style="width: 40px; height: 40px"
+          />
+        </a>
+        {% else %}
+        <a Hi,Guest
+        class="btn btn-light rounded-circle d-flex justify-content-center align-items-center"
+           href="{% url 'profile' %}"
+           style="width: 40px; height: 40px"
+        > 
+          <img
+            src="{% static 'image/user.jpg' %}"
+            class="rounded-circle"
+            style="width: 40px; height: 40px"
+          /> 
+        </a> 
+        {% endif %}
+      </nav> 
 
     <!------------------user booking details----------------------> 
 
-    <h2 class='text-center mt-4 text-dark'>Booking Details</h2>
-    <div class="container p-4 d-flex flex-wrap justify-content-center border-bottom">
+    <h2 class='text-center mt-3 ' >Booking Details</h2>
+    <div class="container  mt-5  d-flex flex-wrap justify-content-center border-bottom">
         {% for booking in bookings %}
         <div class="col-lg-4 mb-4">
-            <div class="card">
-                <h5 class="card-title">{{ booking.name }}</h5>
-                <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6>
-                <p class="card-text"><strong>Address:{{ booking.address }}</strong></p>
-                <p class="card-text"><strong>Booking Time: {{ booking.booking_time }}</strong></p>
+            <div class="card text-center p-5">
+                <h5 class="card-title">{{ booking.name }}</h5> <br>
+                <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6> <br>
+                <p class="card-text"><strong>Address:{{ booking.address }}</strong></p> <br>
+                <p class="card-text"><strong>Booking Time: {{ booking.booking_time }}</strong></p> <br>
+                <p class="card-text text-success"><i>{{ booking.status }}</i></p><br>
                 <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm">Cancel</a>  
             </div>
         </div>
@@ -198,7 +287,7 @@
         </div>
     </footer>
 
-    <footer class="bg-primary py-3  text-white text-center">
+    <footer class="py-3  text-white text-center">
         <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
     </footer>
     

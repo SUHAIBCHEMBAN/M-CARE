@@ -23,13 +23,14 @@ def user_login(request):
         return redirect('booking')
     
     if request.method == 'POST':
+        print("Form submitted!")  # Add this line for debugging
         email = request.POST.get('email')
         request.session['email'] = email
         username = request.POST.get('username')
         
         user = get_user_model().objects.filter(email=email).first()
         if user:
-            otp = ''.join(random.choices('0123456789', k=6))
+            otp = ''.join(random.choices('0123456789', k=4))
             request.session['otp'] = otp
             mail_subject = 'M-CARE HOSPITAL'
             message = f'Your OTP is: {otp}'

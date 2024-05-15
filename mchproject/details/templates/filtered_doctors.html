@@ -10,42 +10,50 @@
     <style>
         body {
             background-color: #f7f7fa;
-            font-family: Arial, sans-serif;
-        }
+            color:#008080;
+          }
+    
         
-        .card {
-            border: none;
-        }
-        
-        .card:hover {
+          .card {
+            border:solid 0.1px #0002;
+            border-radius:5px;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+          }
+    
+          .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
-        }
-        
-        .card-title {
-            font-size: 1.2rem; 
-            font-weight: bold; 
-        }
-        
-        .card-text {
+          }
+    
+          .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+    
+          .card-text {
             font-size: 1rem;
-            color: #6c757d;
-        }
-        .card img {
-            object-fit:cover;
-        }
+            color: #008080;
+          }
+          .card img {
+            object-fit: cover;
+          }
         
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }    
+          .btn {
+            border: none;
+            border-radius:50px;
+            background-color:#008080;
+            color: white;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+              "Lucida Sans", Arial, sans-serif;
+          }   
+
+          .btn:hover{
+            color:#008080;
+            background-color:white;
+            border:solid 1px #008080;
+            width: 50%;
+          }
 
         @media (max-width: 768px) {
             .card {
@@ -68,8 +76,9 @@
                         <p class="card-text text-center">{{ doctor.department }} Department</p>
                         <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
                         <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
-                        <div class="text-center">
-                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
+                        <div class="text-center justify-content-center">
+                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>&nbsp;
+                            <a href="{% url 'finddoctor' %}" class="btn btn-primary">Close</a>
                         </div>
                     </div>
                 </div>
@@ -79,17 +88,13 @@
     </div>
 
     {% if message %}
-    <h4 class="text-center text-danger">{{ message }}</h4>
+    <h4 class="text-center text-danger">{{ message }}</h4><br>
+    <div class="row justify-content-center">
+            <a href="{% url 'finddoctor' %}" class="btn btn-primary w-25">Close</a>
+    </div>
     {% endif %}
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <a href="{% url 'finddoctor' %}" class="btn btn-primary mt-4 mb-3">Close</a>
-            </div>
-        </div>
-    </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     </body>

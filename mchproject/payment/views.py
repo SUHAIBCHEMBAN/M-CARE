@@ -4,6 +4,7 @@ from details.models import Booking, Doctor
 from mchproject.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
 import razorpay
 from constants import *
+from django.contrib import messages
 
 
 def doctor_payment(request):
@@ -24,16 +25,15 @@ def doctor_payment(request):
     booking_data = request.session.get('booking_data')
     if not booking_data:
         return redirect('booking')
-
+    
     try:
         # Extract necessary booking details
-        booking_time = datetime.strptime(booking_data['booking_time'], '%H:%M').time()
         doctor_id = booking_data['doctor_id']
         doctor = Doctor.objects.get(id=doctor_id)
         doctor_name = doctor.name
         doctor_charge = doctor.charge
         department = doctor.department
-
+        time = booking_data.get('selected_time')
         user_name = booking_data.get('name')
         user_address = booking_data.get('address')
     except (ValueError, Doctor.DoesNotExist) as e:
@@ -58,7 +58,7 @@ def doctor_payment(request):
     except Exception as e:
         # Handle exceptions related to payment processing
         error_message = PAYMENT_PROCESS
-        return render(request, 'error.html', {'error_message': error_message})
+        return render(request, 'payment.html', {'error_message': error_message})
 
     # Prepare context for rendering payment page
     context = {
@@ -68,7 +68,7 @@ def doctor_payment(request):
         'doctor_charge': doctor_charge,
         'user_name': user_name,
         'user_address': user_address,
-        'booking_time': booking_time,
+        'booking_time': time,
         'department':department,
     }
     return render(request, 'payment.html', context)
@@ -93,17 +93,20 @@ def booking_success(request):
         return redirect('booking')
 
     # Create booking entry in the database
-    booking_time = datetime.strptime(booking_data['booking_time'], '%H:%M').time()
+    booking_time = datetime.strptime(booking_data['selected_time'], '%I:%M %p').time()
     doctor = Doctor.objects.get(id=booking_data['doctor_id'])
     booking = Booking.objects.create(
         name=booking_data['name'],
         address=booking_data['address'],
         doctor=doctor,
         booking_time=booking_time,
-        user=request.user
+        user=request.user,
+        status = 'Success'
     )
 
     # Remove booking data from session
     del request.session['booking_data']
-
-    return render(request, 'booking_success.html', {'booking': booking})
+    
+    messages.success(request, "Your Booking Successfully Made")
+    return redirect('booking')
+    # return render(request, 'booking.html')

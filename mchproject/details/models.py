@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import time
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 
@@ -71,15 +73,21 @@ class Booking(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=150)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    booking_time = models.TimeField(verbose_name="Booking Time")
+    booking_time = models.TimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # status = models.CharField(max_length=50,default='Pending')
+    STATUS_CHOICES = (
+        ('Pending','Pending'),
+        ('Success','Success'),
+        ('Visited','Visited'),
+    )
+    status = models.CharField(max_length=50,choices=STATUS_CHOICES,default='Pending')
+
 
     def __str__(self):
         """
         String for representing the Model object (booking name, doctor name, and booking time).
         """
-        return f"{self.name} - {self.doctor.name} - {self.booking_time}"  
+        return f"{self.name} - {self.doctor.name}"  
 
 
 class Hospital(models.Model):

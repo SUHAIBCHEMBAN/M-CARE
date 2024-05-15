@@ -1,6 +1,8 @@
-import json
+# import json
 from constants import *
-from datetime import datetime
+# from datetime import datetime
+# from django import forms
+from utils import *
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
@@ -26,7 +28,6 @@ def home(request):
     return render(request, 'home.html',{'user': user})
 
 # this my doctors views function
-@never_cache
 def doctors(request):
     """
     View function for displaying a list of doctors.
@@ -40,13 +41,12 @@ def doctors(request):
     doctors = cache.get('doctors_cache')  # Check if doctors data is cached
     if not doctors:
         # If data is not cached, retrieve from database and cache it
-        doctors = Doctor.objects.all()
-        cache.set('doctors_cache',doctors,timeout=120) # Cache for 2 minutes (120 seconds)
+        doctors = Doctor.objects.prefetch_related('location', 'department','location__country').all()
+        cache.set('doctors_cache', doctors, timeout=60)  # Cache indefinitely since doctor details might rarely change
     return render(request, 'doctor.html', {'doctors': doctors})
 
 
 # this my find_doctor views function
-@never_cache
 def find_doctor(request):   
     """
     View function to find doctors based on location and department.
@@ -102,7 +102,7 @@ def find_doctor(request):
     # If request method is not POST, populate context with locations and departments
     else:
         hospital_id = request.GET.get('hospital_id')
-        locations = Location.objects.all()
+        # locations = Location.objects.prefetch_related('name','country').all()
         selected_location = None
         if hospital_id:
             try:
@@ -113,17 +113,17 @@ def find_doctor(request):
                 return render(request, 'finddoctor.html', {'error_message': error_message})
 
         context = {
-            'locations': Location.objects.all(),  
+            'locations': Location.objects.prefetch_related('country').all(),  
             'selected_location': selected_location,
             'departments': Department.objects.all()  
         }
     
-    # Render template with context
+    # Render template with context  
     return render(request, 'finddoctor.html', context)
-    
+
+
 
 # this user booking views.py function
-@never_cache
 def booking(request):
     """
     View function to handle the booking process.
@@ -141,76 +141,70 @@ def booking(request):
     Returns:
         Renders the booking form with doctors or error message based on validation results.
     """
+
     if request.user.is_authenticated:
         if request.method == 'POST':
+            # Handle form submission
             name = request.POST.get('name')
             address = request.POST.get('address')
             doctor_id = request.POST.get('doctor')
-            booking_time_str = request.POST.get('booking_time')
-            
-            # check if the selected time a validtime format or not 
-            try:
-                booking_time = datetime.strptime(booking_time_str, '%H:%M').time()
+            morning_choice = request.POST.get('morning_choice')
+            noon_choice = request.POST.get('noon_choice')
 
-            # check if the user selected time a even number time or not 
-                if booking_time.minute % 2 == 1:
-                    error_message = CORROCT_TIME
-                    return render(request, 'booking.html', {'error_message': error_message})
-            except ValueError:
-                error_message = INVALID_TIME_FORMAT_ERROR
-                return render(request, 'booking.html', {'error_message': error_message})
-        
+            selected_time = morning_choice if morning_choice else noon_choice
+
             doctor = Doctor.objects.get(id=doctor_id)
-        
-            # Check if the selected time is within the doctor's working hours
-            if not (doctor.start_time <= booking_time <= doctor.end_time):
-                error_message = DOCTOR_WORKING_HOURS_ERROR.format(start_time=doctor.start_time, end_time=doctor.end_time)
-                return render(request, 'booking.html', {'error_message': error_message})
-        
-            # Check if the doctor is already booked at the selected time
-            existing_booking = Booking.objects.filter(doctor=doctor, booking_time=booking_time).exists()
+            
+            if not (morning_choice and noon_choice):
+                if morning_choice:
+                    noon_choice = None
+                elif noon_choice:
+                    morning_choice = None
+
+            selected_time = convert_to_time(selected_time)
+
+            existing_booking = Booking.objects.filter(doctor_id=doctor_id, booking_time=selected_time).exists()
             if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
                 return render(request, 'booking.html', {'error_message': error_message})
-        
-            # Check if the doctor has available slots for booking
+
             available_slot = doctor.slot
             total_bookings = Booking.objects.filter(doctor=doctor).count()
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
                 return render(request, 'booking.html', {'error_message': error_message})
+            
+            selected_time_str = convert_to_string(selected_time)
 
-            # If everything is fine, create the booking
-            # booking = Booking.objects.create(name=name, address=address, doctor=doctor, booking_time=booking_time, user=request.user)
-            # booking.save()
-
-            # Store booking data in session for payment processing
             request.session['booking_data'] = {
                 'name': name,
                 'address': address,
                 'doctor_id': doctor_id,
-                'booking_time': booking_time_str,
+                'selected_time':selected_time_str,
             }
-
             return redirect('payment_page')
-    
         else:
+            # Handle initial GET request
             doctor_id = request.GET.get('doctor_id')
-            doctors = Doctor.objects.all()
+            doctors = Doctor.objects.prefetch_related('department', 'location', 'location__country').all()
             selected_doctor = None
             if doctor_id:
+                # If doctor_id is provided, attempt to get the doctor
                 try:
                     selected_doctor = Doctor.objects.get(id=doctor_id)
                 except Doctor.DoesNotExist:
                     error_message = DOCTOR_NOT
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
-            return render(request, 'booking.html', {'doctors': doctors, 'selected_doctor': selected_doctor})
+                
+            morning_choices = generate_time_choices(9, 12)
+            noon_choices = generate_time_choices(15, 20)
+            return render(request, 'booking.html', {'doctors': doctors, 'morning_choices': morning_choices, 'noon_choices': noon_choices,'selected_doctor': selected_doctor})
     else:
+        # Redirect unauthenticated users to the login page
         return redirect('login')
 
 
 # this aboutus veiws.py function
-@never_cache
 def aboutus(request):
     """
     View to render the about us page.
@@ -227,7 +221,6 @@ def aboutus(request):
 
 
 # this is booking_details views.py function
-@never_cache
 def booking_details(request):
 
     """
@@ -251,7 +244,6 @@ def booking_details(request):
 
 
 # this is cancel_booking vews.py function
-@never_cache
 def cancel_booking(request,booking_id):
 
     """
@@ -287,7 +279,7 @@ def indian(request):
         HttpResponse: The HTTP response containing the rendered template with the list of Indian hospitals.
     """
     india = Countries.objects.get(name='India')
-    indian_hospitals = Hospital.objects.filter(country=india)
+    indian_hospitals = Hospital.objects.filter(country=india).select_related('country','location')
     return render(request, 'indian_hospital_list.html', {'indian_hospitals': indian_hospitals})
 
 
@@ -305,7 +297,7 @@ def uae(request):
         HttpResponse: The HTTP response containing the rendered template with the list of UAE hospitals.
     """
     uae = Countries.objects.get(name='UAE')
-    uae_hospitals = Hospital.objects.filter(country=uae)
+    uae_hospitals = Hospital.objects.filter(country=uae).select_related('location','country')
     return render(request, 'abudhabi_hospital_list.html', {'uae_hospitals': uae_hospitals})
 
 
@@ -323,7 +315,7 @@ def canada(request):
         HttpResponse: The HTTP response containing the rendered template with the list of Canadian hospitals.
     """
     canada = Countries.objects.get(name='Canada')
-    canada_hospitals = Hospital.objects.filter(country=canada)
+    canada_hospitals = Hospital.objects.filter(country=canada).select_related('location','country')
     return render(request, 'canada_hospital_list.html', {'canada_hospitals': canada_hospitals})
 
 # this json get view function

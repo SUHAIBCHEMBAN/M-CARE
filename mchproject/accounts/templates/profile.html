@@ -49,21 +49,21 @@
             display:none;
          }
  
-         button[type="submit"] {
+         {% comment %} button[type="submit"] {
              background-color: #fff;
              color: #000;
              border:solid 1px green;
              padding: 5px 5px;
              border-radius: 4px;
              cursor: pointer;
-         }
+         } {% endcomment %}
 
         .buttons-container {
             display: flex;
             justify-content: center;
         }
         
-        .custom-btn {
+        {% comment %} .custom-btn {
             background-color: white;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
             color: #333;
@@ -72,21 +72,40 @@
         
         .custom-btn:last-child {
             margin-right: 0;
-        }
+        } {% endcomment %}
 
-        .premium-input {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width:60%;
-            padding: 10px;
-            box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 0.3s ease; 
+        .form__input{
+            width: 50%;
+            border:0px solid transparent;
+            border-radius: 0;
+            border-bottom: 1px solid #aaa;
+            padding: 1em .5em .5em;
+            padding-left: 2em;
+            outline:none;
+            margin:1.5em auto;
+            transition: all .5s ease;
+        }
+        .form__input:focus{
+            border-bottom-color: #008080;
+            box-shadow: 0 0 5px rgba(0,80,80,.4); 
+            border-radius: 4px;
         }
         
-        .premium-input:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
+        .btn {
+            border: none;
+            border-radius:50px;
+            background-color:#008080;
+            color: white;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+              "Lucida Sans", Arial, sans-serif;
+          }
+    
+          .btn:hover{
+            color:#008080;
+            background-color:white;
+            border:solid 1px #008080;
+            width: 30%;
+          }
         
      </style>
  </head>
@@ -102,24 +121,21 @@
                 {% csrf_token %}
                 <label for="profile_picture" class="text-center"><strong>Edit</strong></label>
                 <input  type="file"  name="profile_picture" id="profile_picture">
-                <button type="submit" class="btn-success custom-btn">Upload</button>
+                <button type="submit" class="btn">Upload</button>
             </form>
             <form method="post" class="mt-3">
                 {% csrf_token %}
                 <label for="username" class="text-center"><strong>Edit Username</strong></label>
-                <input type="text" name="username" id="username" value="{{ user.username }}" class="premium-input">
-                <button type="submit" class="btn-success custom-btn">Update</button>
+                <input type="text" name="username" id="username" value="{{ user.username }}" class=" form__input">
+                <button type="submit" class="btn">Update</button>
             </form>
                 <div class="buttons-container d-flex">
-                    <a href="{% url 'add_login' %}" class="btn btn-success custom-btn">+ Add</a> &nbsp;
-                    <a href="{% url 'logout' %}" class="btn btn-danger custom-btn">Logout</a> &nbsp;
-                    <a href="{% url 'booking_details' %}" class="btn btn-primary custom-btn">View</a>&nbsp;
-                    <a href="{% url 'home' %}" class="btn btn-secondary custom-btn">Close</a>
+                    <a href="{% url 'add_login' %}" class="btn ">+ Add</a> &nbsp;
+                    <a href="{% url 'logout' %}" class="btn ">Logout</a> &nbsp;
+                    <a href="{% url 'booking_details' %}" class="btn ">View</a>&nbsp;
+                    <a href="{% url 'home' %}" class="btn">Close</a>
                 </div>
         </div>
-    {% else %}
-        <p>Please login to view your profile.</p>
-        <a href="{% url 'login' %}">Login</a>
     {% endif %}
 
     <!-------js link------>

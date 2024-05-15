@@ -8,45 +8,64 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
-        body {
-            background-color: #f7f7fb;
-            color:blue;
-        }
-        
-        .nav-link {
-            font-size: 1.1rem;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .card-title {
-            color: #063C5B;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .card-subtitle {
-            color: #6c757d;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-        .card-text {
-            color: #495057;
-            margin-bottom: 15px;
-        }
-        footer {
+        body{
+            background-color: #f7f7fa;
+            color:#008080;
+          }
+    
+          
+      .nav-link {
+        font-size: 1.2rem;
+        color: #fff;
+        text-decoration: none; 
+        position: relative; 
+        transition: color 0.3s; 
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #fff; 
+        transition: width 0.3s; 
+    }
+    
+    .nav-link:hover {
+        color: #fff; 
+    }
+    .nav-link:hover::after {
+        width: 100%; 
+    }
+
+          #top{
+            background-color:#fff;
+            color:#008080;
+          }
+
+          .btn {
+            border: none;
+            border-radius:50px;
+            background-color:#008080;
+            color: white;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+              "Lucida Sans", Arial, sans-serif;
+          }
+    
+          .btn:hover{
+            color:#008080;
+            background-color:white;
+            border:solid 1px #008080;
+            width: 40%;
+          }  
+          footer {
             background-color: #f8f9fa; 
         }
         
         footer h3 {
-            font-weight: bold;
+            color:#008080;
         } 
         
         footer ul{
@@ -56,11 +75,10 @@
         
         footer li {
             margin-bottom: 10px; 
-            font-weight:bold;
         }
         
         footer a {
-            color: #333; 
+            color: gray; 
             text-decoration: none;
             font-size:100%;
         }
@@ -69,52 +87,114 @@
             color: #000;
             text-decoration:none;
         }
-        
-        .footer1 {
-            background-color:#063C5B;
+
+        footer {
+            background-color:#008080;
             color: white;
             padding: 20px 0;
             text-align: center;
         }
-    </style>   
+
+        @media (max-width: 767px) {
+            .navbar-brand {
+                font-size: 1.2rem; 
+            }
+        
+            .nav-link {
+                font-size: 1rem;
+            }
+        }
+        .card {
+            border:solid 0.1px #0002;
+            border-radius:5px;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+          }
+    
+          .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+          }
+    
+          .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color:#008080;
+          }
+    
+          .card-text {
+            font-size: 1rem;
+            color: #008080;
+          }
+          .card img {
+            object-fit: cover;
+          }
+    </style>  
 </head>
 <body>
 
-    <!-------------Navbar------------------> 
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container border-bottom p-4">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <h1>M-CARE</h1> 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-                    </li>
-                </ul>
-                <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
-            </div>
+    <!-------------Navbar------------------>
+    <nav class="navbar navbar-expand-lg sticky-top" style="height:6rem; background-color:#008080">
+        <div class="container">
+          <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color:#fff"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+              </li>
+            </ul>
+            <a class="btn btn-primary ml-3" href="{% url 'booking' %}" id="top"
+              >Make an Appointment</a>
+            </ul>
+          </div>
         </div>
-    </nav>
+     
+  
+        {% if user.userprofile.profile_picture %}
+        <a
+          class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center"
+          href="{% url 'profile' %}"
+          style="width: 40px; height: 40px"
+        >
+          <img
+            src="{{ user.userprofile.profile_picture.url }}"
+            class="rounded-circle"
+            style="width: 40px; height: 40px"
+          />
+        </a>
+        {% else %}
+        <a Hi,Guest
+        class="btn btn-light rounded-circle d-flex justify-content-center align-items-center"
+           href="{% url 'profile' %}"
+           style="width: 40px; height: 40px"
+        > 
+          <img
+            src="{% static 'image/user.jpg' %}"
+            class="rounded-circle"
+            style="width: 40px; height: 40px"
+          /> 
+        </a> 
+        {% endif %}
+      </nav> 
     <h2 class='text-center m-5'>M-CARE in Canada</h2>
 
     <!-------------Details------------------>
 
     
-    <div class="container p-2 d-flex border-bottom">
+    <div class="container p-2  border-bottom d-flex flex-row flex-wrap mt-4">
         {% for hospital in canada_hospitals %}
         <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card text-center" style="width: 18rem;">
             <img src="{{hospital.image.url}}" class="card-img-top" alt="Somthing Went Wrong" style="height: 10rem;">
             <div class="card-body">
               <h5 class="card-title">M-CARE</h5>
@@ -194,7 +274,7 @@
         </div>
     </footer>
   
-    <footer class="bg-primary py-3  text-white text-center">
+    <footer class=" py-3  text-white text-center">
         <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
     </footer>
 

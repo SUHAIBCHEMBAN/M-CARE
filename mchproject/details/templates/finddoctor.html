@@ -9,20 +9,64 @@
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
         body {
-            background-color: #f7f7fb;
-            color:blue;
-        }
-        
-        .nav-link {
-            font-size: 1.1rem;
-        }
+            background-color: #f7f7fa;
+            color:#008080;
+          }
+    
+          
+      .nav-link {
+        font-size: 1.2rem;
+        color: #fff;
+        text-decoration: none; 
+        position: relative; 
+        transition: color 0.3s; 
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #fff; 
+        transition: width 0.3s; 
+    }
+    
+    .nav-link:hover {
+        color: #fff; 
+    }
+    .nav-link:hover::after {
+        width: 100%; 
+    }
+
+          #top{
+            background-color:#fff;
+            color:#008080;
+          }
+
+          .btn {
+            border: none;
+            border-radius:50px;
+            background-color:#008080;
+            color: white;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+              "Lucida Sans", Arial, sans-serif;
+          }
+    
+          .btn:hover{
+            color:#008080;
+            background-color:white;
+            border:solid 1px #008080;
+            width: 40%;
+          }
         
         footer {
             background-color: #f8f9fa; 
         }
         
         footer h3 {
-            font-weight: bold;
+            color:#008080;
         } 
         
         footer ul{
@@ -32,11 +76,10 @@
         
         footer li {
             margin-bottom: 10px; 
-            font-weight:bold;
         }
         
         footer a {
-            color: #333; 
+            color: gray; 
             text-decoration: none;
             font-size:100%;
         }
@@ -46,8 +89,8 @@
             text-decoration:none;
         }
         
-        .footer1 {
-            background-color:#063C5B;
+        footer {
+            background-color:#008080;
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -57,7 +100,7 @@
             margin-bottom: 10px; 
             display: block; 
             font-weight: 600;
-            color: #063C5B; /* Label color */
+            color: #008080; 
         }
 
         select, input {
@@ -66,53 +109,90 @@
             font-size: 16px; 
             font-weight: 500;
             border-radius: 5px; 
-            border: 1px solid #ccc; /* Border color */
+            border: 1px solid #ccc; 
             box-sizing: border-box; 
             margin-top: 5px;
         }
 
         input[type="submit"] {
-            background-color: #063C5B;
-            color: #fff; /* Text color */
+            background-color:#008080;
+            color: #fff;
+            border-radius:50px;
             cursor: pointer;
         }
 
         input[type="submit"]:hover {
-            background-color: #042c41;
+            background-color: #008080;
+            width:100%;
+        }
+
+        .bg-dark-opacity {
+            background-color: rgba(0.1, 0, 0, 0.4); 
+            padding: 10px;
+            border-radius: 10px; 
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container border-bottom p-4">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <h1>M-CARE</h1> 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'finddoctor' %}">Find a Doctor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-                    </li>
-                </ul>
-                <a class="btn btn-primary ml-3" href="{% url 'booking' %}">Make an Appointment</a>
-            </div>
-        </div> 
-    </nav>
+    <!-------------Navbar------------------>
+    <nav class="navbar navbar-expand-lg sticky-top" style="height:6rem; background-color:#008080;">
+        <div class="container">
+          <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color:#fff"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+              </li>
+            </ul>
+            <a class="btn btn-primary ml-3" href="{% url 'booking' %}" id="top"
+              >Make an Appointment</a>
+            </ul>
+          </div>
+        </div>
+    
 
-    <div class="container text-center p-5 border-bottom border-1">
-        <h1 class="text-dark">Find a Doctor</h1>
-        <h5>Our find a doctor tool assists you in choosing from our diverse pool of health specialists. Discover better health & wellness by using our doctor ratings & reviews to make your choice.</h5>
+        {% if user.userprofile.profile_picture %}
+      <a
+        class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center"
+        href="{% url 'profile' %}"
+        style="width: 40px; height: 40px"
+      >
+        <img
+          src="{{ user.userprofile.profile_picture.url }}"
+          class="rounded-circle"
+          style="width: 40px; height: 40px"
+        />
+      </a>
+      {% else %}
+      <a Hi,Guest
+      class="btn btn-light rounded-circle d-flex justify-content-center align-items-center"
+         href="{% url 'profile' %}"
+         style="width: 40px; height: 40px"
+      > 
+        <img
+          src="{% static 'image/user.jpg' %}"
+          class="rounded-circle"
+          style="width: 40px; height: 40px"
+        /> 
+      </a> 
+      {% endif %}
+    </nav> 
+
+    <div class="container text-center p-3  text-light bg-dark-opacity mt-5">
+        <h1 class="text-light">Find a Doctor</h1>
+        <h5 class="text-light">"Our find a doctor tool assists you in choosing from our diverse pool of health specialists. Discover better health & wellness by using our doctor ratings & reviews to make your choice."</h5>
     </div>
     
+
     <div class="container d-flex mt-5">
         <form method="post" class="p-3 w-100">
             {% csrf_token %}
@@ -140,20 +220,20 @@
                     </select>
                 </div>
             </div>
-            <input type="submit" value="Search">
+            <input type="submit" value="Search" class="">
         </form>
     </div>
 
-    <div class="container p-5 border-bottom">
-        <h4>Choosing the right doctor can be difficult. How do you know that you can believe the ratings you see online? 
-        M-Care Clinic is committed to helping you find the right physician for you with ratings you can trust.</h4>
+    <div class="container text-center p-5 border-bottom border-1 text-light bg-dark-opacity"> 
+        <h5>"Choosing the right doctor can be difficult. How do you know that you can believe the ratings you see online? 
+        M-Care Clinic is committed to helping you find the right physician for you with ratings you can trust."</h5>
     </div>
 
 
     <!--------------Footer------------------>
 
-    <footer class="bg-light">
-        <div class="container">
+    <footer class="bg-light p-3">
+        <div class="container border-top">
             <div class="row">
                 <div class="col-md-3">
                     <div class="text-center">
@@ -216,7 +296,7 @@
         </div>
     </footer>
 
-    <footer class="bg-primary py-3  text-white text-center">
+    <footer class="py-3  text-white text-center">
         <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
     </footer>
 
