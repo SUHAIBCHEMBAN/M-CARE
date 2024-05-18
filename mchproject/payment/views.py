@@ -33,6 +33,7 @@ def doctor_payment(request):
         doctor_name = doctor.name
         doctor_charge = doctor.charge
         department = doctor.department
+        booking_date = booking_data.get('booking_date')
         time = booking_data.get('selected_time')
         user_name = booking_data.get('name')
         user_address = booking_data.get('address')
@@ -69,6 +70,7 @@ def doctor_payment(request):
         'user_name': user_name,
         'user_address': user_address,
         'booking_time': time,
+        'booking_date':booking_date,
         'department':department,
     }
     return render(request, 'payment.html', context)
@@ -100,6 +102,7 @@ def booking_success(request):
         address=booking_data['address'],
         doctor=doctor,
         booking_time=booking_time,
+        booking_date=booking_data['booking_date'],
         user=request.user,
         status = 'Success'
     )
@@ -107,6 +110,6 @@ def booking_success(request):
     # Remove booking data from session
     del request.session['booking_data']
     
-    messages.success(request, "Your Booking Successfully Made")
-    return redirect('booking')
-    # return render(request, 'booking.html')
+    message = "Your booking has been successful!"
+    print(message)
+    return render(request, 'booking.html', {'message': message})

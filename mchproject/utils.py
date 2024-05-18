@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def convert_to_string(time_obj):
@@ -22,3 +22,15 @@ def generate_time_choices(start_hour, end_hour):
             time = f"{hour % 12 if hour % 12 != 0 else 12}:{minute:02d} {'pm' if hour >= 12 else 'am'}"
             choices.append((time, time))
     return choices
+
+# def get_available_dates(start_date, end_date):
+#     """
+#     Generate a list of available dates between start_date and end_date, excluding Sundays.
+#     """
+#     available_dates = []
+#     current_date = start_date
+#     while current_date <= end_date:
+#         if current_date.weekday() != 6:  # 6 corresponds to Sunday
+#             available_dates.append(current_date)
+#         current_date += timedelta(days=1)
+#     return available_dates

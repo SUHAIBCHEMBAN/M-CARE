@@ -23,7 +23,6 @@ def user_login(request):
         return redirect('booking')
     
     if request.method == 'POST':
-        print("Form submitted!")  # Add this line for debugging
         email = request.POST.get('email')
         request.session['email'] = email
         username = request.POST.get('username')
@@ -61,27 +60,37 @@ def verify_otp(request):
     if request.method == 'POST':
         # Get entered OTP
         entered_otp = request.POST.get('otp')
-        
         # Get stored OTP from session
         stored_otp = request.session.get('otp')
         
         if entered_otp == stored_otp:
             # OTP matched, remove OTP from session
             del request.session['otp']
-            
             # Authenticate and login user
             email = request.session.get('email')
             user = get_object_or_404(get_user_model(), email=email)
             auth_login(request, user)
-            
+
+
             # Redirect to success page
-            return redirect('success')
+            # return redirect('success')
+            # Set session variable to indicate booking success
+            request.session['booking_success'] = True
+            
+            return redirect('home')
+           
         else:
             # OTP didn't match, render OTP verification page with error
             return render(request, 'otp_verification.html', {'error': 'Invalid OTP'})
     
     return render(request, 'otp_verification.html')
 
+from django.http import JsonResponse
+
+def clear_booking_success(request):
+    if 'booking_success' in request.session:
+        del request.session['booking_success']
+    return JsonResponse({'status': 'success'})
 
 # this my user_logout views function
 @never_cache
@@ -164,3 +173,5 @@ def profile(request):
         return render(request, 'profile.html', {'form': form, 'user': request.user})
     else:
         return render(request, 'profile.html')
+
+

@@ -73,12 +73,14 @@ class Booking(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=150)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    booking_date = models.DateField()
     booking_time = models.TimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     STATUS_CHOICES = (
         ('Pending','Pending'),
         ('Success','Success'),
         ('Visited','Visited'),
+        ('Expired','Expired'),
     )
     status = models.CharField(max_length=50,choices=STATUS_CHOICES,default='Pending')
 

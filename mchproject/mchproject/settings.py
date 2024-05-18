@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'django_flatpickr',
     'accounts',
     'customadmin',
     'details',
     'payment',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -151,5 +155,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 RAZORPAY_API_KEY = 'rzp_test_hzVAqG2EQyxAr2'
 RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
+
+
+# Celery settings
+
+from celery.schedules import crontab
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+CELERY_BEAT_SCHEDULE = {
+    'check_bookings': {
+        'task': 'details.tasks.check_bookings',
+        'schedule': crontab(hour=2, minute=00),  # Run at 02:00 AM IST every day
+    },
+}
+
 
 

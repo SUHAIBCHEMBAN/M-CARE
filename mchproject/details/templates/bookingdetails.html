@@ -5,100 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M-CARE Multi National Clinic | Bookind-Details</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
-        body {
+        body{
           background-color: #f7f7fa;
           color:#008080;
         }
-  
+        .profile {
+          margin-left:10px;
+        }
         
-      .nav-link {
-        font-size: 1.2rem;
-        color: #fff;
-        text-decoration: none; 
-        position: relative; 
-        transition: color 0.3s; 
-    }
-    
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: #fff; 
-        transition: width 0.3s; 
-    }
-    
-    .nav-link:hover {
-        color: #fff; 
-    }
-    .nav-link:hover::after {
-        width: 100%; 
-    }
+    .nav-link {
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none; 
+      position: relative;
+      transition: color 0.3s; 
+  }
   
-        .card {
-          border:solid 0.1px #0002;
-          border-radius:5px;
-          box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
-        }
+  .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #fff; 
+      transition: width 0.3s; 
+  }
   
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s;
-        }
-  
-        .card-title {
-          font-size: 1.2rem;
-          font-weight: bold;
-        }
-  
-        .card-text {
-          font-size: 1rem;
-          color: #008080;
-        }
-        .card img {
-          object-fit: cover;
-        }
-        footer {
-          background-color: #f8f9fa;
-        }
-  
-        footer h3 {
+  .nav-link:hover {
+      color: #fff; 
+  }
+  .nav-link:hover::after {
+      width: 100%; 
+  }
+
+        #top{
+          background-color:#fff;
           color:#008080;
         }
-  
-        footer ul {
-          padding-left: 5%;
-          list-style-type: none;
-        }
-  
-        footer li {
-          margin-bottom: 10px;
-        }
-  
-        footer a {
-          color:gray;
-          text-decoration: none;
-          font-size: 100%;
-        }
-  
-        footer a:hover {
-          color: #000;
-          text-decoration: none;
-        }
-  
-        footer {
-          background-color:#008080;
-          color: white;
-          padding: 20px 0;
-          text-align: center;
-        }
-  
+
         .btn {
           border: none;
           border-radius:50px;
@@ -107,194 +55,222 @@
           font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
             "Lucida Sans", Arial, sans-serif;
         }
-        #top{
-          background-color:#fff;
-          color:#008080;
-        }
   
         .btn:hover{
           color:#008080;
           background-color:white;
           border:solid 1px #008080;
           width: 40%;
-        }
-  
-        .bg-dark-opacity {
-          background-color: rgba(0, 0, 0, 0.5); 
-          padding: 10px;
-          border-radius: 10px; 
+        } 
+        .btn-cancel {
+          background-color: #dc3545;
+          border-color: #dc3545;
       }
-      .btn-cancel {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-    .btn-cancel:hover {
-        border-color: #bd2130;
-        color:#dc3545;
-    }
-        @media (max-width: 767px) {
-          .navbar-brand {
-            font-size: 1.2rem;
-          }
-  
-          .nav-link {
-            font-size: 1rem;
-          }
-  
-          .card {
-            margin-bottom: 20px;
-          }
+      .btn-cancel:hover {
+          border-color: #bd2130;
+          color:#dc3545;
+      } 
+        footer {
+          background-color: #f8f9fa; 
+      }
+      
+      footer h3 {
+          color:#008080;
+      } 
+      
+      footer ul{
+          padding-left:5%; 
+          list-style-type: none;
+      }
+      
+      footer li {
+          margin-bottom: 10px; 
+      }
+      
+      footer a {
+          color: gray; 
+          text-decoration: none;
+          font-size:100%;
+      }
+      
+      footer a:hover {
+          color: #000;
+          text-decoration:none;
+      }
+
+      footer {
+          background-color:#008080;
+          color: white;
+          padding: 20px 0;
+          text-align: center;
+      }
+      @media (max-width:350px){
+        footer{
+          display:none;
         }
+        .l{
+          display:block;
+          font-size:80%;
+        }
+      }
+     @media (max-width:990px){
+      footer{
+        font-size:100%;
+      }
+      #last_footer{
+        display:flex;
+        margin:auto;
+        justify-content:center;
+      }
+    } 
+    .card {
+      border:solid 0.1px #0002;
+      border-radius:5px;
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color:#008080;
+    }
+
+    .card-text {
+      font-size: 1rem;
+      color: #008080;
+    }
+    .card img {
+      object-fit: cover;
+    } 
       </style>
 </head>
 <body> 
 
     <!-------------Navbar------------------>
-    <nav class="navbar navbar-expand-lg  sticky-top" style="height:6rem; background-color:#008080;">
-        <div class="container">
-          <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style="color:#fff"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-              </li>
-            </ul>
-            <a class="btn btn-primary ml-3" href="{% url 'booking' %}" id="top"
-              >Make an Appointment</a>
-            </ul>
-          </div>
-        </div>
-     
-  
-        {% if user.userprofile.profile_picture %}
-        <a
-          class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center"
-          href="{% url 'profile' %}"
-          style="width: 40px; height: 40px"
-        >
-          <img
-            src="{{ user.userprofile.profile_picture.url }}"
-            class="rounded-circle"
-            style="width: 40px; height: 40px"
-          />
-        </a>
-        {% else %}
-        <a Hi,Guest
-        class="btn btn-light rounded-circle d-flex justify-content-center align-items-center"
-           href="{% url 'profile' %}"
-           style="width: 40px; height: 40px"
-        > 
-          <img
-            src="{% static 'image/user.jpg' %}"
-            class="rounded-circle"
-            style="width: 40px; height: 40px"
-          /> 
-        </a> 
-        {% endif %}
-      </nav> 
 
-    <!------------------user booking details----------------------> 
+  <nav class="navbar navbar-expand-lg  sticky-top" style="height:6rem; background-color:#008080;">
+    <div class="container-fluid">
+      <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+          </li>
+        </ul>
+        <a class="btn btn-primary ms-3" href="{% url 'booking' %}" id="top">Make an Appointment</a>
+        <div class="profile">
+        {% if user.userprofile.profile_picture %}
+          <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+        {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px"> 
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" /> 
+          </a> 
+        {% endif %}
+      </div>
+      </div>
+    </div>
+  </nav>
+
+    <!--------user booking details--------> 
 
     <h2 class='text-center mt-3 ' >Booking Details</h2>
     <div class="container  mt-5  d-flex flex-wrap justify-content-center border-bottom">
+      <div class="row">
         {% for booking in bookings %}
-        <div class="col-lg-4 mb-4">
-            <div class="card text-center p-5">
+        <div class="col-12 col-md-6 col-lg-4 ">
+            <div class="card my-3 text-center p-5 g-3">
                 <h5 class="card-title">{{ booking.name }}</h5> <br>
                 <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6> <br>
                 <p class="card-text"><strong>Address:{{ booking.address }}</strong></p> <br>
                 <p class="card-text"><strong>Booking Time: {{ booking.booking_time }}</strong></p> <br>
+                <p class="card-text"><strong>Booking Date: {{ booking.booking_date }}</strong></p> <br>
                 <p class="card-text text-success"><i>{{ booking.status }}</i></p><br>
                 <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm">Cancel</a>  
             </div>
         </div>
         {% endfor %}
+      </div>
     </div> 
 
 
     <!--------------Footer------------------>
 
-    <footer class="bg-light">
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <h3 class="p-2">Actions</h3>
-                        <ul><br>
-                            <li><a href="#">Appointments & Access</a></li>
-                            <li><a href="#">Accepted Insurance</a></li>
-                            <li><a href="#">Events Calendar</a></li>
-                            <li><a href="#">Financial Assistance</a></li>
-                            <li><a href="#">Pay Your Bill Online</a></li>
-                            <li><a href="#">Refer a Patient</a></li>
-                            <li><a href="#">Virtual Second Opinions</a></li>
-                            <li><a href="#">Virtual Visits</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <h3 class="p-2">About M-Care</h3>
-                        <ul><br>
-                            <li><a href="#">100 Years of M-CARE Clinic</a></li>
-                            <li><a href="#">Locations</a></li>
-                            <li><a href="#">Quality & Patient Safety</a></li>
-                            <li><a href="#">Office of Diversity & Inclusion</a></li>
-                            <li><a href="#">Patient Experience</a></li>
-                            <li><a href="#">Research & Innovations</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">For Employees</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <h3 class="p-2">Site Information</h3>
-                        <ul><br>
-                            <li><a href="#">Send Us Feedback</a></li>
-                            <li><a href="#">Site Map</a></li>
-                            <li><a href="#">About this Website</a></li>
-                            <li><a href="#">Copyright, Reprint & Licensing</a></li>
-                            <li><a href="#">Website Terms of Use</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Notice of Privacy Practices</a></li>
-                            <li><a href="#">Non-Discrimination Notice</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <h3 class="p-2">Blog and News</h3>
-                        <ul> <br>
-                            <li><a href="#">Consult QD</a></li>
-                            <li><a href="#">Health Essentials</a></li>
-                            <li><a href="#">Newsroom</a></li>
-                            <li><a href="#">MyMCARClinic</a></li>
-                            <li><a href="#">MyChart</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+<footer class="bg-light">
+  <div class="container mt-4">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+              <div class="text-center">
+                  <h3 class="p-2">Actions</h3>
+                  <ul><br>
+                      <li><a href="#">Appointments & Access</a></li>
+                      <li><a href="#">Accepted Insurance</a></li>
+                      <li><a href="#">Events Calendar</a></li>
+                      <li><a href="#">Financial Assistance</a></li>
+                      <li><a href="#">Pay Your Bill Online</a></li>
+                      <li><a href="#">Refer a Patient</a></li>
+                      <li><a href="#">Virtual Second Opinions</a></li>
+                      <li><a href="#">Virtual Visits</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+              <div class="text-center">
+                  <h3 class="p-2">About M-Care</h3>
+                  <ul><br>
+                      <li><a href="#">100 Years of M-CARE Clinic</a></li>
+                      <li><a href="#">Locations</a></li>
+                      <li><a href="#">Quality & Patient Safety</a></li>
+                      <li><a href="#">Office of Diversity & Inclusion</a></li>
+                      <li><a href="#">Patient Experience</a></li>
+                      <li><a href="#">Research & Innovations</a></li>
+                      <li><a href="#">Careers</a></li>
+                      <li><a href="#">For Employees</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+              <div class="text-center">
+                  <h3 class="p-2">Site Information</h3>
+                  <ul><br>
+                      <li><a href="#">Send Us Feedback</a></li>
+                      <li><a href="#">Site Map</a></li>
+                      <li><a href="#">About this Website</a></li>
+                      <li><a href="#">Copyright, Reprint & Licensing</a></li>
+                      <li><a href="#">Website Terms of Use</a></li>
+                      <li><a href="#">Privacy Policy</a></li>
+                      <li><a href="#">Notice of Privacy Practices</a></li>
+                      <li><a href="#">Non-Discrimination Notice</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</footer>
 
-    <footer class="py-3  text-white text-center">
-        <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
-    </footer>
+<footer class="py-3  text-white text-center">
+  <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+</footer>
     
     <!-----------------js link------------------>
-    
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
 

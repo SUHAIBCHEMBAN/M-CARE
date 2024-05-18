@@ -58,25 +58,10 @@ class BookingAdmin(admin.ModelAdmin):
     """
     Admin configuration for the Booking model.
     """
-    list_display = ('id', 'name', 'address', 'doctor','status','booking_time','user')  
-    list_filter = [TimeFilter]
+    list_display = ('id', 'name', 'address', 'doctor','status','booking_time','booking_date','user')  
+    list_filter = [TimeFilter,'booking_date']
     actions = ['download_bookings']
 
-    def convert_to_ist(self, booking_time):
-        # Convert booking_time to IST
-        """
-        Convert booking time from UTC to Indian Standard Time (IST).
-
-        Args:
-            booking_time (datetime): The booking time in UTC.
-
-        Returns:
-            str: The booking time converted to IST in 'HH:MM' format.
-        """
-
-        railway_time = timezone.localtime(booking_time)
-        ist = pytz.timezone('Asia/Kolkata')
-        return railway_time.astimezone(ist).strftime('%H:%M')
 
     def download_bookings(self, request, queryset):
         """

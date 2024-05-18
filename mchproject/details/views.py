@@ -1,8 +1,7 @@
-# import json
 from constants import *
-# from datetime import datetime
-# from django import forms
 from utils import *
+# from datetime import date, timedelta
+from details.tasks import check_bookings
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
@@ -141,6 +140,7 @@ def booking(request):
     Returns:
         Renders the booking form with doctors or error message based on validation results.
     """
+    # check_bookings.delay()
 
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -148,6 +148,7 @@ def booking(request):
             name = request.POST.get('name')
             address = request.POST.get('address')
             doctor_id = request.POST.get('doctor')
+            booking_date = request.POST.get('booking_date')
             morning_choice = request.POST.get('morning_choice')
             noon_choice = request.POST.get('noon_choice')
 
@@ -163,7 +164,8 @@ def booking(request):
 
             selected_time = convert_to_time(selected_time)
 
-            existing_booking = Booking.objects.filter(doctor_id=doctor_id, booking_time=selected_time).exists()
+            existing_booking = Booking.objects.filter(
+                            doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
             if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
                 return render(request, 'booking.html', {'error_message': error_message})
@@ -181,6 +183,7 @@ def booking(request):
                 'address': address,
                 'doctor_id': doctor_id,
                 'selected_time':selected_time_str,
+                'booking_date':booking_date,
             }
             return redirect('payment_page')
         else:
@@ -196,6 +199,7 @@ def booking(request):
                     error_message = DOCTOR_NOT
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
                 
+         
             morning_choices = generate_time_choices(9, 12)
             noon_choices = generate_time_choices(15, 20)
             return render(request, 'booking.html', {'doctors': doctors, 'morning_choices': morning_choices, 'noon_choices': noon_choices,'selected_doctor': selected_doctor})
