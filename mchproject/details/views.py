@@ -1,7 +1,5 @@
 from constants import *
 from utils import *
-# from datetime import date, timedelta
-from details.tasks import check_bookings
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
@@ -140,8 +138,7 @@ def booking(request):
     Returns:
         Renders the booking form with doctors or error message based on validation results.
     """
-    # check_bookings.delay()
-
+    
     if request.user.is_authenticated:
         if request.method == 'POST':
             # Handle form submission
