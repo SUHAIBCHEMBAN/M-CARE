@@ -141,6 +141,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# email backend
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 
@@ -149,9 +150,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'shuhaibc2004@gmail.com' 
 EMAIL_HOST_PASSWORD = 'zwra otta kpzg kubz'
 
+# media url
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# razorpay payment settings
 
 RAZORPAY_API_KEY = 'rzp_test_hzVAqG2EQyxAr2'
 RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
@@ -170,9 +174,25 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
     'check_bookings': {
         'task': 'details.tasks.check_bookings',
-        'schedule': crontab(hour=2, minute=00),  # Run at 02:00 AM IST every day
+        'schedule': crontab(hour=2, minute=0),  # Run at 02:00 AM IST every day
     },
 }
+
+# Cache configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_URL', 'redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True,  # Useful for development, can ignore cache errors
+        }
+    }
+}
+
+# Use Redis for sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
 
 
 

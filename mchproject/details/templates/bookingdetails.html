@@ -124,30 +124,31 @@
       }
     } 
     .card {
-      border:solid 0.1px #0002;
-      border-radius:5px;
+      border: solid 0.1px #0002;
+      border-radius: 5px;
       box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
-    }
+  }
 
-    .card:hover {
+  .card:hover {
       transform: translateY(-5px);
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
-    }
+  }
 
-    .card-title {
+  .card-title {
       font-size: 1.2rem;
       font-weight: bold;
-      color:#008080;
-    }
+      color: #008080;
+  }
 
-    .card-text {
+  .card-text {
       font-size: 1rem;
       color: #008080;
-    }
-    .card img {
+  }
+
+  .card img {
       object-fit: cover;
-    } 
+  }
       </style>
 </head>
 <body> 
@@ -190,24 +191,28 @@
 
     <!--------user booking details--------> 
 
-    <h2 class='text-center mt-3 ' >Booking Details</h2>
-    <div class="container  mt-5  d-flex flex-wrap justify-content-center border-bottom">
-      <div class="row">
+<h2 class="text-center mt-3">Booking Details</h2>
+<div class="container mt-5">
+    <div class="row">
         {% for booking in bookings %}
-        <div class="col-12 col-md-6 col-lg-4 ">
-            <div class="card my-3 text-center p-5 g-3">
-                <h5 class="card-title">{{ booking.name }}</h5> <br>
-                <h6 class="card-subtitle mb-2">{{ booking.doctor }}</h6> <br>
-                <p class="card-text"><strong>Address:{{ booking.address }}</strong></p> <br>
-                <p class="card-text"><strong>Booking Time: {{ booking.booking_time }}</strong></p> <br>
-                <p class="card-text"><strong>Booking Date: {{ booking.booking_date }}</strong></p> <br>
-                <p class="card-text text-success"><i>{{ booking.status }}</i></p><br>
-                <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm">Cancel</a>  
+            <div class="col-12 col-md-6 col-lg-4 g-3">
+                <div class="card my-3" style="height: 100%;">
+                    <div class="card-body d-flex flex-column justify-content-between text-center">
+                        <div>
+                            <h5 class="card-title">{{ booking.name }}</h5>
+                            <p class="card-text">{{ booking.address }}</p>
+                            <p class="card-text">{{ booking.doctor }}</p>
+                            <p class="card-text">{{ booking.booking_time }}</p>
+                            <p class="card-text">{{ booking.booking_date }}</p>
+                            <p class="card-text text-success"><i>{{ booking.status }}</i></p>
+                        </div>
+                        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm mt-3">Cancel</a>
+                    </div>
+                </div>
             </div>
-        </div>
         {% endfor %}
-      </div>
-    </div> 
+    </div>
+</div>
 
 
     <!--------------Footer------------------>

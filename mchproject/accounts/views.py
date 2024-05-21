@@ -2,6 +2,7 @@ import random
 from .forms import ProfileForm
 from .models import UserProfile
 from django.core.mail import send_mail
+from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render ,get_object_or_404
@@ -71,13 +72,11 @@ def verify_otp(request):
             user = get_object_or_404(get_user_model(), email=email)
             auth_login(request, user)
 
-
-            # Redirect to success page
-            # return redirect('success')
             # Set session variable to indicate booking success
             request.session['booking_success'] = True
             
-            return redirect('home')
+            message = "Your Login Successfully Completed"
+            return render(request,'home.html',{'message':message})
            
         else:
             # OTP didn't match, render OTP verification page with error
@@ -85,12 +84,22 @@ def verify_otp(request):
     
     return render(request, 'otp_verification.html')
 
-from django.http import JsonResponse
 
+# this my status changing views.py function 
 def clear_booking_success(request):
+    """
+    Clears the 'booking_success' key from the session if it exists.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        A JSON response with a status of 'success' after removing the 'booking_success' key from the session.
+    """
     if 'booking_success' in request.session:
         del request.session['booking_success']
     return JsonResponse({'status': 'success'})
+
 
 # this my user_logout views function
 @never_cache

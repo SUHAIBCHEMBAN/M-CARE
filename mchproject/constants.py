@@ -11,3 +11,6 @@ HOSTPITAL_NOT = "Hospital does not exist."
 DOCTOR_NOT = "The selected doctor does not exist."
 BOOKING_PROCESS = "Error processing booking data."
 PAYMENT_PROCESS = "Error processing payment."
+BOOKING_SUCESS = "Your Booking Successfully Made"
+BOOKING_CANCELED = "Your Booking Canceled"
+

@@ -263,7 +263,8 @@ def cancel_booking(request,booking_id):
     
     booking = get_object_or_404(Booking, pk=booking_id)
     booking.delete()
-    return render(request,'booking.html')
+    message = BOOKING_CANCELED
+    return render(request,'booking.html',{'message':message})
 
 
 # this is IND hospitals list

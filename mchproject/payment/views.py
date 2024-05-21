@@ -110,6 +110,6 @@ def booking_success(request):
     # Remove booking data from session
     del request.session['booking_data']
     
-    message = "Your booking has been successful!"
+    message = BOOKING_SUCESS
     print(message)
     return render(request, 'booking.html', {'message': message})

@@ -185,22 +185,25 @@
     <!-------------Details------------------>
 
     
-    <div class="container p-2  border-bottom d-flex flex-row flex-wrap mt-4">
+    <div class="container mt-5 border-bottom">
+      <div class="row">
         {% for hospital in canada_hospitals %}
-        <div class="col-12 col-md-6 col-lg-4 ">
-        <div class="card text-center" style="width: 18rem; height:26rem;">
-            <img src="{{hospital.image.url}}" class="card-img-top" alt="Somthing Went Wrong" style="height: 10rem;">
-            <div class="card-body">
-              <h5 class="card-title">M-CARE</h5>
-              <p class="card-text">{{ hospital.location }}</p>
-              <p class="card-text">{{ hospital.address }}</p>
-              <p class="card-text">{{ hospital.contact_number }}</p>
-              <a href="{% url 'finddoctor' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
-            </div>
-          </div>
+          <div class="col-12 col-md-6 col-lg-4 ">
+              <div class="card my-3" style="height: 25rem;" >
+                <img src="{{hospital.image.url}}" class="card-img-top" alt="Somthing Went Wrong" style="height: 10rem;">
+                  <div class="card-body text-center">
+                      <h5 class="card-title">M-CARE</h5>
+                      <p class="card-text ">{{ hospital.location }}</p>
+                      <p class="card-text">{{ hospital.address }}</p>
+                      <p class="card-text">{{ hospital.contact_number }}</p>
+                      <a href="{% url 'finddoctor' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
+                  </div>
+              </div>
           </div>
           {% endfor %}
-        </div>
+      </div>
+    </div>
+    
 
     <!--------------Footer------------------>
 
