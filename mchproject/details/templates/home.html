@@ -19,7 +19,7 @@
         color: #fff;
         text-decoration: none; 
         position: relative; 
-        transition: color 0.3s; 
+        transition: color 0.3s;   
     }
     
     .nav-link::after {
@@ -127,6 +127,9 @@
     .profile {
       margin-left:10px;
     }
+
+    
+ 
     @media (max-width:350px){
       footer{
         display:none;
@@ -136,6 +139,7 @@
         font-size:80%;
       }
     }
+
    @media (max-width:990px){
     footer{
       font-size:100%;
@@ -145,13 +149,36 @@
       margin:auto;
       justify-content:center;
     }
-
     .crd3 {
       display:flex;
       margin:auto;
       justify-content:center;
     }
+    #top{
+      display: none;
+    }
+    .profile{
+      display:none;
+    }
+    #profile{
+      display:block;
+    
+    }
    }
+   
+   @media (min-width: 991px) {
+    #profile {
+      display: none; 
+    }
+
+    .nav button{
+      display:none;
+    }
+
+    .navbar-toggler-icon{
+      display:none;
+    }
+}
    @media (min-width: 400px) and (max-width: 450px) {
     .btn {
         margin-top: -20px;
@@ -159,7 +186,11 @@
     .card-body {
         padding: 10px;
     }
+    #profile{
+      margin-top:25%;
+    }
 }
+
     </style>
   </head>
   <body>
@@ -180,70 +211,68 @@
   </script>
 {% endif %}
 
-    <!-------------Navbar------------------>
+<!-------------Navbar------------------>
 
-    <nav class="navbar navbar-expand-lg  sticky-top" style="height:6rem; background-color:#008080;">
-      <div class="container-fluid">
-        <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-            </li>
-          </ul>
-          <a class="btn btn-primary ms-3" href="{% url 'booking' %}" id="top">Make an Appointment</a>
-          <div class="profile">
-          {% if user.userprofile.profile_picture %}
-            <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-              <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
-            </a>
-          {% else %}
-            <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px"> 
-              <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" /> 
-            </a> 
-          {% endif %}
-        </div>
-        </div>
-      </div>
-    </nav>
+<nav class="navbar navbar-expand-lg sticky-top d-flex"style="background-color:#008080;" height:"5.5rem;">
+  <div class="container-fluid">
+    <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+    <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon mt-2"></span>
+      <div class="nav-item" id="profile">
+        {% if user.userprofile.profile_picture %}
+        <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% else %}
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% endif %}
+      </div> 
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+        </li> 
+      </ul>
+    </div>
+    <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
+    <div class="profile">
+      {% if user.userprofile.profile_picture %}
+      <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+        <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+      </a>
+      {% else %}
+      <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+        <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
 
    <!------------carousel------------>
 
-    <div
-      id="carouselExampleAutoplaying"
-      class="carousel slide"
-      data-bs-ride="carousel"
-      data-bs-interval="5000"
-    >
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img
-          src="{% static 'image/p0.jpg' %}"
-          class="d-block w-100"
-          alt="..."style="height:50%;"
-        />
+          <img src="{% static 'image/p0.jpg' %}" class="d-block w-100" alt="something went wrong"/>
           <div class="carousel-caption d-none d-md-block">
             <h4 class="text-light bg-dark-opacity">
-                "Empowering Health, Enriching Lives: M-Care Hospital, where every heartbeat matters and every smile counts."
+              "Empowering Health, Enriching Lives: M-Care Hospital, where every heartbeat matters and every smile counts."
             </h4>
+          </div>
         </div>
-
-        </div>
-        <div class="carousel-item">
-          <img
-            src="{% static 'image/p1.jpg' %}"
-            class="d-block w-100"
-            alt="..."style="height:50%;"
-          />
+      <div class="carousel-item">
+        <img src="{% static 'image/p1.jpg' %}" class="d-block w-100" alt="something went wrong"/>
           <div class="carousel-caption d-none d-md-block">
             <h4 class="text-light bg-dark-opacity">
               "At M-Care Hospital, we're not just treating patients; we're
@@ -251,12 +280,8 @@
             </h4>
           </div>
         </div>
-        <div class="carousel-item">
-          <img
-          src="{% static 'image/p2.jpg' %}"
-          class="d-block w-100"
-          alt="..." style="height:50%;"
-        />
+      <div class="carousel-item">
+        <img src="{% static 'image/p2.jpg' %}" class="d-block w-100" alt="something went wrong"/>
           <div class="carousel-caption d-none d-md-block">
             <h4 class="text-light bg-dark-opacity">
               "Compassionate Care, Trusted Excellence: M-Care Hospital, where
@@ -273,22 +298,18 @@
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card my-3" style="height:24rem;">
-            <img src="{% static "/image/doctors card.webp" %}" class="card-img-top"
-            alt="...">
+            <img src="{% static "/image/doctors card.webp" %}" class="card-img-top" alt="something went wrong">
             <div class="card-body text-center">
               <h5 class="card-title">Our Doctors</h5>
               <p class="card-text">Our specialized doctors are available</p>
-              <a href="{% url 'doctors' %}" class="btn"
-                >Find Doctor</a
-              >
+              <a href="{% url 'doctors' %}" class="btn">Find Doctor</a>
             </div>
           </div>
         </div>
 
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card my-3" style="height:24rem;">
-            <img src="{% static "/image/appointment.webp" %}"
-            class="card-img-top" alt="...">
+            <img src="{% static "/image/appointment.webp" %}" class="card-img-top" alt="something went wrong">
             <div class="card-body text-center">
               <h5 class="card-title">Appointment</h5>
               <p class="card-text">Schedule your appointment now.</p>
@@ -299,8 +320,7 @@
 
         <div class="col-12 col-md-6 col-lg-4 crd3">
           <div class="card my-3" style="height:24rem;">
-            <img src="{% static "/image/ourlocations.jpg" %}" class="card-img-top "
-            alt="..." >
+            <img src="{% static "/image/ourlocations.jpg" %}" class="card-img-top" alt="something went wrong">
             <div class="card-body text-center">
               <h5 class="card-title">Our Locations</h5>
               <p class="card-text">Click and Find the M-CARE Near You</p>
@@ -317,8 +337,7 @@
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card my-3" style="height:15rem;">
             <a href="{% url 'indian' %}">
-              <img src="{% static "/image/tenth.jpg" %}" class="card-img-top"
-              alt="..." style="height:10rem;">
+              <img src="{% static "/image/tenth.jpg" %}" class="card-img-top" alt="something went wrong" style="height:10rem;">
             </a>
             <div class="card-body">
               <h5 class="card-title">M-CARE IN INDIA</h5>
@@ -329,8 +348,7 @@
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card my-3" style="height:15rem;">
             <a href="{% url 'uae' %}">
-              <img src="{% static "/image/seventh one.jpg" %}"
-              class="card-img-top" alt="..." style="height:10rem;">
+              <img src="{% static "/image/seventh one.jpg" %}" class="card-img-top" style="height:10rem;" alt="something went wrong">
             </a>
             <div class="card-body">
               <h5 class="card-title">M-CARE IN UAE</h5>
@@ -342,7 +360,7 @@
           <div class="card my-3"  style="height:15rem;">
             <a href="{% url 'canada' %}">
               <img src="{% static "/image/sixth one.jpg" %}"
-              class="card-img-top" alt="..." style="height:10rem;">
+              class="card-img-top" alt="something went wrong" style="height:10rem;">
             </a>
             <div class="card-body">
               <h5 class="card-title">M-CARE IN CANADA</h5>

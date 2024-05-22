@@ -155,12 +155,39 @@
             margin:auto;
             justify-content:center;
           }
+          #top{
+            display: none;
+          }
+          .profile{
+            display:none;
+          }
+          #profile{
+            display:block;
+          }
     }
+    
+    @media (min-width: 991px) {
+        #profile {
+          display: none; 
+        }
+    
+        .nav button{
+          display:none;
+        }
+        .navbar-toggler-icon{
+            display:none;
+          }
+    }
+
     @media (min-width: 400px) and (max-width: 450px) {
             label{
                 font-size:100%;
             }
+            #profile{
+                margin-top:25%;
+            }
     }
+    
     </style>
     <script>
         // JavaScript function to validate the form
@@ -214,41 +241,52 @@
 
     <!-------------Navbar------------------>
 
-    <nav class="navbar navbar-expand-lg  sticky-top" style="height:6rem; background-color:#008080;">
-        <div class="container-fluid">
-          <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-              </li>
-            </ul>
-            <a class="btn btn-primary ms-3" href="{% url 'booking' %}" id="top">Make an Appointment</a>
-            <div class="profile">
-            {% if user.userprofile.profile_picture %}
-              <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-                <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
-              </a>
-            {% else %}
-              <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px"> 
-                <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" /> 
-              </a> 
-            {% endif %}
-          </div>
-          </div>
-        </div>
-      </nav>
-    
-                <!-------Details---------->
+<nav class="navbar navbar-expand-lg sticky-top d-flex"style="background-color:#008080;" height:"5.5rem;">
+    <div class="container-fluid">
+      <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+      <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2"></span>
+        <div class="nav-item" id="profile">
+          {% if user.userprofile.profile_picture %}
+          <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% endif %}
+        </div> 
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+          </li> 
+        </ul>
+      </div>
+      <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
+      <div class="profile">
+        {% if user.userprofile.profile_picture %}
+        <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% else %}
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+                      <!-------Details---------->
 
     <div class="container text-center p-3 text-light bg-dark-opacity mt-5">
         <h1 class="text-light">Find a Doctor</h1>

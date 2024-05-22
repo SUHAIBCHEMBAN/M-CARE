@@ -4,8 +4,10 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 import pytz
 from django.utils import timezone
-from .models import Countries, Location, Department, Doctor, Booking, Hospital
+from .models import Countries, Location, Department, Doctor, Booking, Hospital,Banner_Cards
 
+class Banner_CardsAdmin(admin.ModelAdmin):
+    list_display = ('id','image')
 
 class CountryAdmin(admin.ModelAdmin):
     """
@@ -101,6 +103,7 @@ class HospitalAdmin(admin.ModelAdmin):
     list_filter = ['country','location']
 
 # Registering admin classes
+admin.site.register(Banner_Cards,Banner_CardsAdmin)
 admin.site.register(Countries, CountryAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Department, DepartmentAdmin)

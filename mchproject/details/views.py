@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Doctor,Booking,Hospital,Countries,Location,Department
+from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards
 
 # this home views.py function
 @never_cache  
@@ -22,7 +22,8 @@ def home(request):
     - Renders the home page template with the username.
     """
     user = request.user 
-    return render(request, 'home.html',{'user': user})
+    image = Banner_Cards.objects.all()
+    return render(request, 'home.html',{'user': user,'image':image})
 
 # this my doctors views function
 def doctors(request):

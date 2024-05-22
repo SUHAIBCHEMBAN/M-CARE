@@ -5,6 +5,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class Banner_Cards(models.Model):
+    image = models.ImageField(upload_to='homeimg',default='default_image.jpg') 
+
 class Countries(models.Model):
     """
     Model representing countries.

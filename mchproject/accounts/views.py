@@ -30,7 +30,7 @@ def user_login(request):
         
         user = get_user_model().objects.filter(email=email).first()
         if user:
-            otp = ''.join(random.choices('0123456789', k=4))
+            otp = ''.join(random.choices('0123456789', k=6))
             request.session['otp'] = otp
             mail_subject = 'M-CARE HOSPITAL'
             message = f'Your OTP is: {otp}'
@@ -132,17 +132,17 @@ def add_login(request):
 
 
 # this login success page render function
-def login_success(request):
-    """
-    Render function for the login success page.
+# def login_success(request):
+#     """
+#     Render function for the login success page.
 
-    Parameters:
-    - request: The HTTP request object.
+#     Parameters:
+#     - request: The HTTP request object.
 
-    Returns:
-    - Renders the success.html template.
-    """
-    return render(request,'success.html')
+#     Returns:
+#     - Renders the success.html template.
+#     """
+#     return render(request,'success.html')
 
 
 # this my user profile views function
