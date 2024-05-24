@@ -154,7 +154,7 @@ import os
 STATIC_URL = '/static/'
 
 # This should be a different directory than STATIC_ROOT
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 
 # Directory where collectstatic will collect static files for deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
