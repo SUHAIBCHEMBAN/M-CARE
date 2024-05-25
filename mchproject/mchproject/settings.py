@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['54.88.34.113', 'localhost']
 # INTERNAL_IPS = ['127.0.0.1', '::1'] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
