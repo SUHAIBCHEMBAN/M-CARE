@@ -1,13 +1,11 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
 from details.models import Booking, Doctor
-from django.core.cache import cache
 from mchproject.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
 import razorpay
 from constants import *
 from django.contrib import messages
 
-@never_cache  
 def doctor_payment(request):
     """
     View function to handle doctor payment processing.
@@ -75,8 +73,7 @@ def doctor_payment(request):
         'department':department,
     }
     return render(request, 'payment.html', context)
-
-@never_cache  
+ 
 def booking_success(request):
     """
     View function to handle booking success.
