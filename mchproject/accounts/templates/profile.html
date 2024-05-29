@@ -111,7 +111,7 @@
             {% endif %}
             <form method="post" enctype="multipart/form-data" class="mt-3">
                 {% csrf_token %}
-                <label for="profile_picture" class="text-center"><strong>Edit</strong></label>
+                <label for="profile_picture" class="text-center"><strong>Picture</strong></label>
                 <input type="file" name="profile_picture" id="profile_picture">
                 <button type="submit" class="btn">Upload</button>
             </form>
@@ -122,12 +122,14 @@
                 <button type="submit" class="btn">Update</button>
             </form>
             <div class="buttons-container">
-                <a href="{% url 'add_login' %}" class="btn">+ Add</a>
+                <a href="{% url 'add_login' %}" class="btn">+ Add Account</a>
                 <a href="{% url 'logout' %}" class="btn">Logout</a>
-                <a href="{% url 'booking_details' %}" class="btn">View</a>
+                <a href="{% url 'booking_details' %}" class="btn">Booking Details</a>
                 <a href="{% url 'home' %}" class="btn">Close</a>
             </div>
         </div>
+        {% else %}
+            <a href="{% url 'add_login' %}" class="btn">Create User</a>
     {% endif %}
 
     <!-------js link------>
