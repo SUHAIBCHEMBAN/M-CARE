@@ -5,10 +5,6 @@ from mchproject.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
 import razorpay
 from constants import *
 from django.contrib import messages
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.conf import settings
 
 def doctor_payment(request):
     """
@@ -111,27 +107,6 @@ def booking_success(request):
 
     # Remove booking data from session
     del request.session['booking_data']
-
-    # Generate PDF with booking details
-    context = {
-        'booking': booking,
-        'doctor': doctor,
-    }
-    html_string = render_to_string('payment.html', context)
-    html = HTML(string=html_string)
-    pdf = html.write_pdf()
-
-    # Send email with PDF attachment
-    subject = 'Booking Confirmation - M-CARE HOSPITAL'
-    message = 'Thank you for your booking. Please find attached the details of your booking.'
-    email = EmailMessage(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [request.user.email],
-    )
-    email.attach('payment.pdf', pdf, 'application/pdf')
-    email.send()
     
     message = BOOKING_SUCESS
     return render(request, 'bookingdetails.html', {'message': message})
