@@ -27,6 +27,14 @@ def user_login(request):
         email = request.POST.get('email')
         request.session['email'] = email
         username = request.POST.get('username')
+
+        
+        # New 
+        User = get_user_model()
+        
+        if User.objects.filter(username=username).exists():
+            error_message = USERNAME_ERROR
+            return render(request, 'login.html', {'error_message': error_message})
         
         user = get_user_model().objects.filter(email=email).first()
         if user:
