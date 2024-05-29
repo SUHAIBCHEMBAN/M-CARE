@@ -273,7 +273,7 @@
     </div>
     <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
     <div class="profile">
-      {% if user %}
+      {% if user.is_authenticated %}
         {% if user.userprofile.profile_picture %}
         <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
           <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
@@ -284,7 +284,9 @@
         </a>
         {% endif %}
       {% else %}
-        <a href="{% url 'login' %}" class="btn" id="ctb">Create User</a>
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
       {% endif %}
     </div>
   </div>
