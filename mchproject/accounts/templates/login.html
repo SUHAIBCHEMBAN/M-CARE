@@ -28,6 +28,11 @@
     .fa-android{
         font-size:3em;
     }
+    .btns {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5em;
+        }
     @media screen and (max-width: 640px) {
         .main-content{width: 90%;}
         .company__info{
@@ -44,6 +49,16 @@
     .row > h2{
         color:#008080;
     }
+   @media (max-width: 768px) {
+            .btns {
+                flex-direction: column;
+                gap: 0.5em;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
     .login_form{
         background-color: #fff;
         border-top-right-radius:20px;
@@ -111,7 +126,10 @@
 							<div class="row form-group">
                                 <input type="email" class="form__input"  id="email" name="email" placeholder="Email" required>
 							</div>
-								<input type="submit" value="Register" class="btn">
+							<div class="btns">
+                    						<input type="submit" value="Register" class="btn">
+                    						<a href="{% url 'home' %}" class="btn last">Close</a>
+                					</div>
 						</form>
 					</div>
 				</div>
