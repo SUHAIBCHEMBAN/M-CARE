@@ -1,6 +1,5 @@
 from constants import *
 from utils import *
-from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
