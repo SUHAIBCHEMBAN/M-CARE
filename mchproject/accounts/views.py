@@ -1,4 +1,5 @@
 import random
+from constants import *
 from .forms import ProfileForm
 from .models import UserProfile
 from django.core.mail import send_mail
