@@ -8,7 +8,6 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards
 
 # this home views.py function
-@never_cache  
 def home(request):
     """
     Home view.
@@ -26,7 +25,6 @@ def home(request):
     return render(request, 'home.html',{'user': user,'image':image})
 
 # this my doctors views function
-@never_cache
 def doctors(request):
     """
     View function for displaying a list of doctors.
@@ -46,7 +44,6 @@ def doctors(request):
 
 
 # this my find_doctor views function
-@never_cache
 def find_doctor(request):   
     """
     View function to find doctors based on location and department.
@@ -124,7 +121,6 @@ def find_doctor(request):
 
 
 # this user booking views.py function
-@never_cache
 def booking(request):
     """
     View function to handle the booking process.
@@ -210,7 +206,6 @@ def booking(request):
 
 
 # this aboutus veiws.py function
-@never_cache
 def aboutus(request):
     """
     View to render the about us page.
@@ -227,7 +222,6 @@ def aboutus(request):
 
 
 # this is booking_details views.py function
-@never_cache
 def booking_details(request):
 
     """
@@ -251,7 +245,6 @@ def booking_details(request):
 
 
 # this is cancel_booking vews.py function
-@never_cache
 def cancel_booking(request,booking_id):
 
     """
@@ -275,7 +268,6 @@ def cancel_booking(request,booking_id):
 
 
 # this is IND hospitals list
-@never_cache
 def indian(request):
     """
     View function to display a list of Indian hospitals.
@@ -294,7 +286,6 @@ def indian(request):
 
 
 # this is UAE hospitals list
-@never_cache
 def uae(request):
     """
     View function to display a list of hospitals in the UAE (United Arab Emirates).
@@ -313,7 +304,6 @@ def uae(request):
 
 
 # this is CANADA hospitals list
-@never_cache
 def canada(request):
     """
     View function to display a list of hospitals in Canada.
@@ -331,7 +321,6 @@ def canada(request):
     return render(request, 'canada_hospital_list.html', {'canada_hospitals': canada_hospitals})
 
 # this json get view function
-@never_cache
 def get_departments_for_location(request, location_id):
     """
     Get departments associated with a location and return them as JSON.
