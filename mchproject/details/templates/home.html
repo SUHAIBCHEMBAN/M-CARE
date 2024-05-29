@@ -153,6 +153,9 @@
     footer{
       font-size:100%;
     }
+     #pli{
+       display:block;
+     }
     #last_footer{
       display:flex;
       margin:auto;
@@ -173,6 +176,9 @@
       display:block;
     
     }
+    #ctb{
+      display:none;
+    }
    }
    
    @media (min-width: 991px) {
@@ -185,6 +191,9 @@
     }
 
     .navbar-toggler-icon{
+      display:none;
+    }
+    #pli{
       display:none;
     }
 }
@@ -252,6 +261,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
         </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}" id="pli">Create User</a>
+        </li>
       </ul>
     </div>
     <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
