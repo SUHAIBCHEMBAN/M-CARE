@@ -242,12 +242,9 @@
         <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
           <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
         </a>
-        {% else %}
-<!--         <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a> -->
-        <a href="{% url 'login' %}" class="btn" id="ctb">Create User</a>
         {% endif %}
+      {% else %}
+        <a href="{% url 'login' %}" class="btn" id="ctb">Create User</a>
       {% endif %}
       </div> 
     </button>
