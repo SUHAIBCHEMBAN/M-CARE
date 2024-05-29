@@ -105,6 +105,9 @@
 							<div class="row form-group">
 								<input type="text" name="username" id="username" class="form__input" placeholder="Username" required>
 							</div>
+							{% if error_message %}
+                    						<p class='text-danger bold ml-4 mt-3'>{{ error_message }}</p>
+                					{% endif %}
 							<div class="row form-group">
                                 <input type="email" class="form__input"  id="email" name="email" placeholder="Email" required>
 							</div>
