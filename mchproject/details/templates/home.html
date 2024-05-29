@@ -123,6 +123,15 @@
         padding: 10px;
         border-radius: 10px; 
     }
+      #ctb:{
+        color:#008080;
+        background-color:white;
+        width:20%
+      }
+      
+      #ctb:hover{
+        width:20%
+      }
 
     .profile {
       margin-left:10px;
@@ -227,7 +236,7 @@
 <!--         <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
           <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
         </a> -->
-        <a href="{% url 'login' %}" class="btn">Create User</a>
+        <a href="{% url 'login' %}" class="btn" id="ctb">Create User</a>
         {% endif %}
       </div> 
     </button>
@@ -255,7 +264,7 @@
 <!--       <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
         <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
       </a>  -->
-      <a href="{% url 'login' %}" class="btn">Create User</a>
+      <a href="{% url 'login' %}" class="btn" id="ctb">Create User</a>
       {% endif %}
     </div>
   </div>
