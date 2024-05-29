@@ -112,4 +112,4 @@ def booking_success(request):
     
     message = BOOKING_SUCESS
     print(message)
-    return render(request, 'booking.html', {'message': message})
+    return render(request, 'bookingdetails.html', {'message': message})
