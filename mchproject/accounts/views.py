@@ -22,7 +22,7 @@ def user_login(request):
     If the user doesn't exist, create a new user and redirect to OTP verification page.
     """
     if request.user.is_authenticated:
-        return redirect('booking')
+        return redirect('home')
     
     if request.method == 'POST':
         email = request.POST.get('email')
