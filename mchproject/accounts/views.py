@@ -95,6 +95,7 @@ def verify_otp(request):
 
 
 # this my status changing views.py function 
+@never_cache
 def clear_booking_success(request):
     """
     Clears the 'booking_success' key from the session if it exists.
@@ -124,6 +125,7 @@ def user_logout(request):
 
 
 # this add another account function
+@never_cache
 def add_login(request):
     """
     Log out the user if authenticated, otherwise redirect to login page.
@@ -155,6 +157,7 @@ def add_login(request):
 
 
 # this my user profile views function
+@never_cache
 def profile(request):
     """
     Render function for the user profile page.
