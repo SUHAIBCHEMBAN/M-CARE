@@ -169,6 +169,26 @@
           }
       }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Function to handle dynamic sorting
+            $('body').on('click', '.sort-option', function(e){
+                e.preventDefault();
+                var sortOption = $(this).data('sort');
+                $.ajax({
+                    type: 'GET',
+                    url: window.location.pathname + '?sort=' + sortOption,
+                    success: function(data){
+                        $('#doctor-list').html(data);
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
   <!-------------Navbar------------------>
@@ -197,6 +217,22 @@
       </div> 
     </button>
 
+    <div class="container mt-5 border-bottom">
+        <div class="row">
+            <div class="col-12">
+                <p>Sort by:</p>
+                <ul>
+                    <li><a href="#" class="sort-option" data-sort="name">Name</a></li>
+                    <li><a href="#" class="sort-option" data-sort="location">Location</a></li>
+                    <!-- Add more sorting options as needed -->
+                </ul>
+            </div>
+            <div id="doctor-list">
+                {% include 'doctor_list.html' %}
+            </div>
+        </div>
+    </div>
+      
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
         <li class="nav-item">
