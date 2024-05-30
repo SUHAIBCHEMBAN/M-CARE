@@ -1,8 +1,6 @@
 from constants import *
 from utils import *
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render,redirect,get_object_or_404
@@ -168,15 +166,15 @@ def booking(request):
                             doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
             if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
-                # return render(request, 'booking.html', {'error_message': error_message})
-                return JsonResponse({'error': error_message})
+                return render(request, 'booking.html', {'error_message': error_message})
+            
 
             available_slot = doctor.slot
             total_bookings = Booking.objects.filter(doctor=doctor).count()
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
-                # return render(request, 'booking.html', {'error_message': error_message})
-                return JsonResponse({'error': error_message})
+                return render(request, 'booking.html', {'error_message': error_message})
+            
             
             selected_time_str = convert_to_string(selected_time)
 
