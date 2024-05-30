@@ -203,6 +203,9 @@
         var doctorSelect = document.getElementById('id_doctor');
         var morningChoiceDiv = document.getElementById('morningChoiceDiv');
         var noonChoiceDiv = document.getElementById('noonChoiceDiv');
+        var submitButton = document.getElementById('submit-button');
+        var bookingForm = document.getElementById('bookingForm');
+        var errorMessageDiv = document.getElementById('error-message');
 
         doctorSelect.addEventListener('change', function() {
             var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
@@ -246,6 +249,30 @@
                 }
             ],
             minDate: "today"  // Disallow past dates
+        });
+        
+     submitButton.addEventListener('click', function() {
+            var formData = new FormData(bookingForm);
+            var csrfToken = formData.get('csrfmiddlewaretoken');
+
+            fetch("{% url 'booking' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    errorMessageDiv.textContent = data.error;
+                } else {
+                    window.location.href = data.redirect_url;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
     });
 </script>
