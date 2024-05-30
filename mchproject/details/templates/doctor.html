@@ -169,6 +169,7 @@
           }
       }
     </style>
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -216,22 +217,6 @@
       {% endif %}
       </div> 
     </button>
-
-    <div class="container mt-5 border-bottom">
-        <div class="row">
-            <div class="col-12">
-                <p>Sort by:</p>
-                <ul>
-                    <li><a href="#" class="sort-option" data-sort="name">Name</a></li>
-                    <li><a href="#" class="sort-option" data-sort="location">Location</a></li>
-                    <!-- Add more sorting options as needed -->
-                </ul>
-            </div>
-            <div id="doctor-list">
-                {% include 'doctor.html' %}
-            </div>
-        </div>
-    </div>
       
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
@@ -269,8 +254,27 @@
 
 
     <!-----------Cards---------->
+    
 
     <h1 class="text-center mt-5 text-dark">Available Doctors</h1>
+
+    
+       <div class="container mt-5 border-bottom">
+        <div class="row">
+            <div class="col-12">
+                <p>Sort by:</p>
+                <ul>
+                    <li><a href="#" class="sort-option" data-sort="name">Name</a></li>
+                    <li><a href="#" class="sort-option" data-sort="location">Location</a></li>
+                    <!-- Add more sorting options as needed -->
+                </ul>
+            </div>
+            <div id="doctor-list">
+                {% include 'doctor.html' %}
+            </div>
+        </div>
+    </div>
+    
         <div class="container mt-5 border-bottom">
             <div class="row">
                 {% for doctor in doctors %}
