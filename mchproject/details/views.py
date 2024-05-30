@@ -121,7 +121,6 @@ def find_doctor(request):
 
 
 # this user booking views.py function
-@csrf_exempt
 def booking(request):
     """
     View function to handle the booking process.
