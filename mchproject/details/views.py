@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render,redirect,get_object_or_404
+from django.core.cache import cache
 from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards
 
 # this home views.py function
