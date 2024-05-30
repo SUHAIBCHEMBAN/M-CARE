@@ -35,13 +35,17 @@ def doctors(request):
     :param request: The HTTP request object.
     :return: The rendered HTML page displaying the list of doctors.
     """
-    doctors = cache.get('doctors_cache')  # Check if doctors data is cached
+    
+    sort_option = request.GET.get('sort', 'name')  # Get the sort option from the URL query parameters
+    doctors = cache.get('doctors_cache_' + sort_option)  # Check if doctors data with specific sort option is cached
     if not doctors:
-        # If data is not cached, retrieve from database and cache it
-        doctors = Doctor.objects.prefetch_related('location', 'department','location__country').all()
-        cache.set('doctors_cache', doctors, timeout=60)  # Cache indefinitely since doctor details might rarely change
-    return render(request, 'doctor.html', {'doctors': doctors})
-
+        if sort_option == 'name':
+            doctors = Doctor.objects.prefetch_related('location', 'department', 'location__country').order_by('name')
+        elif sort_option == 'location':
+            doctors = Doctor.objects.prefetch_related('location', 'department', 'location__country').order_by('location')
+        # Add more sorting options as needed
+        cache.set('doctors_cache_' + sort_option, doctors, timeout=60)  # Cache for 60 seconds
+    return render(request, 'doctor.html', {'doctors': doctors, 'sort_option': sort_option})
 
 # this my find_doctor views function
 def find_doctor(request):   
