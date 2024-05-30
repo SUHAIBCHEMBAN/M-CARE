@@ -63,6 +63,10 @@ def verify_otp(request):
     If the OTP matches, authenticate the user and redirect to the booking page.
     If the OTP doesn't match, render the OTP verification page with an error message.
     """
+    
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if 'otp' not in request.session:
         # OTP not generated, redirect to login
         return redirect('login')
@@ -137,20 +141,6 @@ def add_login(request):
         logout(request)
         return redirect('login')
     return redirect('login')
-
-
-# this login success page render function
-# def login_success(request):
-#     """
-#     Render function for the login success page.
-
-#     Parameters:
-#     - request: The HTTP request object.
-
-#     Returns:
-#     - Renders the success.html template.
-#     """
-#     return render(request,'success.html')
 
 
 # this my user profile views function
