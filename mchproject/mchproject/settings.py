@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'customadmin',
     'details',
     'payment',
-    # 'celery',
-    # 'django_celery_results',
-    # 'django_celery_beat',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -131,12 +131,6 @@ import os
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# This directory is for development static files
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-
-# This directory is for collected static files for production
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -149,9 +143,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  
 EMAIL_USE_TLS = True    
 EMAIL_HOST_USER = 'mcareclinic2.0@gmail.com' 
-# shuhaibc2004@gmail.com
 EMAIL_HOST_PASSWORD =  'vbwa vakq xnsg obbt'
-# 'zwra otta kpzg kubz'
 
 # Media url
 
@@ -165,20 +157,20 @@ RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
 
 # Celery settings
 
-# from celery.schedules import crontab
+from celery.schedules import crontab
 
-# CELERY_BROKER_URL = 'redis://localhost:6379/0'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
-# CELERY_BEAT_SCHEDULE = {
-#     'check_bookings': {
-#         'task': 'details.tasks.check_bookings',
-#         'schedule': crontab(hour=2, minute=0),  # Run at 02:00 AM IST every day
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    'check_bookings': {
+        'task': 'details.tasks.check_bookings',
+        'schedule': crontab(hour=2, minute=0),  # Run at 02:00 AM IST every day
+    },
+}
 
 # Cache configuration
 CACHES = {
