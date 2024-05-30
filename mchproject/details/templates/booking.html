@@ -249,6 +249,35 @@
             ],
             minDate: "today"  // Disallow past dates
         });
+
+        // Handle form submission with AJAX
+        var bookingForm = document.getElementById('bookingForm');
+        bookingForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(bookingForm);
+            fetch(bookingForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                },
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw new Error(data.error); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                }
+            })
+            .catch(error => {
+                var errorMessageDiv = document.getElementById('error-message');
+                errorMessageDiv.innerHTML = `<p class='text-danger bold ml-4 mt-3'>${error.message}</p>`;
+            });
+        });
     });
 </script>
 
