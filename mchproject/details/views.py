@@ -37,14 +37,25 @@ def doctors(request):
     """
     
     sort_option = request.GET.get('sort', 'name')  # Get the sort option from the URL query parameters
-    doctors = cache.get('doctors_cache_' + sort_option)  # Check if doctors data with specific sort option is cached
+
+    # Check if doctors data with the specific sort option is cached
+    cache_key = f'doctors_cache_{sort_option}'
+    doctors = cache.get(cache_key)
+
     if not doctors:
         if sort_option == 'name':
-            doctors = Doctor.objects.prefetch_related('location', 'department', 'location__country').order_by('name')
+            doctors = Doctor.objects.all().order_by('name')
         elif sort_option == 'location':
-            doctors = Doctor.objects.prefetch_related('location', 'department', 'location__country').order_by('location')
-        # Add more sorting options as needed
-        cache.set('doctors_cache_' + sort_option, doctors, timeout=60)  # Cache for 60 seconds
+            doctors = Doctor.objects.all().order_by('location')
+        else:
+            doctors = Doctor.objects.all().order_by('name')  # Default sorting
+
+        # Cache the result for 60 seconds
+        cache.set(cache_key, list(doctors), timeout=60)
+
+    if request.is_ajax():
+        return render(request, 'doctor_list.html', {'doctors': doctors})
+
     return render(request, 'doctor.html', {'doctors': doctors, 'sort_option': sort_option})
 
 # this my find_doctor views function
