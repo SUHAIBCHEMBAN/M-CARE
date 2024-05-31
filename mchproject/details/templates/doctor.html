@@ -9,112 +9,111 @@
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
         body{
-        background-color: #f7f7fa;
-        color:#008080;
-      }
+            background-color: #f7f7fa;
+            color:#008080;
+        }
 
-      
-      .nav-link {
-        font-size: 1.2rem;
-        color: #fff;
-        text-decoration: none; 
-        position: relative; 
-        transition: color 0.3s; 
-    }
-    
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: #fff; 
-        transition: width 0.3s; 
-    }
-    
-    .nav-link:hover {
-        color: #fff; 
-    }
-    .nav-link:hover::after {
-        width: 100%; 
-    }
+        .nav-link {
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none; 
+            position: relative; 
+            transition: color 0.3s; 
+        }
 
-      #top{
-        background-color:#fff;
-        color:#008080;
-      }
-      .profile {
-        margin-left:10px;
-      }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff; 
+            transition: width 0.3s; 
+        }
+
+        .nav-link:hover {
+            color: #fff; 
+        }
+        .nav-link:hover::after {
+            width: 100%; 
+        }
+
+        #top{
+            background-color:#fff;
+            color:#008080;
+        }
+        .profile {
+            margin-left:10px;
+        }
         .card {
             border:solid 0.1px #0002;
             border-radius:5px;
             box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
-          }
-    
-          .card:hover {
+        }
+
+        .card:hover {
             transform: translateY(-5px);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
-          }
-    
-          .card-title {
+        }
+
+        .card-title {
             font-size: 1.2rem;
             font-weight: bold;
             color:#008080;
-          }
-    
-          .card-text {
+        }
+
+        .card-text {
             font-size: 1rem;
             color: #008080;
-          }
-          .card img {
+        }
+        .card img {
             object-fit: cover;
-          }
+        }
 
-          .btn {
+        .btn {
             border: none;
             border-radius:50px;
             background-color:#008080;
             color: white;
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-              "Lucida Sans", Arial, sans-serif;
-          }
-    
-          .btn:hover{
+                "Lucida Sans", Arial, sans-serif;
+        }
+
+        .btn:hover{
             color:#008080;
             background-color:white;
             border:solid 1px #008080;
             width: 40%;
-          }   
+        }   
 
-          footer {
+        footer {
             background-color: #f8f9fa; 
         }
-        
+
         footer h3 {
             color:#008080;
         } 
-        
+
         footer ul{
             padding-left:5%; 
             list-style-type: none;
         }
-        
+
         footer li {
             margin-bottom: 10px; 
         }
-        
+
         footer a {
             color: gray; 
             text-decoration: none;
             font-size:100%;
         }
         footer p{
-          {% comment %} font-size:clamp(8px, 20px, 32px); {% endcomment %}
+            {% comment %} font-size:clamp(8px, 20px, 32px); {% endcomment %}
         }
-        
+
         footer a:hover {
             color: #000;
             text-decoration:none;
@@ -128,47 +127,46 @@
         } 
 
         @media (max-width:350px){
-          footer{
-            display:none;
-          }
-          .l{
-            display:block;
-            font-size:80%;
-          }
+            footer{
+                display:none;
+            }
+            .l{
+                display:block;
+                font-size:80%;
+            }
         }
 
         @media (max-width:990px){
-          footer{
-            font-size:100%;
-          }
-          #last_footer{
-            display:flex;
-            margin:auto;
-            justify-content:center;
-          }
-          #top{
-            display: none;
-          }
-          .profile{
-            display:none;
-          }
-          #profile{
-            display:block;
-          }
+            footer{
+                font-size:100%;
+            }
+            #last_footer{
+                display:flex;
+                margin:auto;
+                justify-content:center;
+            }
+            #top{
+                display: none;
+            }
+            .profile{
+                display:none;
+            }
+            #profile{
+                display:block;
+            }
         }
         @media (min-width: 991px) {
-          #profile {
-            display: none; 
-          }
-      
-          .nav button{
-            display:none;
-          }
-          .navbar-toggler-icon{
-            display:none;
-          }
-      }
-    </style>
+            #profile {
+                display: none; 
+            }
+
+            .nav button{
+                display:none;
+            }
+            .navbar-toggler-icon{
+                display:none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,27 +235,32 @@
     
 
     <h1 class="text-center mt-5 text-dark">Available Doctors</h1>
-        <div class="container mt-5 border-bottom">
-            <div class="row">
-                {% for doctor in doctors %}
-                <div class="col-12 col-md-6 col-lg-4 ">
-                    <div class="card my-3" style="height: 33rem;" >
-                        <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Somthing Went Wrong" style="height: 15rem;">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
-                            <p class="card-text text-center">{{ doctor.location }}</p>
-                            <p class="card-text text-center">Department - {{ doctor.department }}</p>
-                            <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
-                            <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
-                            <div class="text-center">
-                                <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
-                            </div>
+    <div class="container mt-5 border-bottom">
+        <div class="row">
+            {% for doctor in doctors %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card my-3" style="height: 33rem;">
+                    <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Something Went Wrong" style="height: 15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
+                        <p class="card-text text-center">{{ doctor.location }}</p>
+                        <p class="card-text text-center">Department - {{ doctor.department }}</p>
+                        <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
+                        <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
+                        <div class="text-center">
+                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
+                            {% if doctor in user.userprofile.saved_doctors.all %}
+                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Unsave</button>
+                            {% else %}
+                            <button class="btn btn-success mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="save">Save</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
+    </div>
 
     
 <!--------------Footer------------------>
@@ -325,5 +328,48 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.save-doctor-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const doctorId = this.dataset.doctorId;
+                    const action = this.dataset.action;
+                    fetch(`/save_doctor/${doctorId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: JSON.stringify({ action: action })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (action === 'save') {
+                                this.textContent = 'Unsave';
+                                this.classList.remove('btn-success');
+                                this.classList.add('btn-danger');
+                                this.dataset.action = 'unsave';
+                                Swal.fire('Saved!', 'Doctor has been saved.', 'success');
+                            } else {
+                                this.textContent = 'Save';
+                                this.classList.remove('btn-danger');
+                                this.classList.add('btn-success');
+                                this.dataset.action = 'save';
+                                Swal.fire('Removed!', 'Doctor has been removed.', 'success');
+                            }
+                        } else {
+                            Swal.fire('Error!', 'An error occurred.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Error!', 'An error occurred.', 'error');
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
