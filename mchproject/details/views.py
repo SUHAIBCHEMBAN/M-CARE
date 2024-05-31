@@ -120,99 +120,27 @@ def find_doctor(request):
 
 
 # this user booking views.py function
-# def booking(request):
-#     """
-#     View function to handle the booking process.
-
-#     POST method:
-#         Validates user input for name, address, doctor, and booking time.
-#         Checks if the selected time is within the doctor's working hours.
-#         Verifies if the selected time slot is available for booking with the chosen doctor.
-#         Ensures that the doctor has available slots for booking (up to a maximum of 5 bookings).
-#         Creates the booking if all validations pass.
-
-#     GET method:
-#         Retrieves all doctors for displaying in the booking form.
-
-#     Returns:
-#         Renders the booking form with doctors or error message based on validation results.
-#     """
-    
-#     if request.user.is_authenticated:
-#         if request.method == 'POST':
-#             # Handle form submission
-#             name = request.POST.get('name')
-#             address = request.POST.get('address')
-#             doctor_id = request.POST.get('doctor')
-#             booking_date = request.POST.get('booking_date')
-#             morning_choice = request.POST.get('morning_choice')
-#             noon_choice = request.POST.get('noon_choice')
-
-#             selected_time = morning_choice if morning_choice else noon_choice
-
-#             doctor = Doctor.objects.get(id=doctor_id)
-            
-#             if not (morning_choice and noon_choice):
-#                 if morning_choice:
-#                     noon_choice = None
-#                 elif noon_choice:
-#                     morning_choice = None
-
-#             selected_time = convert_to_time(selected_time)
-
-#             existing_booking = Booking.objects.filter(
-#                             doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
-#             if existing_booking: 
-#                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
-#                 return render(request, 'booking.html', {'error_message': error_message})
-            
-
-#             available_slot = doctor.slot
-#             total_bookings = Booking.objects.filter(doctor=doctor).count()
-#             if total_bookings >= available_slot:
-#                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
-#                 return render(request, 'booking.html', {'error_message': error_message})
-            
-            
-#             selected_time_str = convert_to_string(selected_time)
-
-#             request.session['booking_data'] = {
-#                 'name': name,
-#                 'address': address,
-#                 'doctor_id': doctor_id,
-#                 'selected_time':selected_time_str,
-#                 'booking_date':booking_date,
-#             }
-#             return redirect('payment_page')
-#         else:
-#             # Handle initial GET request
-#             doctor_id = request.GET.get('doctor_id')
-#             doctors = Doctor.objects.prefetch_related('department', 'location', 'location__country').all()
-#             selected_doctor = None
-#             if doctor_id:
-#                 # If doctor_id is provided, attempt to get the doctor
-#                 try:
-#                     selected_doctor = Doctor.objects.get(id=doctor_id)
-#                 except Doctor.DoesNotExist:
-#                     error_message = DOCTOR_NOT
-#                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
-                
-         
-#             morning_choices = generate_time_choices(9, 12)
-#             noon_choices = generate_time_choices(15, 20)
-#             return render(request, 'booking.html', {
-#                 'doctors': doctors,
-#                 'morning_choices': morning_choices,
-#                 'noon_choices': noon_choices,
-#                 'selected_doctor': selected_doctor
-#             })
-#     else:
-#         # Redirect unauthenticated users to the login page
-#         return redirect('login')
-
 def booking(request):
+    """
+    View function to handle the booking process.
+
+    POST method:
+        Validates user input for name, address, doctor, and booking time.
+        Checks if the selected time is within the doctor's working hours.
+        Verifies if the selected time slot is available for booking with the chosen doctor.
+        Ensures that the doctor has available slots for booking (up to a maximum of 5 bookings).
+        Creates the booking if all validations pass.
+
+    GET method:
+        Retrieves all doctors for displaying in the booking form.
+
+    Returns:
+        Renders the booking form with doctors or error message based on validation results.
+    """
+    
     if request.user.is_authenticated:
         if request.method == 'POST':
+            # Handle form submission
             name = request.POST.get('name')
             address = request.POST.get('address')
             doctor_id = request.POST.get('doctor')
@@ -233,16 +161,18 @@ def booking(request):
             selected_time = convert_to_time(selected_time)
 
             existing_booking = Booking.objects.filter(
-                            doctor_id=doctor_id, booking_time=selected_time, booking_date=booking_date).exists()
-            if existing_booking:
+                            doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
+            if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
-                return JsonResponse({'error': error_message}, status=400)
+                return render(request, 'booking.html', {'error_message': error_message})
             
+
             available_slot = doctor.slot
             total_bookings = Booking.objects.filter(doctor=doctor).count()
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
-                return JsonResponse({'error': error_message}, status=400)
+                return render(request, 'booking.html', {'error_message': error_message})
+            
             
             selected_time_str = convert_to_string(selected_time)
 
@@ -250,22 +180,24 @@ def booking(request):
                 'name': name,
                 'address': address,
                 'doctor_id': doctor_id,
-                'selected_time': selected_time_str,
-                'booking_date': booking_date,
+                'selected_time':selected_time_str,
+                'booking_date':booking_date,
             }
-            return JsonResponse({'redirect_url': 'payment_page'})
-
+            return redirect('payment_page')
         else:
+            # Handle initial GET request
             doctor_id = request.GET.get('doctor_id')
             doctors = Doctor.objects.prefetch_related('department', 'location', 'location__country').all()
             selected_doctor = None
             if doctor_id:
+                # If doctor_id is provided, attempt to get the doctor
                 try:
                     selected_doctor = Doctor.objects.get(id=doctor_id)
                 except Doctor.DoesNotExist:
                     error_message = DOCTOR_NOT
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
                 
+         
             morning_choices = generate_time_choices(9, 12)
             noon_choices = generate_time_choices(15, 20)
             return render(request, 'booking.html', {
@@ -275,7 +207,9 @@ def booking(request):
                 'selected_doctor': selected_doctor
             })
     else:
+        # Redirect unauthenticated users to the login page
         return redirect('login')
+
 
 # this aboutus veiws.py function
 def aboutus(request):
