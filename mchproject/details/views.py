@@ -5,7 +5,8 @@ from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.cache import cache
-from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards,UserProfile
+from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards
+from accounts.models import UserProfile
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
