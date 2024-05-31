@@ -243,10 +243,10 @@ def booking_details(request):
     - Rendered HttpResponse object containing the booking details
       displayed on the 'bookingdetails.html' template.
     """
-    if request.user.is_authenticated:
+    # if request.user.is_authenticated:
         bookings = Booking.objects.filter(user=request.user)
         return render(request,'bookingdetails.html',{'bookings':bookings})
-    return render(request,'login.html')
+    # return render(request,'login.html')
 
 
 
@@ -270,7 +270,7 @@ def cancel_booking(request,booking_id):
     booking = get_object_or_404(Booking, pk=booking_id)
     booking.delete()
     message = BOOKING_CANCELED
-    return render(request,'booking.html',{'message':message})
+    return render(request,'bookingdetails.html',{'message':message})
 
 
 # this is IND hospitals list
