@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from datetime import datetime
 from django.shortcuts import render, redirect
 from details.models import Booking, Doctor
@@ -107,6 +108,14 @@ def booking_success(request):
 
     # Remove booking data from session
     del request.session['booking_data']
+
+    # Send confirmation email
+    mail_subject = 'M-CARE Booking Confirmation'
+    message = 'Your booking was successfully made. Thank you for choosing M-CARE Clinic.'
+    from_email = 'your_email@example.com'
+    recipient_list = [request.user.email]
+
+    send_mail(mail_subject, message, from_email, recipient_list)
     
     message = BOOKING_SUCESS
     return render(request, 'bookingdetails.html', {'message': message})
