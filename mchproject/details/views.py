@@ -243,10 +243,10 @@ def booking_details(request):
     - Rendered HttpResponse object containing the booking details
       displayed on the 'bookingdetails.html' template.
     """
-    # if request.user.is_authenticated:
+    if request.user.is_authenticated:
         bookings = Booking.objects.filter(user=request.user)
         return render(request,'bookingdetails.html',{'bookings':bookings})
-    # return render(request,'login.html')
+    return render(request,'login.html')
 
 
 
