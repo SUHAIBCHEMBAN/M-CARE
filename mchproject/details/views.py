@@ -289,6 +289,12 @@ def save_doctor(request, doctor_id):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
+@login_required
+def saved_doctors(request):
+    user_profile = request.user.userprofile
+    saved_doctors_list = user_profile.saved_doctors.all()
+    return render(request, 'saved_doctors.html', {'saved_doctors': saved_doctors_list})
+
 # this is IND hospitals list
 def indian(request):
     """
