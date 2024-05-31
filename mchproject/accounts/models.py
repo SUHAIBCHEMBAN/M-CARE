@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from details.models import Doctor
+
 class UserProfile(models.Model):
     """
     Model representing user profile information.
@@ -14,5 +15,5 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='profile_pics', blank=True, null=True)
-    saved_doctors = models.ManyToManyField('Doctor', related_name='saved_by_users')
+    saved_doctors = models.ManyToManyField(Doctor, related_name='saved_by_users')
 
