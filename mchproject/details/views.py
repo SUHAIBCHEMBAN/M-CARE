@@ -9,6 +9,10 @@ from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner
 from accounts.models import UserProfile
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 # this home views.py function
 def home(request):
@@ -278,17 +282,22 @@ def cancel_booking(request,booking_id):
 @login_required
 @require_POST
 def save_doctor(request, doctor_id):
-    user_profile = request.user.userprofile
-    doctor = get_object_or_404(Doctor, id=doctor_id)
-    data = json.loads(request.body)
-    action = data.get('action')
-    if action == 'save':
-        user_profile.saved_doctors.add(doctor)
-        return JsonResponse({'success': True})
-    elif action == 'unsave':
-        user_profile.saved_doctors.remove(doctor)
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
+    try:
+        user_profile = request.user.userprofile
+        doctor = get_object_or_404(Doctor, id=doctor_id)
+        data = json.loads(request.body)
+        action = data.get('action')
+        if action == 'save':
+            user_profile.saved_doctors.add(doctor)
+            return JsonResponse({'success': True})
+        elif action == 'unsave':
+            user_profile.saved_doctors.remove(doctor)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+    except Exception as e:
+        logger.error(f"Error saving doctor: {e}")
+        return JsonResponse({'success': False})
 
 @login_required
 def saved_doctors(request):
