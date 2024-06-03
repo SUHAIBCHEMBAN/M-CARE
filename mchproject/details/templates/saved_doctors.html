@@ -235,7 +235,7 @@
     <h1 class="text-center mb-5">Your Saved Doctors</h1>
     <div class="row">
         {% for doctor in saved_doctors %}
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4 doctor-item" id="doctor-{{ doctor.id }}">
             <div class="card my-3" style="height: 33rem;">
                 <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Doctor Picture" style="height: 15rem;">
                 <div class="card-body">
@@ -258,7 +258,6 @@
         {% endfor %}
     </div>
 </div>
-
 <!--------------Footer------------------>
 
 <footer class="bg-light">
@@ -324,48 +323,47 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.save-doctor-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const doctorId = this.dataset.doctorId;
-                    const action = this.dataset.action;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.save-doctor-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const doctorId = this.dataset.doctorId;
+                const action = this.dataset.action;
 
-                    fetch(`/save_doctor/${doctorId}/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}', // Ensure this is included
-                        },
-                        body: JSON.stringify({ action: action })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            if (action === 'save') {
-                                this.textContent = 'Unsave';
-                                this.classList.remove('btn-success');
-                                this.classList.add('btn-danger');
-                                this.dataset.action = 'unsave';
-                                Swal.fire('Saved!', 'Doctor has been saved.', 'success');
-                            } else {
-                                this.textContent = 'Save';
-                                this.classList.remove('btn-danger');
-                                this.classList.add('btn-success');
-                                this.dataset.action = 'save';
-                                Swal.fire('Removed!', 'Doctor has been removed.', 'success');
-                            }
+                fetch(`/save_doctor/${doctorId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ action: action })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (action === 'save') {
+                            this.textContent = 'Unsave';
+                            this.classList.remove('btn-success');
+                            this.classList.add('btn-danger');
+                            this.dataset.action = 'unsave';
+                            Swal.fire('Saved!', 'Doctor has been saved.', 'success');
                         } else {
-                            Swal.fire('Error!', 'An error occurred.', 'error');
+                            // Remove the doctor card from the DOM
+                            const doctorCard = document.getElementById(`doctor-${doctorId}`);
+                            doctorCard.remove();
+                            Swal.fire('Removed!', 'Doctor has been removed.', 'success');
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
+                    } else {
                         Swal.fire('Error!', 'An error occurred.', 'error');
-                    });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error!', 'An error occurred.', 'error');
                 });
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>
