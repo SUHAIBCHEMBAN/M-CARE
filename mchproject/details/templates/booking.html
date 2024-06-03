@@ -202,77 +202,78 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var doctorSelect = document.getElementById('id_doctor');
-        var morningChoiceDiv = document.getElementById('morningChoiceDiv');
-        var noonChoiceDiv = document.getElementById('noonChoiceDiv');
-        var bookingForm = document.getElementById('bookingForm');
-        var errorMessageDiv = document.getElementById('error-message');
+    var doctorSelect = document.getElementById('id_doctor');
+    var morningChoiceDiv = document.getElementById('morningChoiceDiv');
+    var noonChoiceDiv = document.getElementById('noonChoiceDiv');
+    var bookingForm = document.getElementById('bookingForm');
+    var errorMessageDiv = document.getElementById('error-message');
 
-        doctorSelect.addEventListener('change', function() {
-            var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
-            var startTime = selectedDoctor.getAttribute('data-start-time');
-            var endTime = selectedDoctor.getAttribute('data-end-time');
+    doctorSelect.addEventListener('change', function() {
+        var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
+        var startTime = selectedDoctor.getAttribute('data-start-time');
+        var endTime = selectedDoctor.getAttribute('data-end-time');
 
-            var startDateTime = new Date();
-            startDateTime.setHours(parseInt(startTime.split(':')[0]));
-            startDateTime.setMinutes(parseInt(startTime.split(':')[1]));
-            var endDateTime = new Date();
-            endDateTime.setHours(parseInt(endTime.split(':')[0]));
-            endDateTime.setMinutes(parseInt(endTime.split(':')[1]));
+        var startDateTime = new Date();
+        startDateTime.setHours(parseInt(startTime.split(':')[0]));
+        startDateTime.setMinutes(parseInt(startTime.split(':')[1]));
+        var endDateTime = new Date();
+        endDateTime.setHours(parseInt(endTime.split(':')[0]));
+        endDateTime.setMinutes(parseInt(endTime.split(':')[1]));
 
-            var morningStartTime = new Date();
-            morningStartTime.setHours(9);
-            morningStartTime.setMinutes(0);
-            var morningEndTime = new Date();
-            morningEndTime.setHours(12);
-            morningEndTime.setMinutes(0);
+        var morningStartTime = new Date();
+        morningStartTime.setHours(9);
+        morningStartTime.setMinutes(0);
+        var morningEndTime = new Date();
+        morningEndTime.setHours(12);
+        morningEndTime.setMinutes(0);
 
-            if (startDateTime <= morningStartTime && endDateTime >= morningEndTime) {
-                morningChoiceDiv.style.display = 'block';
-                noonChoiceDiv.style.display = 'none';
-            } else {
-                morningChoiceDiv.style.display = 'none';
-                noonChoiceDiv.style.display = 'block';
+        if (startDateTime <= morningStartTime && endDateTime >= morningEndTime) {
+            morningChoiceDiv.style.display = 'block';
+            noonChoiceDiv.style.display = 'none';
+        } else {
+            morningChoiceDiv.style.display = 'none';
+            noonChoiceDiv.style.display = 'block';
+        }
+    });
+
+    doctorSelect.dispatchEvent(new Event('change'));
+
+    flatpickr("#id_dat", {
+        dateFormat: "Y-m-d",
+        disable: [
+            function(date) {
+                return (date.getDay() === 0);
             }
-        });
+        ],
+        minDate: "today"
+    });
 
-        doctorSelect.dispatchEvent(new Event('change'));
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-        flatpickr("#id_dat", {
-            dateFormat: "Y-m-d",
-            disable: [
-                function(date) {
-                    return (date.getDay() === 0);
-                }
-            ],
-            minDate: "today"
-        });
+        var formData = new FormData(bookingForm);
 
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            var formData = new FormData(bookingForm);
-
-            fetch("{% url 'booking' %}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = data.redirect_url;
-                } else {
-                    errorMessageDiv.innerHTML = '<p class="text-danger bold ml-4 mt-3">' + data.error_message + '</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        fetch("{% url 'booking' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // If successful, submit the form traditionally to navigate to the payment page
+                bookingForm.submit();
+            } else {
+                errorMessageDiv.innerHTML = '<p class="text-danger bold ml-4 mt-3">' + data.error_message + '</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     });
+});
 </script>
 
 <!-- JS links -->
