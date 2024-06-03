@@ -220,7 +220,7 @@
                     <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
                     <div class="text-center">
                         <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
-                        <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Unsave</button>
+                        <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Remove</button>
                     </div>
                 </div>
             </div>
