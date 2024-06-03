@@ -253,7 +253,7 @@
                         <div class="text-center">
                             <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
                             {% if doctor in user.userprofile.saved_doctors.all %}
-                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Remove</button>
+                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">UnSave</button>
                             {% else %}
                             <button class="btn btn-success mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="save">Save</button>
                             {% endif %}
