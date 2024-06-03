@@ -458,22 +458,22 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
-      // Function to display the SweetAlert toast message every 3 seconds
+      // Function to display the SweetAlert toast message every 10 seconds
       function showAlert() {
         Swal.fire({
           icon: 'info',
           title: 'Importent!',
           text: 'If you have any Emergency Call : 2289574',
           showConfirmButton: false,
-          timer: 3000 // Auto hide after 3 seconds
+          timer: 2000 // Auto hide after 2 seconds
         });
       }
 
       // Display the alert immediately when the page loads
       showAlert();
 
-      // Set an interval to display the alert every 3 seconds
-      setInterval(showAlert, 3000);
+      // Set an interval to display the alert every 10 seconds
+      setInterval(showAlert, 10000);
     </script>
     
   </body>
