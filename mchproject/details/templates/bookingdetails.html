@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-CARE Multi National Clinic | Bookind-Details</title>
+    <title>M-CARE Multi National Clinic | Booking-Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRST+0i0AB6+Qp4YLp4dLl4x1p6gZq5w3fpX7HD+7" crossorigin="anonymous"></script>
     <style>
         body{
           background-color: #f7f7fa;
@@ -232,9 +233,9 @@
 
 <h2 class="text-center mt-3">Booking Details</h2>
 <div class="container mt-5">
-    <div class="row">
+    <div class="row" id="booking-list">
         {% for booking in bookings %}
-            <div class="col-12 col-md-6 col-lg-4 g-3">
+            <div class="col-12 col-md-6 col-lg-4 g-3 booking-item" id="booking-{{ booking.id }}">
                 <div class="card my-3" style="height: 100%;">
                     <div class="card-body d-flex flex-column justify-content-between text-center">
                         <div>
@@ -245,7 +246,7 @@
                             <p class="card-text">{{ booking.booking_date }}</p>
                             <p class="card-text text-success"><i>{{ booking.status }}</i></p>
                         </div>
-                        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm mt-3">Cancel</a>
+                        <button class="btn btn-cancel btn-sm mt-3 cancel-booking-btn" data-booking-id="{{ booking.id }}">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -253,19 +254,46 @@
     </div>
 </div>
 
-
-    <!--------------Footer------------------>
+<!--------------Footer------------------>
 
 <footer class="py-3  text-white text-center">
   <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
 </footer>
-    
-    <!-----------------js link------------------>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<!-----------------js link------------------>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+    $('.cancel-booking-btn').click(function() {
+        var bookingId = $(this).data('booking-id');
+        $.ajax({
+            url: '{% url "cancel_booking" 0 %}'.replace('0', bookingId),
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                $('#booking-' + bookingId).remove();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Booking canceled successfully!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            },
+            error: function(response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error cancelling booking!',
+                    text: 'Please try again later.',
+                });
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
-
-
-     
-     
