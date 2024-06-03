@@ -242,27 +242,24 @@ def cancel_booking(request, booking_id):
     View function to cancel a specific booking.
 
     Retrieves the booking object with the given booking ID from the database,
-    deletes it, and then returns a JSON response for AJAX requests or renders
-    the 'bookingdetails.html' template for non-AJAX requests.
+    deletes it, and returns a JSON response for AJAX requests.
 
     Parameters:
     - request: HttpRequest object
     - booking_id: Integer representing the ID of the booking to be canceled
 
     Returns:
-    - JSON response for AJAX requests
-    - Rendered HttpResponse object containing the 'bookingdetails.html' template
-      for non-AJAX requests
+    - JsonResponse object indicating success or failure
     """
-    
-    booking = get_object_or_404(Booking, pk=booking_id)
-    booking.delete()
+    if request.method == 'POST':
+        try:
+            booking = get_object_or_404(Booking, pk=booking_id)
+            booking.delete()
+            return JsonResponse({'success': True})
+        except:
+            return JsonResponse({'success': False})
+    return JsonResponse({'success': False})
 
-    if request.is_ajax():
-        return JsonResponse({'message': 'Booking canceled successfully!'})
-    
-    message = BOOKING_CANCELED
-    return render(request, 'bookingdetails.html', {'message': message})
     
 
 @login_required
