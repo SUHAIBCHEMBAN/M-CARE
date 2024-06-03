@@ -258,17 +258,31 @@ def cancel_booking(request, booking_id):
         except:
             return JsonResponse({'success': False})
     return JsonResponse({'success': False})
-
     
 
 @login_required
 @require_POST
 def save_doctor(request, doctor_id):
+    """
+    Handles the saving and unsaving of doctors to a user's profile.
+
+    This view expects a POST request with a JSON payload containing an 'action' key.
+    The 'action' key can have two values: 'save' or 'unsave', which will respectively
+    add or remove the doctor with the given ID from the user's saved doctors list.
+
+    Parameters:
+    request (HttpRequest): The request object.
+    doctor_id (int): The ID of the doctor to be saved or unsaved.
+
+    Returns:
+    JsonResponse: A JSON response indicating success or failure.
+    """
     try:
         user_profile = request.user.userprofile
         doctor = get_object_or_404(Doctor, id=doctor_id)
         data = json.loads(request.body)
         action = data.get('action')
+
         if action == 'save':
             user_profile.saved_doctors.add(doctor)
             return JsonResponse({'success': True})
@@ -281,11 +295,24 @@ def save_doctor(request, doctor_id):
         logger.error(f"Error saving doctor: {e}")
         return JsonResponse({'success': False})
 
+
 @login_required
 def saved_doctors(request):
+    """
+    Displays the list of doctors saved by the user.
+
+    This view retrieves all doctors saved by the user and renders them in the 'saved_doctors.html' template.
+
+    Parameters:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: A rendered HTML page displaying the list of saved doctors.
+    """
     user_profile = request.user.userprofile
     saved_doctors_list = user_profile.saved_doctors.all()
     return render(request, 'saved_doctors.html', {'saved_doctors': saved_doctors_list})
+
 
 # this is IND hospitals list
 def indian(request):
