@@ -141,7 +141,7 @@ def booking(request):
             selected_time = morning_choice if morning_choice else noon_choice
 
             doctor = Doctor.objects.get(id=doctor_id)
-            
+
             if not (morning_choice and noon_choice):
                 if morning_choice:
                     noon_choice = None
@@ -151,7 +151,7 @@ def booking(request):
             selected_time = convert_to_time(selected_time)
 
             existing_booking = Booking.objects.filter(
-                            doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
+                            doctor_id=doctor_id, booking_time=selected_time, booking_date=booking_date).exists()
             if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
                 return JsonResponse({'success': False, 'error_message': error_message})
@@ -161,7 +161,7 @@ def booking(request):
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
                 return JsonResponse({'success': False, 'error_message': error_message})
-            
+
             selected_time_str = convert_to_string(selected_time)
 
             request.session['booking_data'] = {
@@ -171,7 +171,7 @@ def booking(request):
                 'selected_time': selected_time_str,
                 'booking_date': booking_date,
             }
-            return redirect('payment_page')
+            return JsonResponse({'success': True, 'redirect_url': '/payment_page/'})
         else:
             # Handle initial GET request
             doctor_id = request.GET.get('doctor_id')
@@ -181,7 +181,7 @@ def booking(request):
                 try:
                     selected_doctor = Doctor.objects.get(id=doctor_id)
                 except Doctor.DoesNotExist:
-                    error_message = DOCTOR_NOT
+                    error_message = "Doctor does not exist."
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
 
             morning_choices = generate_time_choices(9, 12)
@@ -194,7 +194,6 @@ def booking(request):
             })
     else:
         return redirect('login')
-
 
 
 # this aboutus veiws.py function
