@@ -6,230 +6,184 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M-CARE Multi National Clinic | Booking-Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRST+0i0AB6+Qp4YLp4dLl4x1p6gZq5w3fpX7HD+7" crossorigin="anonymous"></script>
     <style>
-        body{
-          background-color: #f7f7fa;
-          color:#008080;
+        body {
+            background-color: #f7f7fa;
+            color: #008080;
         }
         .profile {
-          margin-left:10px;
+            margin-left: 10px;
+        }
+        .nav-link {
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s;
+        }
+        .nav-link:hover {
+            color: #fff;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        #top {
+            background-color: #fff;
+            color: #008080;
+        }
+        .btn {
+            border: none;
+            border-radius: 50px;
+            background-color: #008080;
+            color: white;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+        }
+        .btn:hover {
+            color: #008080;
+            background-color: white;
+            border: solid 1px #008080;
+            width: 40%;
+        }
+        .btn-cancel {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-cancel:hover {
+            border-color: #bd2130;
+            color: #dc3545;
         }
         
-    .nav-link {
-      font-size: 1.2rem;
-      color: #fff;
-      text-decoration: none; 
-      position: relative;
-      transition: color 0.3s; 
-  }
-  
-  .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #fff; 
-      transition: width 0.3s; 
-  }
-  
-  .nav-link:hover {
-      color: #fff; 
-  }
-  .nav-link:hover::after {
-      width: 100%; 
-  }
-
-        #top{
-          background-color:#fff;
-          color:#008080;
+        footer {
+            background-color: #008080;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
         }
-
-        .btn {
-          border: none;
-          border-radius:50px;
-          background-color:#008080;
-          color: white;
-          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-            "Lucida Sans", Arial, sans-serif;
+        @media (max-width: 350px) {
+            footer {
+                display: none;
+            }
+            .l {
+                display: block;
+                font-size: 80%;
+            }
         }
-  
-        .btn:hover{
-          color:#008080;
-          background-color:white;
-          border:solid 1px #008080;
-          width: 40%;
-        } 
-        .btn-cancel {
-          background-color: #dc3545;
-          border-color: #dc3545;
-      }
-      .btn-cancel:hover {
-          border-color: #bd2130;
-          color:#dc3545;
-      } 
-    
-      footer {
-          background-color:#008080;
-          color: white;
-          padding: 20px 0;
-          text-align: center;
-      }
-      @media (max-width:350px){
-        footer{
-          display:none;
+        @media (max-width: 990px) {
+            footer {
+                font-size: 100%;
+            }
+            #last_footer {
+                display: flex;
+                margin: auto;
+                justify-content: center;
+            }
+            #top {
+                display: none;
+            }
+            .profile {
+                display: none;
+            }
+            #profile {
+                display: block;
+            }
         }
-        .l{
-          display:block;
-          font-size:80%;
+        .card {
+            border: solid 0.1px #0002;
+            border-radius: 5px;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
         }
-      }
-     @media (max-width:990px){
-      footer{
-        font-size:100%;
-      }
-      #last_footer{
-        display:flex;
-        margin:auto;
-        justify-content:center;
-      }
-      #top{
-        display: none;
-      }
-      .profile{
-        display:none;
-      }
-      #profile{
-        display:block;
-      }
-    } 
-    .card {
-      border: solid 0.1px #0002;
-      border-radius: 5px;
-      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-  }
-
-  .card-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #008080;
-  }
-
-  .card-text {
-      font-size: 1rem;
-      color: #008080;
-  }
-
-  .card img {
-      object-fit: cover;
-  }
-
-  @media (min-width: 991px) {
-    #profile {
-      display: none; 
-    }
-
-    .nav button{
-      display:none;
-    }
-    .navbar-toggler-icon{
-      display:none;
-    }
-}
-      </style>
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #008080;
+        }
+        .card-text {
+            font-size: 1rem;
+            color: #008080;
+        }
+        .card img {
+            object-fit: cover;
+        }
+        @media (min-width: 991px) {
+            #profile {
+                display: none;
+            }
+            .nav button {
+                display: none;
+            }
+            .navbar-toggler-icon {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body> 
-    
-        <!--------sweet alert-------->
-    
-{% if message %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-      // Wait for the DOM to be fully loaded
-      document.addEventListener('DOMContentLoaded', function () {
-        // Display the SweetAlert toast message
-        Swal.fire({
-          icon: 'success',
-          title: '{{ message }}',
-          showConfirmButton: false,
-          timer: 5000 // Auto hide after 5 seconds
-        });
-      });
-    </script>
-{% endif %}
 
-  <!-------------Navbar------------------>
+    <!-------------Navbar------------------>
 
-<nav class="navbar navbar-expand-lg sticky-top d-flex"style="background-color:#008080;" height:"5.5rem;">
-  <div class="container-fluid">
-    <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
-    <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon mt-2"></span>
-      <div class="nav-item" id="profile">
-      {% if user.is_authenticated %}
-        {% if user.userprofile.profile_picture %}
-        <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-          <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-        {% else %}
-        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-        {% endif %}
-      {% else %}
-        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
-          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-      {% endif %}
-      </div> 
-    </button>
+<nav class="navbar navbar-expand-lg sticky-top d-flex" style="background-color:#008080;" height:"5.5rem;">
+    <div class="container-fluid">
+        <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+        <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon mt-2"></span>
+            <div class="nav-item" id="profile">
+                {% if user.userprofile.profile_picture %}
+                <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+                    <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+                </a>
+                {% else %}
+                <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+                    <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+                </a>
+                {% endif %}
+            </div>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-        </li> 
-      </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+                </li> 
+            </ul>
+        </div>
+        <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
+        <div class="profile">
+            {% if user.userprofile.profile_picture %}
+            <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+                <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+            </a>
+            {% else %}
+            <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+                <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+            </a>
+            {% endif %}
+        </div>
     </div>
-    <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
-    <div class="profile">
-      {% if user.is_authenticated %}
-        {% if user.userprofile.profile_picture %}
-        <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-          <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-        {% else %}
-        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-        {% endif %}
-      {% else %}
-        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
-          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-        </a>
-      {% endif %}
-    </div>
-  </div>
 </nav>
-  
 
-    <!--------user booking details--------> 
+<!--------user booking details--------> 
 
 <h2 class="text-center mt-3">Booking Details</h2>
 <div class="container mt-5">
@@ -246,7 +200,7 @@
                             <p class="card-text">{{ booking.booking_date }}</p>
                             <p class="card-text text-success"><i>{{ booking.status }}</i></p>
                         </div>
-                        <button class="btn btn-cancel btn-sm mt-3 cancel-booking-btn" data-booking-id="{{ booking.id }}">Cancel</button>
+                        <button class="btn btn-cancel btn-sm mt-3 cancel-booking" data-booking-id="{{ booking.id }}">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -255,46 +209,66 @@
 </div>
 
 <!--------------Footer------------------>
-
-<footer class="py-3  text-white text-center">
-  <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+    
+<footer class="py-3 text-white text-center mt-5">
+    <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
 </footer>
 
 <!-----------------js link------------------>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-$(document).ready(function() {
-    $('.cancel-booking-btn').click(function() {
-        var bookingId = $(this).data('booking-id');
-        $.ajax({
-            url: '{% url "cancel_booking" 0 %}'.replace('0', bookingId),
-            type: 'POST',
-            data: {
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function(response) {
-                $('#booking-' + bookingId).remove();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Booking canceled successfully!',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            },
-            error: function(response) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error cancelling booking!',
-                    text: 'Please try again later.',
-                });
-            }
+    $(document).ready(function() {
+        $('.cancel-booking').on('click', function() {
+            const bookingId = $(this).data('booking-id');
+            const bookingElement = $(this).closest('.booking-item');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{% url "cancel_booking" 0 %}'.replace('0', bookingId),
+                        method: 'POST',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                bookingElement.remove();
+                                Swal.fire(
+                                    'Canceled!',
+                                    'Your booking has been canceled.',
+                                    'success'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while canceling your booking.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function() {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while canceling your booking.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
         });
     });
-});
 </script>
-
 </body>
 </html>
