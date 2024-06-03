@@ -171,7 +171,7 @@ def booking(request):
                 'selected_time': selected_time_str,
                 'booking_date': booking_date,
             }
-            return JsonResponse({'success': True, 'redirect_url': '/payment_page/'})
+            return JsonResponse({'success': True, 'redirect_url': '/doctor_payment/'})
         else:
             # Handle initial GET request
             doctor_id = request.GET.get('doctor_id')
