@@ -116,6 +116,4 @@ def booking_success(request):
     recipient_list = [request.user.email]
 
     send_mail(mail_subject, message, from_email, recipient_list)
-    
-    message = BOOKING_SUCESS
-    return render(request, 'bookingdetails.html', {'message': message})
+    return render(request,'booking_success.html')
