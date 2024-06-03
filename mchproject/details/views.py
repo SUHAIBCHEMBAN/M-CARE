@@ -127,6 +127,8 @@ def find_doctor(request):
 
 
 # this user booking views.py function
+from django.http import JsonResponse
+
 def booking(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -168,8 +170,8 @@ def booking(request):
                 'name': name,
                 'address': address,
                 'doctor_id': doctor_id,
-                'selected_time':selected_time_str,
-                'booking_date':booking_date,
+                'selected_time': selected_time_str,
+                'booking_date': booking_date,
             }
             return JsonResponse({'success': True, 'redirect_url': reverse('payment_page')})
         else:
