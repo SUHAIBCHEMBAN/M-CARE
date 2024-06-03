@@ -202,78 +202,54 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    var doctorSelect = document.getElementById('id_doctor');
-    var morningChoiceDiv = document.getElementById('morningChoiceDiv');
-    var noonChoiceDiv = document.getElementById('noonChoiceDiv');
-    var bookingForm = document.getElementById('bookingForm');
-    var errorMessageDiv = document.getElementById('error-message');
+        var doctorSelect = document.getElementById('id_doctor');
+        var morningChoiceDiv = document.getElementById('morningChoiceDiv');
+        var noonChoiceDiv = document.getElementById('noonChoiceDiv');
 
-    doctorSelect.addEventListener('change', function() {
-        var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
-        var startTime = selectedDoctor.getAttribute('data-start-time');
-        var endTime = selectedDoctor.getAttribute('data-end-time');
+        doctorSelect.addEventListener('change', function() {
+            var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
+            var startTime = selectedDoctor.getAttribute('data-start-time');
+            var endTime = selectedDoctor.getAttribute('data-end-time');
 
-        var startDateTime = new Date();
-        startDateTime.setHours(parseInt(startTime.split(':')[0]));
-        startDateTime.setMinutes(parseInt(startTime.split(':')[1]));
-        var endDateTime = new Date();
-        endDateTime.setHours(parseInt(endTime.split(':')[0]));
-        endDateTime.setMinutes(parseInt(endTime.split(':')[1]));
+            // Convert doctor's start and end times to JavaScript Date objects
+            var startDateTime = new Date();
+            startDateTime.setHours(parseInt(startTime.split(':')[0]));
+            startDateTime.setMinutes(parseInt(startTime.split(':')[1]));
+            var endDateTime = new Date();
+            endDateTime.setHours(parseInt(endTime.split(':')[0]));
+            endDateTime.setMinutes(parseInt(endTime.split(':')[1]));
 
-        var morningStartTime = new Date();
-        morningStartTime.setHours(9);
-        morningStartTime.setMinutes(0);
-        var morningEndTime = new Date();
-        morningEndTime.setHours(12);
-        morningEndTime.setMinutes(0);
+            // Define morning time range
+            var morningStartTime = new Date();
+            morningStartTime.setHours(9);
+            morningStartTime.setMinutes(0);
+            var morningEndTime = new Date();
+            morningEndTime.setHours(12);
+            morningEndTime.setMinutes(0);
 
-        if (startDateTime <= morningStartTime && endDateTime >= morningEndTime) {
-            morningChoiceDiv.style.display = 'block';
-            noonChoiceDiv.style.display = 'none';
-        } else {
-            morningChoiceDiv.style.display = 'none';
-            noonChoiceDiv.style.display = 'block';
-        }
-    });
-
-    doctorSelect.dispatchEvent(new Event('change'));
-
-    flatpickr("#id_dat", {
-        dateFormat: "Y-m-d",
-        disable: [
-            function(date) {
-                return (date.getDay() === 0);
-            }
-        ],
-        minDate: "today"
-    });
-
-    bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        var formData = new FormData(bookingForm);
-
-        fetch("{% url 'booking' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // If successful, submit the form traditionally to navigate to the payment page
-                bookingForm.submit();
+            // Check if the doctor's working hours include morning time (9 am to 12 pm)
+            if (startDateTime <= morningStartTime && endDateTime >= morningEndTime) {
+                morningChoiceDiv.style.display = 'block';
+                noonChoiceDiv.style.display = 'none';
             } else {
-                errorMessageDiv.innerHTML = '<p class="text-danger bold ml-4 mt-3">' + data.error_message + '</p>';
+                morningChoiceDiv.style.display = 'none';
+                noonChoiceDiv.style.display = 'block';
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+        });
+
+        // Trigger change event on page load to ensure initial state is set correctly
+        doctorSelect.dispatchEvent(new Event('change'));
+
+        flatpickr("#id_dat", {
+            dateFormat: "Y-m-d",
+            disable: [
+                function(date) {
+                    return (date.getDay() === 0);  // Disable Sundays
+                }
+            ],
+            minDate: "today"  // Disallow past dates
         });
     });
-});
 </script>
 
 <!-- JS links -->
@@ -281,3 +257,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
