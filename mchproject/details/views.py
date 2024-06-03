@@ -127,8 +127,6 @@ def find_doctor(request):
 
 
 # this user booking views.py function
-from django.http import JsonResponse
-
 def booking(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -239,26 +237,33 @@ def booking_details(request):
 
 
 # this is cancel_booking vews.py function
-def cancel_booking(request,booking_id):
-
+def cancel_booking(request, booking_id):
     """
     View function to cancel a specific booking.
 
     Retrieves the booking object with the given booking ID from the database,
-    deletes it, and then renders the 'booking.html' template.
+    deletes it, and then returns a JSON response for AJAX requests or renders
+    the 'bookingdetails.html' template for non-AJAX requests.
 
     Parameters:
     - request: HttpRequest object
     - booking_id: Integer representing the ID of the booking to be canceled
 
     Returns:
-    - Rendered HttpResponse object containing the 'booking.html' template
+    - JSON response for AJAX requests
+    - Rendered HttpResponse object containing the 'bookingdetails.html' template
+      for non-AJAX requests
     """
     
     booking = get_object_or_404(Booking, pk=booking_id)
     booking.delete()
+
+    if request.is_ajax():
+        return JsonResponse({'message': 'Booking canceled successfully!'})
+    
     message = BOOKING_CANCELED
-    return render(request,'bookingdetails.html',{'message':message})
+    return render(request, 'bookingdetails.html', {'message': message})
+    
 
 @login_required
 @require_POST
