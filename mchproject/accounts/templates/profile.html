@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +15,12 @@
 
 * {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
     background-color: #e8f5ff;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
+    font-family: Arial;
+    overflow: hidden;
 }
 
 /* NavbarTop */
@@ -30,26 +29,25 @@ body {
     color: #333;
     box-shadow: 0px 4px 8px 0px grey;
     height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
 }
 
 .title {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.5em;
+    padding-top: 15px;
+    position: absolute;
+    left: 45%;
 }
 
 .navbar-top ul {
-    display: flex;
+    float: right;
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    overflow: hidden;
+    padding: 18px 50px 0 40px;
 }
 
 .navbar-top ul li {
-    margin-left: 20px;
+    float: left;
 }
 
 .navbar-top ul li a {
@@ -57,73 +55,74 @@ body {
     padding: 14px 16px;
     text-align: center;
     text-decoration: none;
-    position: relative;
 }
 
 .icon-count {
     background-color: #ff0000;
     color: #fff;
+    float: right;
     font-size: 11px;
-    padding: 2px 5px;
-    border-radius: 50%;
-    position: absolute;
-    top: 8px;
-    right: 5px;
+    left: -25px;
+    padding: 2px;
+    position: relative;
 }
+
+/* End */
 
 /* Sidenav */
 .sidenav {
     background-color: #fff;
     color: #333;
     border-bottom-right-radius: 25px;
-    padding: 20px;
+    height: 86%;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
     position: absolute;
     top: 70px;
-    left: 0;
     width: 250px;
-    height: calc(100% - 70px);
-    overflow-y: auto;
 }
 
 .profile {
-    text-align: center;
     margin-bottom: 20px;
+    margin-top: -12px;
+    text-align: center;
 }
 
 .profile img {
     border-radius: 50%;
     box-shadow: 0px 0px 5px 1px grey;
-    width: 150px;
-    height: 150px;
 }
 
 .name {
     font-size: 20px;
     font-weight: bold;
-    margin-top: 20px;
+    padding-top: 20px;
 }
 
 .form__input {
     width: 100%;
-    border: 0;
+    max-width: 500px;
+    border: 0px solid transparent;
+    border-radius: 0;
     border-bottom: 1px solid #aaa;
     outline: none;
-    margin: 1.5em 0;
-    transition: all 0.5s ease;
+    margin: 1.5em auto;
+    transition: all .5s ease;
 }
 
 .form__input:focus {
     border-bottom-color: #008080;
-    box-shadow: 0 0 5px rgba(0, 80, 80, 0.4);
+    box-shadow: 0 0 5px rgba(0, 80, 80, .4);
     border-radius: 4px;
 }
 
-.url {
+.url, hr {
     text-align: center;
 }
 
 .url hr {
-    margin: 20px auto;
+    margin-left: 20%;
     width: 60%;
 }
 
@@ -136,8 +135,7 @@ body {
     text-decoration: none;
 }
 
-.url a:hover,
-.url .active {
+.url a:hover, .url .active {
     background-color: #e8f5ff;
     border-radius: 28px;
     color: #000;
@@ -145,13 +143,15 @@ body {
     width: 65%;
 }
 
+/* End */
+
 /* Main */
 .main {
-    margin: 2% auto;
+    margin-top: 2%;
+    margin-left: 29%;
     font-size: 28px;
     padding: 0 10px;
-    width: 90%;
-    max-width: 800px;
+    width: 58%;
 }
 
 .main h2 {
@@ -165,71 +165,60 @@ body {
     background-color: #fff;
     border-radius: 18px;
     box-shadow: 1px 1px 8px 0 grey;
+    height: auto;
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 20px 0 20px 50px;
 }
 
-.main .card-body {
-    display: flex;
-    flex-direction: column;
+.main .card table {
+    border: none;
+    font-size: 16px;
+    height: 270px;
+    width: 80%;
 }
 
-.buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.edit {
+    position: absolute;
+    color: #e7e7e8;
+    right: 14%;
+}
+.fa-check:hover{
+    color:green;
 }
 
-.btn.l {
+.fa-times:hover{
+    color:red;
+}
+img {
+    height: 9.5rem;
+    width: 10rem;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+    display: none;
+}
+label{
+    font-family:'Times New Roman', Times, serif;
+}
+
+.l{
     border: none;
     border-radius: 50px;
     background-color: #008080;
     color: white;
-    padding: 10px 20px;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    text-align: center;
+    margin: 5px;
+    transition: all .3s ease;
 }
 
-.btn.l:hover {
+.l:hover {
     color: #008080;
     background-color: white;
     border: solid 1px #008080;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .navbar-top {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
-
-    .navbar-top ul {
-        justify-content: center;
-        width: 100%;
-    }
-
-    .navbar-top ul li {
-        margin-left: 10px;
-    }
-
-    .sidenav {
-        position: relative;
-        width: 100%;
-        height: auto;
-        border-radius: 0;
-        padding: 20px;
-        border-bottom-right-radius: 0;
-    }
-
-    .main {
-        margin-left: 0;
-        width: 100%;
-    }
-}
-
+/* End */
     </style>
 </head>
 <body>
@@ -294,13 +283,13 @@ body {
         <h2>IDENTITY</h2>
         <div class="card">
             <div class="card-body">
-                <form method="post" class="mt-3">
-                    {% csrf_token %}
-                    <input type="text" name="username" id="username" value="{{ user.username }}" class="form__input">
-                    <button type="submit" class="btn l">Save</button>
-                </form>
-                <h5>Email:
-                {% if user.email %}{{ user.email }}{% else %}Guest{% endif %} !</h5>
+                                <form method="post" class="mt-3">
+                                    {% csrf_token %}
+                                    <input type="text" name="username" id="username" value="{{ user.username }}" class="form__input">
+                                    <button type="submit" class="btn l">Save</button>
+                                </form>
+                                <h5>Email:
+                                {% if user.email %}{{ user.email }}{% else %}Guest{% endif %} !</h5>
             </div>
         </div>
 
@@ -309,11 +298,14 @@ body {
             <a href="{% url 'booking_details' %}" class="btn l">Booking Details</a>
             <a href="{% url 'saved_doctors' %}" class="btn l">Saved Doctors</a>
         </div>
-    </div>
-    <!-- End -->
 
-    <!-- JS Scripts -->
+        
+    
+    <!-------js link------>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
-</html>
+</html> 
+
+
