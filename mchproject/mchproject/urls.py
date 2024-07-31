@@ -26,6 +26,7 @@ urlpatterns = [
     path('',include('customadmin.urls')),
     path('',include('details.urls')),
     path('',include('payment.urls')),
+    path('',include('admission.urls')),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 # Debug Toolbar URL configuration

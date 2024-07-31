@@ -59,9 +59,11 @@
 <body>
     <div class="container">
         <i class="fas fa-check-circle success-icon"></i>
-        <h1 class='text-success'>Booking Successful</h1>
+        <h1 class='text-success'>Booking Completed</h1>
         <p class='text-success'>Your booking has been successfully made</p>
-        <a href="{% url 'booking' %}" class="button">Go Back</a>
+        <p class='text-success'>Thenks for Choose M-CARE Clinic</p>
+        <a href="{% url 'home' %}" class="button">Go Back</a>
+        <a href="{% url 'booking_details' %}" class="button">View Booking Details</a>
     </div> 
    <!-- JS Links -->
    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

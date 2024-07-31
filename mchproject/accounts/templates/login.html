@@ -51,6 +51,11 @@
         border-top:1px solid #ccc;
         border-right:1px solid #ccc;
     }
+    .company__logo img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
     form{
         padding: 0 2em;
     }
@@ -91,7 +96,7 @@
 	<div class="container-fluid">
 		<div class="row main-content bg-success text-center">
 			<div class="col-md-4 text-center company__info">
-				<span class="company__logo"><h2><span class="fa fa-android"></span></h2></span>
+                <span class="company__logo"><img src="{% static 'image/M-CARE logo.png' %}" alt="Company Logo"></span><br>
 				<h4 class="company_title">M-CARE CLINIC</h4>
 			</div>
 			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
@@ -108,6 +113,7 @@
 							<div class="row form-group">
                                 <input type="email" class="form__input"  id="email" name="email" placeholder="Email" required>
 							</div>
+                                <a href="{% url 'home' %}" class="btn last">Close</a>
 								<input type="submit" value="Submit" class="btn">
 						</form>
 					</div>

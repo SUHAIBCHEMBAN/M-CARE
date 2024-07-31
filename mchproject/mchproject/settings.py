@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-*$2nk8(m25!!lrtoxmo9^5y*(yoe047yb2ahb%9xz(ifrp@14+'
 
-ALLOWED_HOSTS = ['54.88.34.113', 'localhost']
+# ALLOWED_HOSTS = ['54.88.34.113', 'localhost']
 
-INTERNAL_IPS = ['127.0.0.1', '::1'] 
+# INTERNAL_IPS = ['127.0.0.1', '::1'] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,9 +45,10 @@ INSTALLED_APPS = [
     'customadmin',
     'details',
     'payment',
-    # 'celery',
-    # 'django_celery_results',
-    # 'django_celery_beat',
+    'admission',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'mcare',
-        'USER':'admin',
-        'PASSWORD':'password',
+        'USER':'postgres',
+        'PASSWORD':'1234',
         'HOST':'localhost',
         'PORT':''
     }
@@ -129,21 +130,21 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 import os
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    # Add other directories if needed
+]
 
 # email backend
 
@@ -167,20 +168,21 @@ RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
 
 # Celery settings
 
-# from celery.schedules import crontab
+from celery.schedules import crontab
 
-# CELERY_BROKER_URL = 'redis://localhost:6379/0'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
-# CELERY_BEAT_SCHEDULE = {
-#     'check_bookings': {
-#         'task': 'details.tasks.check_bookings',
-#         'schedule': crontab(hour=2, minute=0),  # Run at 02:00 AM IST every day
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    'check_bookings': {
+        'task': 'details.tasks.check_bookings',
+        'schedule': crontab(hour=2, minute=0),  # Run at 2:00 am ist every day
+    },
+}
+
 
 # Cache configuration
 CACHES = {

@@ -21,9 +21,9 @@
           }
     
           .card:hover {
-            transform: translateY(-5px);
+            {% comment %} transform: translateY(-5px); {% endcomment %}
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            {% comment %} transition: transform 0.3s; {% endcomment %}
           }
     
           .card-title {
@@ -40,19 +40,19 @@
           }
         
           .btn {
-            border: none;
-            border-radius:50px;
-            background-color:#008080;
+            border: solid 1px;
+            border-radius:5px;
+            background-color:#000;
             color: white;
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
               "Lucida Sans", Arial, sans-serif;
           }   
 
           .btn:hover{
-            color:#008080;
+            color:#000;
             background-color:white;
-            border:solid 1px #008080;
-            width: 50%;
+            border:solid 1px #000;
+            font-weight:500;
           }
 
         @media (max-width: 768px) {

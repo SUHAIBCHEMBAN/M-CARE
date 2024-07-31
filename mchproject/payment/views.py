@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from datetime import datetime
 from django.shortcuts import render, redirect
 from details.models import Booking, Doctor
@@ -5,7 +6,6 @@ from mchproject.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
 import razorpay
 from constants import *
 from django.contrib import messages
-
 
 def doctor_payment(request):
     """
@@ -74,8 +74,7 @@ def doctor_payment(request):
         'department':department,
     }
     return render(request, 'payment.html', context)
-
-
+ 
 def booking_success(request):
     """
     View function to handle booking success.
@@ -109,7 +108,12 @@ def booking_success(request):
 
     # Remove booking data from session
     del request.session['booking_data']
-    
-    message = BOOKING_SUCESS
-    print(message)
-    return render(request, 'booking.html', {'message': message})
+
+    # Send confirmation email
+    mail_subject = 'M-CARE Booking Confirmation'
+    message = 'Your booking was successfully made. Thank you for choosing M-CARE Clinic.'
+    from_email = 'your_email@example.com'
+    recipient_list = [request.user.email]
+
+    send_mail(mail_subject, message, from_email, recipient_list)
+    return render(request,'booking_success.html')

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-CARE Multi National Clinic | Doctors</title>
+    <title>Saved Doctors</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
@@ -43,11 +43,6 @@
             background-color:#fff;
             color:#008080;
         }
-
-        #top:hover{
-          border:none;
-          width:20%;
-        }
         .profile {
             margin-left:10px;
         }
@@ -77,58 +72,28 @@
             object-fit: cover;
         }
 
-        .b{
+        .btn {
             border: none;
             border-radius:5px;
             {% comment %} background-color:#008080; {% endcomment %}
-            background-color:#000;
+            background-color:#000; 
             color: white;
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
                 "Lucida Sans", Arial, sans-serif;
         }
 
-        .b:hover{
-            {% comment %} color:#008080; {% endcomment %}
+        .btn:hover{
+            color:#000 ;
             background-color:white;
-            color:#000;
             border:solid 1px #000;
             width: 40%;
         }   
-        .save-doctor-btn{
+         .save-doctor-btn{
             margin-bottom:10px;    
         }
-        
         footer {
             background-color: #f8f9fa; 
         }
-
-        footer h3 {
-            color:#008080;
-        } 
-
-        footer ul{
-            padding-left:5%; 
-            list-style-type: none;
-        }
-
-        footer li {
-            margin-bottom: 10px; 
-        }
-
-        footer a {
-            color: gray; 
-            text-decoration: none;
-            font-size:100%;
-        }
-        footer p{
-            {% comment %} font-size:clamp(8px, 20px, 32px); {% endcomment %}
-        }
-
-        footer a:hover {
-            color: #000;
-            text-decoration:none;
-        }
-
         footer {
             background-color:#008080;
             color: white;
@@ -216,7 +181,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-        </li> 
+        </li>
       </ul>
     </div>
     <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
@@ -238,148 +203,88 @@
       {% endif %}
     </div>
   </div>
-</nav>  
+</nav>
 
-
-    <!-----------Cards---------->
-    
-
-    <h1 class="text-center mt-5 text-dark">Available Doctors</h1>
-    <div class="container mt-5 border-bottom">
-        <div class="row">
-            {% for doctor in doctors %}
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card my-3" style="height: 33rem;">
-                    <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Something Went Wrong" style="height: 15rem;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
-                        <p class="card-text text-center">{{ doctor.location }}</p>
-                        <p class="card-text text-center">Department - {{ doctor.department }}</p>
-                        <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
-                        <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
-                        <div class="text-center">
-                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn b">Book Now</a>
-                            {% if doctor in user.userprofile.saved_doctors.all %}
-                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Unsave</button>
-                            {% else %}
-                            <button class="btn btn-success mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="save">Save</button>
-                            {% endif %}
-                        </div>
+<!--------------Main Content------------------>
+<div class="container mt-5 border-bottom">
+    <h1 class="text-center mb-5">Your Saved Doctors</h1>
+    <div class="row">
+        {% for doctor in saved_doctors %}
+        <div class="col-12 col-md-6 col-lg-4 doctor-item" id="doctor-{{ doctor.id }}">
+            <div class="card my-3" style="height: 33rem;">
+                <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Doctor Picture" style="height: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
+                    <p class="card-text text-center">{{ doctor.location }}</p>
+                    <p class="card-text text-center">Department - {{ doctor.department }}</p>
+                    <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
+                    <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
+                    <div class="text-center">
+                        <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
+                        <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Remove</button>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">You have not saved any doctors yet.</p>
+        </div>
+        {% endfor %}
     </div>
-
-    
+</div>
 <!--------------Footer------------------>
-
-<footer class="bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="text-center">
-          <h3 class="p-2">Actions</h3>
-          <ul>
-            <br />
-            <li><a href="#">Appointments & Access</a></li>
-            <li><a href="#">Accepted Insurance</a></li>
-            <li><a href="#">Events Calendar</a></li>
-            <li><a href="#">Financial Assistance</a></li>
-            <li><a href="#">Pay Your Bill Online</a></li>
-            <li><a href="#">Refer a Patient</a></li>
-            <li><a href="#">Virtual Second Opinions</a></li>
-            <li><a href="#">Virtual Visits</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="text-center">
-          <h3 class="p-2">About M-Care</h3>
-          <ul>
-            <br />
-            <li><a href="#">100 Years of M-CARE Clinic</a></li>
-            <li><a href="#">Locations</a></li>
-            <li><a href="#">Quality & Patient Safety</a></li>
-            <li><a href="#">Office of Diversity & Inclusion</a></li>
-            <li><a href="#">Patient Experience</a></li>
-            <li><a href="#">Research & Innovations</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">For Employees</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-12 col-md-6 col-lg-4 " id="last_footer">
-        <div class="text-center">
-          <h3 class="p-2">Site Information</h3>
-          <ul>
-            <br />
-            <li><a href="#">Send Us Feedback</a></li>
-            <li><a href="#">Site Map</a></li>
-            <li><a href="#">About this Website</a></li>
-            <li><a href="#">Copyright, Reprint & Licensing</a></li>
-            <li><a href="#">Website Terms of Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Notice of Privacy Practices</a></li>
-            <li><a href="#">Non-Discrimination Notice</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+    
 <footer class="py-3 text-white text-center l">
   <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
 </footer>
 
-  
-    <!--------js link-------->
+<!--------js link-------->
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.save-doctor-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const doctorId = this.dataset.doctorId;
-                    const action = this.dataset.action;
-                    fetch(`/save_doctor/${doctorId}/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        },
-                        body: JSON.stringify({ action: action })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            if (action === 'save') {
-                                this.textContent = 'Unsave';
-                                this.classList.remove('btn-success');
-                                this.classList.add('btn-danger');
-                                this.dataset.action = 'unsave';
-                                Swal.fire('Saved!', 'Doctor has been saved.', 'success');
-                            } else {
-                                this.textContent = 'Save';
-                                this.classList.remove('btn-danger');
-                                this.classList.add('btn-success');
-                                this.dataset.action = 'save';
-                                Swal.fire('Removed!', 'Doctor has been removed.', 'success');
-                            }
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.save-doctor-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const doctorId = this.dataset.doctorId;
+                const action = this.dataset.action;
+
+                fetch(`/save_doctor/${doctorId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ action: action })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (action === 'save') {
+                            this.textContent = 'Unsave';
+                            this.classList.remove('btn-success');
+                            this.classList.add('btn-danger');
+                            this.dataset.action = 'unsave';
+                            Swal.fire('Saved!', 'Doctor has been saved.', 'success');
                         } else {
-                            Swal.fire('Error!', 'An error occurred.', 'error');
+                            // Remove the doctor card from the DOM
+                            const doctorCard = document.getElementById(`doctor-${doctorId}`);
+                            doctorCard.remove();
+                            Swal.fire('Removed!', 'Doctor has been removed.', 'success');
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
+                    } else {
                         Swal.fire('Error!', 'An error occurred.', 'error');
-                    });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error!', 'An error occurred.', 'error');
                 });
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

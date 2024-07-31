@@ -46,9 +46,9 @@
       }
 
       .card:hover {
-        transform: translateY(-5px);
+        {% comment %} transform: translateY(-5px); {% endcomment %}
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
+        {% comment %} transition: transform 0.3s; {% endcomment %}
       }
 
       .card-title {
@@ -100,8 +100,9 @@
 
       .btn {
         border: none;
-        border-radius:50px;
-        background-color:#008080;
+        border-radius:5px;
+        {% comment %} background-color:#008080; {% endcomment %}
+        background-color:#000;
         color: white;
         font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
           "Lucida Sans", Arial, sans-serif;
@@ -111,10 +112,17 @@
         color:#008080;
       }
 
+      #top:hover{
+        border:none;
+        width:20%;
+      }
+
       .btn:hover{
-        color:#008080;
+        {% comment %} color:#008080; {% endcomment %}
+        color:#000 !import;
         background-color:white;
-        border:solid 1px #008080;
+        {% comment %} border:solid 1px #008080; {% endcomment %}
+        border:solid 1px #000;
         width: 40%;
       }
 
@@ -242,6 +250,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
         </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'student_admission' %}">AdmissionOpen</a>
+        </li>
       </ul>
     </div>
     <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
@@ -372,7 +383,7 @@
 
     <!--------------Footer------------------>
 
-    <footer class="bg-light">
+    {% comment %} <footer class="bg-light">
       <div class="container">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4">
@@ -423,9 +434,9 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div>  
       </div>
-    </footer>
+    </footer> {% endcomment %}
     <footer class="py-3 text-white text-center l">
       <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
     </footer>

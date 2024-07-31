@@ -1,14 +1,20 @@
 from constants import *
 from utils import *
-from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render,redirect,get_object_or_404
+from django.core.cache import cache
 from .models import Doctor,Booking,Hospital,Countries,Location,Department,Banner_Cards
+from accounts.models import UserProfile
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 # this home views.py function
-@never_cache  
 def home(request):
     """
     Home view.
@@ -42,7 +48,6 @@ def doctors(request):
         doctors = Doctor.objects.prefetch_related('location', 'department','location__country').all()
         cache.set('doctors_cache', doctors, timeout=60)  # Cache indefinitely since doctor details might rarely change
     return render(request, 'doctor.html', {'doctors': doctors})
-
 
 # this my find_doctor views function
 def find_doctor(request):   
@@ -123,23 +128,6 @@ def find_doctor(request):
 
 # this user booking views.py function
 def booking(request):
-    """
-    View function to handle the booking process.
-
-    POST method:
-        Validates user input for name, address, doctor, and booking time.
-        Checks if the selected time is within the doctor's working hours.
-        Verifies if the selected time slot is available for booking with the chosen doctor.
-        Ensures that the doctor has available slots for booking (up to a maximum of 5 bookings).
-        Creates the booking if all validations pass.
-
-    GET method:
-        Retrieves all doctors for displaying in the booking form.
-
-    Returns:
-        Renders the booking form with doctors or error message based on validation results.
-    """
-    
     if request.user.is_authenticated:
         if request.method == 'POST':
             # Handle form submission
@@ -153,7 +141,7 @@ def booking(request):
             selected_time = morning_choice if morning_choice else noon_choice
 
             doctor = Doctor.objects.get(id=doctor_id)
-            
+
             if not (morning_choice and noon_choice):
                 if morning_choice:
                     noon_choice = None
@@ -163,46 +151,48 @@ def booking(request):
             selected_time = convert_to_time(selected_time)
 
             existing_booking = Booking.objects.filter(
-                            doctor_id=doctor_id, booking_time=selected_time,booking_date=booking_date).exists()
+                            doctor_id=doctor_id, booking_time=selected_time, booking_date=booking_date).exists()
             if existing_booking: 
                 error_message = BOOKED_TIME_SLOT_ERROR.format(doctor_name=doctor.name)
-                return render(request, 'booking.html', {'error_message': error_message})
-
+                return JsonResponse({'success': False, 'error_message': error_message})
+            
             available_slot = doctor.slot
             total_bookings = Booking.objects.filter(doctor=doctor).count()
             if total_bookings >= available_slot:
                 error_message = MAX_BOOKING_REACHED_ERROR.format(doctor_name=doctor.name)
-                return render(request, 'booking.html', {'error_message': error_message})
-            
+                return JsonResponse({'success': False, 'error_message': error_message})
+
             selected_time_str = convert_to_string(selected_time)
 
             request.session['booking_data'] = {
                 'name': name,
                 'address': address,
                 'doctor_id': doctor_id,
-                'selected_time':selected_time_str,
-                'booking_date':booking_date,
+                'selected_time': selected_time_str,
+                'booking_date': booking_date,
             }
-            return redirect('payment_page')
+            return JsonResponse({'success': True, 'redirect_url': '/doctor_payment/'})
         else:
             # Handle initial GET request
             doctor_id = request.GET.get('doctor_id')
             doctors = Doctor.objects.prefetch_related('department', 'location', 'location__country').all()
             selected_doctor = None
             if doctor_id:
-                # If doctor_id is provided, attempt to get the doctor
                 try:
                     selected_doctor = Doctor.objects.get(id=doctor_id)
                 except Doctor.DoesNotExist:
-                    error_message = DOCTOR_NOT
+                    error_message = "Doctor does not exist."
                     return render(request, 'booking.html', {'doctors': doctors, 'error_message': error_message})
-                
-         
+
             morning_choices = generate_time_choices(9, 12)
             noon_choices = generate_time_choices(15, 20)
-            return render(request, 'booking.html', {'doctors': doctors, 'morning_choices': morning_choices, 'noon_choices': noon_choices,'selected_doctor': selected_doctor})
+            return render(request, 'booking.html', {
+                'doctors': doctors,
+                'morning_choices': morning_choices,
+                'noon_choices': noon_choices,
+                'selected_doctor': selected_doctor
+            })
     else:
-        # Redirect unauthenticated users to the login page
         return redirect('login')
 
 
@@ -246,26 +236,82 @@ def booking_details(request):
 
 
 # this is cancel_booking vews.py function
-def cancel_booking(request,booking_id):
-
+def cancel_booking(request, booking_id):
     """
     View function to cancel a specific booking.
 
     Retrieves the booking object with the given booking ID from the database,
-    deletes it, and then renders the 'booking.html' template.
+    deletes it, and returns a JSON response for AJAX requests.
 
     Parameters:
     - request: HttpRequest object
     - booking_id: Integer representing the ID of the booking to be canceled
 
     Returns:
-    - Rendered HttpResponse object containing the 'booking.html' template
+    - JsonResponse object indicating success or failure
     """
+    if request.method == 'POST':
+        try:
+            booking = get_object_or_404(Booking, pk=booking_id)
+            booking.delete()
+            return JsonResponse({'success': True})
+        except:
+            return JsonResponse({'success': False})
+    return JsonResponse({'success': False})
     
-    booking = get_object_or_404(Booking, pk=booking_id)
-    booking.delete()
-    message = BOOKING_CANCELED
-    return render(request,'booking.html',{'message':message})
+
+@login_required
+@require_POST
+def save_doctor(request, doctor_id):
+    """
+    Handles the saving and unsaving of doctors to a user's profile.
+
+    This view expects a POST request with a JSON payload containing an 'action' key.
+    The 'action' key can have two values: 'save' or 'unsave', which will respectively
+    add or remove the doctor with the given ID from the user's saved doctors list.
+
+    Parameters:
+    request (HttpRequest): The request object.
+    doctor_id (int): The ID of the doctor to be saved or unsaved.
+
+    Returns:
+    JsonResponse: A JSON response indicating success or failure.
+    """
+    try:
+        user_profile = request.user.userprofile
+        doctor = get_object_or_404(Doctor, id=doctor_id)
+        data = json.loads(request.body)
+        action = data.get('action')
+
+        if action == 'save':
+            user_profile.saved_doctors.add(doctor)
+            return JsonResponse({'success': True})
+        elif action == 'unsave':
+            user_profile.saved_doctors.remove(doctor)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+    except Exception as e:
+        logger.error(f"Error saving doctor: {e}")
+        return JsonResponse({'success': False})
+
+
+@login_required
+def saved_doctors(request):
+    """
+    Displays the list of doctors saved by the user.
+
+    This view retrieves all doctors saved by the user and renders them in the 'saved_doctors.html' template.
+
+    Parameters:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: A rendered HTML page displaying the list of saved doctors.
+    """
+    user_profile = request.user.userprofile
+    saved_doctors_list = user_profile.saved_doctors.all()
+    return render(request, 'saved_doctors.html', {'saved_doctors': saved_doctors_list})
 
 
 # this is IND hospitals list
