@@ -239,41 +239,15 @@
 </head>
 <body>
 
-    <!-------------Navbar------------------>
+   <!-------------Navbar------------------>
 
 <nav class="navbar navbar-expand-lg sticky-top d-flex"style="background-color:#008080;" height:"5.5rem;">
-    <div class="container-fluid">
-      <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
-      <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon mt-2"></span>
-        <div class="nav-item" id="profile">
-          {% if user.userprofile.profile_picture %}
-          <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-            <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
-          </a>
-          {% else %}
-          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
-            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
-          </a>
-          {% endif %}
-        </div> 
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
-          </li> 
-        </ul>
-      </div>
-      <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
-      <div class="profile">
+  <div class="container-fluid">
+    <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+    <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon mt-2"></span>
+      <div class="nav-item" id="profile">
+      {% if user.is_authenticated %}
         {% if user.userprofile.profile_picture %}
         <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
           <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
@@ -283,9 +257,47 @@
           <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
         </a>
         {% endif %}
-      </div>
+      {% else %}
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+      {% endif %}
+      </div> 
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+        </li> 
+      </ul>
     </div>
-  </nav>
+    <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
+    <div class="profile">
+      {% if user.is_authenticated %}
+        {% if user.userprofile.profile_picture %}
+        <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% else %}
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+        {% endif %}
+      {% else %}
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
+          <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
                       <!-------Details---------->
 
     <div class="container text-center p-3 text-light bg-dark-opacity mt-5">

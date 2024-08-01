@@ -117,3 +117,5 @@ def booking_success(request):
 
     send_mail(mail_subject, message, from_email, recipient_list)
     return render(request,'booking_success.html')
+    return render(request,'booking_success.html')
+

@@ -13,4 +13,5 @@ BOOKING_PROCESS = "Error processing booking data."
 PAYMENT_PROCESS = "Error processing payment."
 BOOKING_SUCESS = "Your Booking Successfully Made"
 BOOKING_CANCELED = "Your Booking Canceled"
-USERNAME_ERROR = "Username already exists. Please choose a different username."
+USERNAME_ERROR = "This Name Already Used"
+

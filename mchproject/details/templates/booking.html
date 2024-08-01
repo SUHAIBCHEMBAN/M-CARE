@@ -142,6 +142,7 @@
             <h4 class="company_title">DOCTOR BOOKING</h4>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 login_form">
+            <div id="error-container"></div>
             <form method="POST" action="{% url 'booking' %}" class="p-3" id="bookingForm">
                 {% csrf_token %}
                 <div class="form-group">
@@ -181,11 +182,14 @@
                 <div class="form-group">
                     <input type="text" id="id_dat" name="booking_date" class="form__input" required placeholder="Set Your Date">
                 </div>
+<<<<<<< HEAD
                 <div id="error-message" class="text-danger">
                 {% if error_message %}
                     <p class='text-danger bold ml-4 mt-3'>{{ error_message }}</p>
                 {% endif %}
                 </div>
+=======
+>>>>>>> 124ce97d2156e0b752246af480fe8d4123a9830c
                 <div class="btns">
                     <button type="submit" class="btn last">Submit</button>
                     <a href="{% url 'home' %}" class="btn last">Close</a>
@@ -197,18 +201,20 @@
 
 <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var doctorSelect = document.getElementById('id_doctor');
         var morningChoiceDiv = document.getElementById('morningChoiceDiv');
         var noonChoiceDiv = document.getElementById('noonChoiceDiv');
+        var bookingForm = document.getElementById('bookingForm');
+        var errorContainer = document.getElementById('error-container');
 
         doctorSelect.addEventListener('change', function() {
             var selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
             var startTime = selectedDoctor.getAttribute('data-start-time');
             var endTime = selectedDoctor.getAttribute('data-end-time');
 
-            // Convert doctor's start and end times to JavaScript Date objects
             var startDateTime = new Date();
             startDateTime.setHours(parseInt(startTime.split(':')[0]));
             startDateTime.setMinutes(parseInt(startTime.split(':')[1]));
@@ -216,7 +222,6 @@
             endDateTime.setHours(parseInt(endTime.split(':')[0]));
             endDateTime.setMinutes(parseInt(endTime.split(':')[1]));
 
-            // Define morning time range
             var morningStartTime = new Date();
             morningStartTime.setHours(9);
             morningStartTime.setMinutes(0);
@@ -224,7 +229,6 @@
             morningEndTime.setHours(12);
             morningEndTime.setMinutes(0);
 
-            // Check if the doctor's working hours include morning time (9 am to 12 pm)
             if (startDateTime <= morningStartTime && endDateTime >= morningEndTime) {
                 morningChoiceDiv.style.display = 'block';
                 noonChoiceDiv.style.display = 'none';
@@ -234,17 +238,51 @@
             }
         });
 
-        // Trigger change event on page load to ensure initial state is set correctly
         doctorSelect.dispatchEvent(new Event('change'));
 
         flatpickr("#id_dat", {
             dateFormat: "Y-m-d",
             disable: [
                 function(date) {
-                    return (date.getDay() === 0);  // Disable Sundays
+                    return (date.getDay() === 0);
                 }
             ],
-            minDate: "today"  // Disallow past dates
+            minDate: "today"
+        });
+
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(bookingForm);
+
+            fetch("{% url 'booking' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    errorContainer.innerHTML = '<p class="text-danger bold ml-4 mt-3">' + data.error_message + '</p>';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error_message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while processing your request.',
+                });
+            });
         });
 
         // Handle form submission with AJAX
