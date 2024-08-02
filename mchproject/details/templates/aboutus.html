@@ -18,7 +18,7 @@
             color: #fff;
             text-decoration: none; 
             position: relative; 
-            {% comment %} margin-left:5px; {% endcomment %}
+            margin-left:5px;
             transition: color 0.3s; 
         }
         
@@ -30,7 +30,7 @@
             bottom: 0;
             left: 0;
             background-color: #fff; 
-            transition: width 0.3s; 
+            transition: width 0.4s; 
         }
         
         .nav-link:hover {
@@ -42,12 +42,12 @@
         .container{
           box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
           border-radius: 15px;
-          transform: translateY(-5px);
-          transition: transform 0.3s;
+          {% comment %} transform: translateY(-5px); {% endcomment %}
+          {% comment %} transition: transform 0.3s; {% endcomment %}
         }
 
         .container:hover {
-      transform: translateY(0);
+      {% comment %} transform: translateY(0); {% endcomment %}
     }
 
           #top{

@@ -24,12 +24,12 @@ SECRET_KEY = 'django-insecure-*$2nk8(m25!!lrtoxmo9^5y*(yoe047yb2ahb%9xz(ifrp@14+
 
 
 # ALLOWED_HOSTS = ['54.88.34.113', 'localhost']
-ALLOWED_HOSTS = ['52.23.150.25', 'localhost', 'mcareclinicservice.live', 'www.mcareclinicservice.live']
+ALLOWED_HOSTS = ['52.23.150.25', 'localhost', 'mcareclinicservice.live', 'www.mcareclinicservice.live','127.0.0.1']
 
-# INTERNAL_IPS = ['127.0.0.1', '::1'] 
+INTERNAL_IPS = ['127.0.0.1', '::1'] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
 
@@ -93,10 +93,11 @@ DATABASES = {
         'NAME':'mcare',
         'USER':'postgres',
         'PASSWORD':'1234',
-        'HOST':'localhost',
-        'USER': 'admin',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        # 'HOST':'localhost',
+        # 'USER': 'admin',
+        # 'PASSWORD': 'password',
+        # 'HOST': 'localhost',
+        'PORT':'5432',
     }
 }
 
