@@ -73,23 +73,22 @@
         }
 
         .btn {
-            border: none;
+            border:solid 1px #000;
+            transition: all .5s ease;
             border-radius:5px;
-            {% comment %} background-color:#008080; {% endcomment %}
             background-color:#000; 
             color: white;
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
                 "Lucida Sans", Arial, sans-serif;
+            width:30%;
         }
 
         .btn:hover{
-            color:#000 ;
-            background-color:white;
+            color:#fff ;
+            background-color:#000;
             border:solid 1px #000;
+            width:50%;
         }   
-         .save-doctor-btn{
-            margin-bottom:10px;    
-        }
         footer {
             background-color: #f8f9fa; 
         }
@@ -220,7 +219,7 @@
                     <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
                     <div class="text-center">
                         <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
-                        <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Remove</button>
+                        <button class="btn btn-danger save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Remove</button>
                     </div>
                 </div>
             </div>

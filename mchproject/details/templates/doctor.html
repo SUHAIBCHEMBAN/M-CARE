@@ -12,62 +12,44 @@
             background-color: #f7f7fa;
             color:#008080;
         }
-
         .nav-link {
-            font-size: 1.2rem;
-            color: #fff;
-            text-decoration: none; 
-            position: relative; 
-            transition: color 0.3s; 
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #fff; 
-            transition: width 0.3s; 
-        }
-
-        .nav-link:hover {
-            color: #fff; 
-        }
-        .nav-link:hover::after {
-            width: 100%; 
-        }
-
-        #top{
-            background-color:#fff;
-            color:#008080;
-        }
-        #top:hover{
-          border:none;
-          width:20%;
-        }
-        .profile {
-            margin-left:10px;
-        }
+          font-size: 1.2rem;
+          color: #fff;
+          text-decoration: none; 
+          position: relative; 
+          transition: color 0.3s;   
+      }
+      
+      .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: #fff; 
+          transition: width 0.3s; 
+      }
+      
+      .nav-link:hover {
+          color: #fff; 
+      }
+      .nav-link:hover::after {
+          width: 100%; 
+      }
         .card {
             border:solid 0.1px #0002;
             border-radius:5px;
             box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
         }
-
         .card:hover {
-            {% comment %} transform: translateY(-5px); {% endcomment %}
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            {% comment %} transition: transform 0.3s; {% endcomment %}
         }
-
         .card-title {
             font-size: 1.2rem;
             font-weight: bold;
             color:#008080;
         }
-
         .card-text {
             font-size: 1rem;
             color: #008080;
@@ -75,104 +57,134 @@
         .card img {
             object-fit: cover;
         }
-        .btn {
-            border: none;
-            border-radius:5px;
-            {% comment %} background-color:#008080; {% endcomment %}
-            background-color:#000;
-            color: white;
-            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-                "Lucida Sans", Arial, sans-serif;
-        }
-        .b:hover{
-            {% comment %} color:#008080; {% endcomment %}
-            background-color:white;
-            color:#000;
-            border:solid 1px #000;
-          
         .save-doctor-btn{
             margin-bottom:10px;    
-        }
-        
-        footer {
-            background-color: #f8f9fa; 
-        }
+        } 
 
+        footer {
+          background-color: #f8f9fa;
+        }
+  
         footer h3 {
-            color:#008080;
-        } 
-
-        footer ul{
-            padding-left:5%; 
-            list-style-type: none;
+          color:#008080;
         }
-
+  
+        footer ul {
+          padding-left: 5%;
+          list-style-type: none;
+        }
+  
         footer li {
-            margin-bottom: 10px; 
+          margin-bottom: 10px;
         }
-
+  
         footer a {
-            color: gray; 
-            text-decoration: none;
-            font-size:100%;
+          color:gray;
+          text-decoration: none;
+          font-size: 100%;
         }
-        footer p{
-            {% comment %} font-size:clamp(8px, 20px, 32px); {% endcomment %}
-        }
-
+  
         footer a:hover {
-            color: #000;
-            text-decoration:none;
+          color: #000;
+          text-decoration: none;
         }
-
+  
         footer {
-            background-color:#008080;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        } 
+          background-color:#008080;
+          color: white;
+          padding: 20px 0;
+          text-align: center;
+        }
+        .b {
+          transition: all .5s ease;
+          border:solid 1 px #000;
+          border-radius:5px;
+          background-color:#000;
+          width:30%;
+          color: #fff;
+          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+            "Lucida Sans", Arial, sans-serif;
+        }
+  
+        .b:hover, .btn:focus{
+          background-color:#000;
+          color: #fff;
+          border:solid 1px #000;
+          border-radius:5px;
+          width:50%;
+        }
 
+        .save-doctor-btn{
+          width:30%;
+          transition: all .5s ease;
+        }
+
+        .save-doctor-btn:hover,.save-doctor-btn:focus{
+          width:50%;
+        }
+
+
+  
+        #top{
+          background-color:#fff;
+          color:#008080;
+        }
+  
+        #top:hover{
+          border:none;
+          width:20%;
+        }
         @media (max-width:350px){
-            footer{
-                display:none;
-            }
-            .l{
-                display:block;
-                font-size:80%;
-            }
+          footer{
+            display:none;
+          }
+          .l{
+            display:block;
+            font-size:80%;
+          }
         }
+    
+       @media (max-width:990px){
+        footer{
+          font-size:100%;
+        }
+        #last_footer{
+          display:flex;
+          margin:auto;
+          justify-content:center;
+        }
+        #top{
+          display: none;
+        }
+        .profile{
+          display:none;
+        }
+        #profile{
+          display:block;
+        
+        }
+      }
 
-        @media (max-width:990px){
-            footer{
-                font-size:100%;
-            }
-            #last_footer{
-                display:flex;
-                margin:auto;
-                justify-content:center;
-            }
-            #top{
-                display: none;
-            }
-            .profile{
-                display:none;
-            }
-            #profile{
-                display:block;
-            }
+      @media (min-width: 991px) {
+        #profile {
+          display: none; 
         }
-        @media (min-width: 991px) {
-            #profile {
-                display: none; 
-            }
-
-            .nav button{
-                display:none;
-            }
-            .navbar-toggler-icon{
-                display:none;
-            }
+    
+        .nav button{
+          display:none;
         }
+    
+        .navbar-toggler-icon{
+          display:none;
+        }
+    }
+    @media (min-width: 400px) and (max-width: 450px) {
+      #profile{
+        margin-top:25%;
+      }
+  }
+        
+        
     </style>
 </head>
 <body>
@@ -201,7 +213,6 @@
       {% endif %}
       </div> 
     </button>
-      
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
         <li class="nav-item">
@@ -213,6 +224,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
         </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'student_admission' %}">AdmissionOpen</a>
+        </li>
       </ul>
     </div>
     <a class="btn btn-primary" href="{% url 'booking' %}" id="top">Make an Appointment</a>
@@ -234,42 +248,37 @@
       {% endif %}
     </div>
   </div>
-</nav>  
+</nav>
 
+<!-----------Cards---------->
 
-    <!-----------Cards---------->
-    
-
-    <h1 class="text-center mt-5 text-dark">Available Doctors</h1>
-    <div class="container mt-5 border-bottom">
-        <div class="row">
-            {% for doctor in doctors %}
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card my-3" style="height: 33rem;">
-                    <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Something Went Wrong" style="height: 15rem;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
-                        <p class="card-text text-center">{{ doctor.location }}</p>
-                        <p class="card-text text-center">Department - {{ doctor.department }}</p>
-                        <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
-                        <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
-                        <div class="text-center">
-                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn b">Book Now</a>
-                            {% if doctor in user.userprofile.saved_doctors.all %}
-                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Unsave</button>
-                            <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>
-                            {% if doctor in user.userprofile.saved_doctors.all %}
-                            <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">UnSave</button>
-                            {% else %}
-                            <button class="btn btn-success mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="save">Save</button>
-                            {% endif %}
-                        </div>
+<h1 class="text-center mt-5" style="color:#008080;">Available Doctors</h1>
+  <div class="container mt-5 border-bottom">
+    <div class="row">
+      {% for doctor in doctors %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card my-3" style="height: 33rem;">
+            <img src="{{ doctor.pic.url }}" class="card-img-top" alt="Something Went Wrong" style="height: 15rem;">
+              <div class="card-body">
+                <h5 class="card-title text-center">Dr. {{ doctor.name }}</h5>
+                  <p class="card-text text-center">{{ doctor.location }}</p>
+                  <p class="card-text text-center">Department - {{ doctor.department }}</p>
+                  <p class="card-text text-center">Charge: {{ doctor.charge }} per head</p>
+                  <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
+                    <div class="text-center">
+                      <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn b">Book Now</a>
+                        {% if doctor in user.userprofile.saved_doctors.all %}
+                          <button class="btn btn-danger mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="unsave">Unsave</button>
+                        {% else %}
+                          <button class="btn btn-success mt-2 save-doctor-btn" data-doctor-id="{{ doctor.id }}" data-action="save">Save</button>
+                        {% endif %}
                     </div>
-                </div>
-            </div>
-            {% endfor %}
+              </div>
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
 
     
 <!--------------Footer------------------>
@@ -325,7 +334,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div>  
   </div>
 </footer>
 <footer class="py-3 text-white text-center l">
