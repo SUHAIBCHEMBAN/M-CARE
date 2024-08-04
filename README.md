@@ -1,6 +1,6 @@
 M-CARE Clinic
 
-M-CARE Clinic is a comprehensive hospital management web application built with Django. It features separate interfaces for admins and users, facilitating efficient hospital operations and patient management.
+M-CARE Clinic is a comprehensive hospital management web application built with Python-Django. It features separate interfaces for admins and users, facilitating efficient hospital operations,patient management and Student's admissions.
 
 Table of Contents
 
@@ -8,6 +8,7 @@ Table of Contents
 > Usage
 > Hosting
 > Technologies Used
+> Drow Backs
 
 1-Features
 
@@ -20,10 +21,11 @@ Payment Management: Track and manage payments.
 
 => User Interface
 
-Doctor Booking: Search, filter, and book appointments with doctors.
+Doctor Booking: Search, filter,Save and book appointments with doctors.
 Payment Integration: Secure payment processing with Razorpay.
 Email OTP Login: Secure login with OTP sent to the user's email.
 Profile Management: Users can manage their profiles, including medical history.
+Studend's Admission:Select Your Intrested Course and Take Admission
 
 => Access the application:
 
@@ -35,14 +37,7 @@ User Interface: www.mcareclinicservice.live
 => Admin Panel
 
 Log in using the superuser credentials.
-Manage doctors, patients, appointments, and payments through the intuitive dashboard.
-
-=> User Interface
-
-Register and log in using email OTP.
-Browse, search, and filter doctors.
-Book appointments and make payments securely with Razorpay.
-Manage personal profile and view appointment history.
+Manage doctors, patients, appointments,admission and payments through the intuitive dashboard.
 
 3-Hosting
 
@@ -59,5 +54,10 @@ Authentication: Email OTP for secure login
 Hosting: AWS EC2
 Proxy Server: Route 53
 Calendar:Flatpicker
-Optimize:Debug toolbar
+Optimize:Debug toolbar,Redis Cache
 Auto Update:Celery
+Notifications:Sweat Alert
+
+5-Drow Back
+
+AWS's Proxy Server is not free so My website now not available becuase AWS account was suspended
