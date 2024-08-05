@@ -72,7 +72,7 @@
                         <p class="card-text text-center">Time: {{ doctor.start_time }} to {{ doctor.end_time }}</p>
                         <div class="text-center justify-content-center">
                             <a href="{% url 'booking' %}?doctor_id={{ doctor.id }}" class="btn btn-primary">Book Now</a>&nbsp;
-                            <a href="{% url 'finddoctor' %}" class="btn btn-primary">Close</a>
+                            <a href="{% url 'home' %}#Search" class="btn btn-primary">Close</a>
                         </div>
                     </div>
                 </div>

@@ -190,9 +190,6 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto" style="text-align: center; color: blue;">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'finddoctor' %}">Find Doctor</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
         </li>
         <li class="nav-item">
@@ -235,7 +232,7 @@
                   <p class="card-text ">{{ hospital.location }}</p>
                   <p class="card-text">{{ hospital.address }}</p>
                   <p class="card-text">{{ hospital.contact_number }}</p>
-                  <a href="{% url 'finddoctor' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
+                  <a href="{% url 'home' %}?hospital_id={{ hospital.id }}" class="btn btn-primary">Book Now</a>
               </div>
           </div>
       </div>

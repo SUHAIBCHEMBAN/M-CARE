@@ -89,6 +89,9 @@ def verify_otp(request):
             request.session['booking_success'] = True
             
             message = "Your Login Successfully Completed"
+            mail_subject = 'M-CARE HOSPITAL'
+            message = 'Welecome, M-CARE Clinic, Your Login Successfully Completed'
+            send_mail(mail_subject, message, 'your_email@example.com', [email])
             return render(request,'home.html',{'message':message})
            
         else:

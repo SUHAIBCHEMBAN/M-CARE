@@ -15,6 +15,76 @@ import logging
 logger = logging.getLogger(__name__)
 
 # this home views.py function
+# def home(request):
+#     """
+#     Home view.
+
+#     Renders the home page with the username of the logged-in user.
+    
+#     Parameters:
+#     - request: The HTTP request object.
+    
+#     Returns:
+#     - Renders the home page template with the username.
+#     """
+#     user = request.user 
+#     image = Banner_Cards.objects.all()
+
+#     # Initialize doctors variable
+#     doctors = None
+
+#     # Check if the request method is POST
+#     if request.method == 'POST':
+#         # Get location and department from POST data
+#         location_id = request.POST.get('location')
+#         department_id = request.POST.get('department')
+        
+#         # Retrieve location and department names
+#         location = Location.objects.get(id=location_id)
+#         department = Department.objects.get(id=department_id)
+        
+#         # Generate cache key based on location and department
+#         cache_key = f"doctors_{location.name}_{department.name}"
+        
+#         # Check if data is cached
+#         doctors = cache.get(cache_key)
+        
+#         # If data is not cached, retrieve it from the database
+#         if not doctors:
+#             doctors = Doctor.objects.filter(location=location, department=department)
+            
+#             # Cache the data for 2 minutes
+#             cache.set(cache_key, doctors, timeout=120)
+        
+#         # If no doctors found, render template with message
+#         if not doctors:
+#             message = NO_DOCTOR_FOUND_MESSAGE
+#             return render(request, 'filtered_doctors.html', {'message': message})
+        
+#         # Render template with list of doctors
+#         return render(request, 'filtered_doctors.html', {'doctors': doctors})
+    
+#     # If request method is not POST, populate context with locations and departments
+#     else:
+#         hospital_id = request.GET.get('hospital_id')
+#         # locations = Location.objects.prefetch_related('name','country').all()
+#         selected_location = None
+#         if hospital_id:
+#             try:
+#                 hospital = Hospital.objects.get(id=hospital_id)
+#                 selected_location = hospital.location
+#             except ObjectDoesNotExist:
+#                 error_message = "Hospital does not exist."
+#                 return render(request, 'finddoctor.html', {'error_message': error_message})
+
+#         context = {
+#             'locations': Location.objects.prefetch_related('country').all(),  
+#             'selected_location': selected_location,
+#             'departments': Department.objects.all()  
+#         }
+
+#     return render(request, 'home.html',{'user': user,'image':image},context)
+
 def home(request):
     """
     Home view.
@@ -29,7 +99,71 @@ def home(request):
     """
     user = request.user 
     image = Banner_Cards.objects.all()
-    return render(request, 'home.html',{'user': user,'image':image})
+
+    # Initialize doctors variable
+    doctors = None
+
+    # Check if the request method is POST
+    if request.method == 'POST':
+        # Get location and department from POST data
+        location_id = request.POST.get('location')
+        department_id = request.POST.get('department')
+        
+        try:
+            # Retrieve location and department names
+            location = Location.objects.get(id=location_id)
+            department = Department.objects.get(id=department_id)
+            
+            # Generate cache key based on location and department
+            cache_key = f"doctors_{location.name}_{department.name}"
+            
+            # Check if data is cached
+            doctors = cache.get(cache_key)
+            
+            # If data is not cached, retrieve it from the database
+            if doctors is None:
+                doctors = Doctor.objects.filter(location=location, department=department)
+                
+                # Cache the data for 2 minutes
+                cache.set(cache_key, doctors, timeout=120)
+            
+            # If no doctors found, render template with message
+            if not doctors.exists():
+                message = NO_DOCTOR_FOUND_MESSAGE
+                return render(request, 'filtered_doctors.html', {'message': message, 'user': user, 'image': image})
+            
+            # Render template with list of doctors
+            return render(request, 'filtered_doctors.html', {'doctors': doctors, 'user': user, 'image': image})
+        
+        except Location.DoesNotExist:
+            error_message = "Location does not exist."
+            return render(request, 'home.html', {'error_message': error_message, 'user': user, 'image': image})
+        
+        except Department.DoesNotExist:
+            error_message = "Department does not exist."
+            return render(request, 'home.html', {'error_message': error_message, 'user': user, 'image': image})
+    
+    # If request method is not POST, populate context with locations and departments
+    else:
+        hospital_id = request.GET.get('hospital_id')
+        selected_location = None
+        if hospital_id:
+            try:
+                hospital = Hospital.objects.get(id=hospital_id)
+                selected_location = hospital.location
+            except ObjectDoesNotExist:
+                error_message = "Hospital does not exist."
+                return render(request, 'finddoctor.html', {'error_message': error_message, 'user': user, 'image': image})
+
+        context = {
+            'locations': Location.objects.prefetch_related('country').all(),  
+            'selected_location': selected_location,
+            'departments': Department.objects.all(),  
+            'user': user,
+            'image': image
+        }
+
+    return render(request, 'home.html', context)
 
 # this my doctors views function
 def doctors(request):
@@ -50,79 +184,79 @@ def doctors(request):
     return render(request, 'doctor.html', {'doctors': doctors})
 
 # this my find_doctor views function
-def find_doctor(request):   
-    """
-    View function to find doctors based on location and department.
+# def find_doctor(request):   
+#     """
+#     View function to find doctors based on location and department.
 
-    Retrieves doctors based on user-selected location and department,
-    and renders them on the 'filtered_doctors.html' template. If no doctors
-    match the selected criteria, it renders the same template with a message
-    indicating no matching doctors found.
+#     Retrieves doctors based on user-selected location and department,
+#     and renders them on the 'filtered_doctors.html' template. If no doctors
+#     match the selected criteria, it renders the same template with a message
+#     indicating no matching doctors found.
 
-    Parameters:
-    - request: HttpRequest object
+#     Parameters:
+#     - request: HttpRequest object
 
-    Returns:
-    - Rendered HttpResponse object containing either the 'filtered_doctors.html' 
-      template with the list of matching doctors or the 'finddoctor.html' template 
-      with a form to select location and department.
-    """
+#     Returns:
+#     - Rendered HttpResponse object containing either the 'filtered_doctors.html' 
+#       template with the list of matching doctors or the 'finddoctor.html' template 
+#       with a form to select location and department.
+#     """
 
-    # Initialize doctors variable
-    doctors = None
+#     # Initialize doctors variable
+#     doctors = None
 
-    # Check if the request method is POST
-    if request.method == 'POST':
-        # Get location and department from POST data
-        location_id = request.POST.get('location')
-        department_id = request.POST.get('department')
+#     # Check if the request method is POST
+#     if request.method == 'POST':
+#         # Get location and department from POST data
+#         location_id = request.POST.get('location')
+#         department_id = request.POST.get('department')
         
-        # Retrieve location and department names
-        location = Location.objects.get(id=location_id)
-        department = Department.objects.get(id=department_id)
+#         # Retrieve location and department names
+#         location = Location.objects.get(id=location_id)
+#         department = Department.objects.get(id=department_id)
         
-        # Generate cache key based on location and department
-        cache_key = f"doctors_{location.name}_{department.name}"
+#         # Generate cache key based on location and department
+#         cache_key = f"doctors_{location.name}_{department.name}"
         
-        # Check if data is cached
-        doctors = cache.get(cache_key)
+#         # Check if data is cached
+#         doctors = cache.get(cache_key)
         
-        # If data is not cached, retrieve it from the database
-        if not doctors:
-            doctors = Doctor.objects.filter(location=location, department=department)
+#         # If data is not cached, retrieve it from the database
+#         if not doctors:
+#             doctors = Doctor.objects.filter(location=location, department=department)
             
-            # Cache the data for 2 minutes
-            cache.set(cache_key, doctors, timeout=120)
+#             # Cache the data for 2 minutes
+#             cache.set(cache_key, doctors, timeout=120)
         
-        # If no doctors found, render template with message
-        if not doctors:
-            message = NO_DOCTOR_FOUND_MESSAGE
-            return render(request, 'filtered_doctors.html', {'message': message})
+#         # If no doctors found, render template with message
+#         if not doctors:
+#             message = NO_DOCTOR_FOUND_MESSAGE
+#             return render(request, 'filtered_doctors.html', {'message': message})
         
-        # Render template with list of doctors
-        return render(request, 'filtered_doctors.html', {'doctors': doctors})
+#         # Render template with list of doctors
+#         return render(request, 'filtered_doctors.html', {'doctors': doctors})
     
-    # If request method is not POST, populate context with locations and departments
-    else:
-        hospital_id = request.GET.get('hospital_id')
-        # locations = Location.objects.prefetch_related('name','country').all()
-        selected_location = None
-        if hospital_id:
-            try:
-                hospital = Hospital.objects.get(id=hospital_id)
-                selected_location = hospital.location
-            except ObjectDoesNotExist:
-                error_message = "Hospital does not exist."
-                return render(request, 'finddoctor.html', {'error_message': error_message})
+#     # If request method is not POST, populate context with locations and departments
+#     else:
+#         hospital_id = request.GET.get('hospital_id')
+#         # locations = Location.objects.prefetch_related('name','country').all()
+#         selected_location = None
+#         if hospital_id:
+#             try:
+#                 hospital = Hospital.objects.get(id=hospital_id)
+#                 selected_location = hospital.location
+#             except ObjectDoesNotExist:
+#                 error_message = "Hospital does not exist."
+#                 return render(request, 'finddoctor.html', {'error_message': error_message})
 
-        context = {
-            'locations': Location.objects.prefetch_related('country').all(),  
-            'selected_location': selected_location,
-            'departments': Department.objects.all()  
-        }
+#         context = {
+#             'locations': Location.objects.prefetch_related('country').all(),  
+#             'selected_location': selected_location,
+#             'departments': Department.objects.all()  
+#         }
     
-    # Render template with context  
-    return render(request, 'finddoctor.html', context)
+#     # Render template with context  
+#     return render(request, 'finddoctor.html', context)
 
 
 

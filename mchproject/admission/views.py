@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import StudentForm
 from .models import Course
+from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
 
 def student_admission(request):
@@ -9,6 +10,9 @@ def student_admission(request):
         if form.is_valid():
             try:
                 form.save()
+                mail_subject = 'M-CARE HOSPITAL'
+                message = 'Your Admission Approved'
+                send_mail(mail_subject, message, 'your_email@example.com')
                 return redirect('student_admission_success')
             except ValidationError as e:
                 return render(request, 'admissionform.html', {'error_message': e.message, 'form_data': request.POST})

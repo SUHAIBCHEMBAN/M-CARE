@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.template',
     'debug_toolbar',
     'django_flatpickr',
     'accounts',
@@ -93,10 +94,6 @@ DATABASES = {
         'NAME':'mcare',
         'USER':'postgres',
         'PASSWORD':'1234',
-        # 'HOST':'localhost',
-        # 'USER': 'admin',
-        # 'PASSWORD': 'password',
-        # 'HOST': 'localhost',
         'PORT':'5432',
     }
 }
