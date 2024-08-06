@@ -4,10 +4,16 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 import pytz
 from django.utils import timezone
-from .models import Countries, Location, Department, Doctor, Booking, Hospital,Banner_Cards
+from .models import Countries, Location, Department, Doctor, Booking, Hospital,Banner_Cards,Location_Cards,Main_Cards
 
 class Banner_CardsAdmin(admin.ModelAdmin):
-    list_display = ('id','image')
+    list_display = ('id','image','title')
+
+class Main_CardsAdmin(admin.ModelAdmin):
+    list_display = ('id','crd_img','title','discription','button','button_url')
+
+class Location_CardsAdmin(admin.ModelAdmin):
+    list_display = ('id','title','image')
 
 class CountryAdmin(admin.ModelAdmin):
     """
@@ -104,6 +110,8 @@ class HospitalAdmin(admin.ModelAdmin):
 
 # Registering admin classes
 admin.site.register(Banner_Cards,Banner_CardsAdmin)
+admin.site.register(Main_Cards,Main_CardsAdmin)
+admin.site.register(Location_Cards,Location_CardsAdmin)
 admin.site.register(Countries, CountryAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Department, DepartmentAdmin)

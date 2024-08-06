@@ -5,9 +5,26 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-
 class Banner_Cards(models.Model):
+    title = models.CharField(max_length=500,default='no title')
     image = models.ImageField(upload_to='homeimg',default='default_image.jpg') 
+
+class Main_Cards(models.Model):
+    crd_img = models.ImageField(upload_to='main_crd_img')
+    title = models.CharField(max_length=50)
+    discription = models.CharField(max_length=50)
+    button = models.CharField(max_length=50)
+    button_url = models.URLField(default='/doctor')
+
+    def __str__(self) -> str:
+        return self.title
+
+class Location_Cards(models.Model):
+    image = models.ImageField(upload_to='location_img',default='defualt_image.jpg')
+    title = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
 
 class Countries(models.Model):
     """
