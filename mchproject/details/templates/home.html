@@ -62,46 +62,11 @@
       .card img {
         object-fit: cover;
       }
-      footer {
-        background-color: #f8f9fa;
-      }
-
-      footer h3 {
-        color:#008080;
-      }
-
-      footer ul {
-        padding-left: 5%;
-        list-style-type: none;
-      }
-
-      footer li {
-        margin-bottom: 10px;
-      }
-
-      footer a {
-        color:gray;
-        text-decoration: none;
-        font-size: 100%;
-      }
-
-      footer a:hover {
-        color: #000;
-        text-decoration: none;
-      }
-
-      footer {
-        background-color:#008080;
-        color: white;
-        padding: 20px 0;
-        text-align: center;
-      }
-
       .btn {
         transition: all .6s ease;
-        border:solid 1 px #000;
         border-radius:5px;
-        background-color:#000;
+        background-color:#008080;
+        border:solid 1px #008080;
         color: white;
         font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
           "Lucida Sans", Arial, sans-serif;
@@ -110,21 +75,10 @@
 
       .btn:hover, .btn:focus{
         color:#fff;
-        background-color:#000;
-        border:solid 1px #000;
+        background-color:#008080;
+        border:solid 1px #008080;
         border-radius:5px;
         width: 100%;
-      }
-
-      #top{
-        background-color:#fff;
-        color:#008080;
-        width:30%;
-      }
-
-      #top:hover{
-        border:none;
-        width:20%;
       }
       .bg-dark-opacity {
         background-color: rgba(0, 0, 0, 0.5); 
@@ -150,7 +104,8 @@
   }
 
   input[type="submit"] {
-      background-color: #000;
+      background-color:#008080;
+      border:solid 1px #008080;
       color: #fff;
       border-radius: 5px;
       cursor: pointer;
@@ -159,19 +114,15 @@
       margin-top:4px;
       margin-left:3px;
       transition:all .5s ease;
-      border:solid 1px #000;
   }
 
   input[type="submit"]:hover {
-      background-color: #000;
-      border:solid 1px #000;
+      background-color:#008080;
+      border:solid 1px #008080;
       width:40%;
   }
 
     @media (max-width:350px){
-      footer{
-        display:none;
-      }
       .l{
         display:block;
         font-size:80%;
@@ -179,14 +130,6 @@
     }
 
    @media (max-width:990px){
-    footer{
-      font-size:100%;
-    }
-    #last_footer{
-      display:flex;
-      margin:auto;
-      justify-content:center;
-    }
     .crd3 {
       display:flex;
       margin:auto;
@@ -200,7 +143,6 @@
     }
     #profile{
       display:block;
-    
     }
    }
    
@@ -328,7 +270,7 @@
   
     <!------------Cards-------------->
 
-    <div class="container mt-2">
+    <div class="container mt-5">
       <div class="row">
         {% for mcrd in main_crd %}
         <div class="col-12 col-md-6 col-lg-4">
@@ -337,7 +279,7 @@
             <div class="card-body text-center">
               <h5 class="card-title">{{ mcrd.title}}</h5>
               <p class="card-text">{{ mcrd.discription}}</p>
-              <a href="{% url 'doctors' %}" class="btn">{{mcrd.button}}</a>
+              <a href="{{mcrd.button_url}}" class="btn">{{mcrd.button}}</a>
             </div>
           </div>
         </div>
@@ -352,7 +294,6 @@
           {% csrf_token %}
           <div class="d-flex justify-content-between" style="width: 100%;">
               <div style="width: 100%;">
-                  {% comment %} <label for="location">Select Your Location:</label> {% endcomment %}
                   <select id="location" name="location">
                       <option value="" disabled selected>Select Your Location</option> 
                       {% for location in locations %}
@@ -365,7 +306,6 @@
                   </select>
               </div>&nbsp;
               <div style="width: 100%;">
-                  {% comment %} <label for="department">Select Department:</label> {% endcomment %}
                   <select id="department" name="department">
                       <option value="" disabled selected>Select Your Department</option> 
                       {% for department in departments %}
@@ -404,7 +344,7 @@
         {% for loc_img in location_img %}
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-3" style="height:15rem;">
-              <a href="{% url 'indian' %}">
+              <a href="{{ loc_img.click_url }}">
                 <img src="{{ loc_img.image.url }}" class="card-img-top" alt="something went wrong" style="height:10rem;">
               </a>
               <div class="card-body">
@@ -416,17 +356,11 @@
   
     <!--------------Footer------------------>
 
-    {% comment %} <footer class="py-3 text-white d-flex l">
-      <div class="right w-50">
-        <p>if You have any Emergency Call : +91 9947 896 956 , +91 9207 896 956</p>
-        <a href="mailto:{{ "mcareclinc2.0@gmail.com" }}?subject=Hello%20there&body=I%20wanted%20to%20reach%20out%20to%20you.">
-          <i class="fa fa-envelope fa-2x"></i>
-        </a>
-      </div>
-      <div class="left w-50">
-        <p>&copy;M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
-      </div>
-    </footer> {% endcomment %}
+    <footer>
+      
+    </footer>
+
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -434,7 +368,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       // Function to display the SweetAlert toast message every 60 seconds
-      {% comment %} function showAlert() {
+      function showAlert() {
         Swal.fire({
           icon: 'info',
           title: 'Importent!',
@@ -448,7 +382,7 @@
       showAlert();
 
       // Set an interval to display the alert every 60 seconds
-      setInterval(showAlert, 100000); {% endcomment %}
+      setInterval(showAlert, 500000);
 
       // JavaScript function to validate the form
       function validateForm(event) {
@@ -496,8 +430,5 @@
         }
     });
     </script>
-
-    
-    
   </body>
 </html>

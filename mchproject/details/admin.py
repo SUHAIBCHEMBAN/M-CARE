@@ -13,7 +13,7 @@ class Main_CardsAdmin(admin.ModelAdmin):
     list_display = ('id','crd_img','title','discription','button','button_url')
 
 class Location_CardsAdmin(admin.ModelAdmin):
-    list_display = ('id','title','image')
+    list_display = ('id','title','image','click_url')
 
 class CountryAdmin(admin.ModelAdmin):
     """

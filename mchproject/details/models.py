@@ -22,6 +22,7 @@ class Main_Cards(models.Model):
 class Location_Cards(models.Model):
     image = models.ImageField(upload_to='location_img',default='defualt_image.jpg')
     title = models.CharField(max_length=20)
+    click_url = models.URLField(default='/indian')
 
     def __str__(self):
         return self.title
