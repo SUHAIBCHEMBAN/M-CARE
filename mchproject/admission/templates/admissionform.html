@@ -161,7 +161,7 @@
                     <select id="id_course" name="course" class="form__input" required>
                         <option value="" selected disabled>Select Your Course</option>
                         {% for course, available_slots in courses %}
-                            <option value="{{ course.id }}" {% if form_data.course == course.id %}selected{% endif %}>{{ course.name }} - Slots Available: {{ available_slots }}</option>
+                            <option value="{{ course.id }}" {% if form_data.course == course.id %}selected{% endif %}>{{ course.name }} - Available Seates: {{ available_slots }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
     <style>
       body {
@@ -170,6 +171,19 @@
       margin-top:25%;
     }
 }
+@media (max-width: 768px) {
+  .foot_right, .foot_left {
+    text-align: center;
+  }
+
+  .logos {
+    justify-content: center !important;
+  }
+
+  .foot_left h5 {
+    margin-top: 1rem;
+  }
+}
 
     </style>
   </head>
@@ -231,7 +245,10 @@
         </li>
       </ul>
     </div>
-    <div class="profile">
+    <div class="profile d-flex"><!-- Booking Icon -->
+      <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'booking' %}" style="width: 40px; height: 40px;">
+        <i class="fas fa-calendar-alt" style="font-size: 1.5rem; color:#fff;"></i>
+      </a>
       {% if user.is_authenticated %}
         {% if user.userprofile.profile_picture %}
         <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
@@ -247,6 +264,7 @@
           <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
         </a>
       {% endif %}
+      
     </div>
   </div>
 </nav>
@@ -350,14 +368,34 @@
               <div class="card-body">
                 <h5 class="card-title">{{loc_img.title}}</h5>
               </div> 
-            </div></div>
+            </div>
+          </div>
         {% endfor %}
       </div>
+    </div>
   
     <!--------------Footer------------------>
 
-    <footer>
-      
+    <footer class="p-5 w-100 d-flex flex-wrap justify-content-between align-items-center border-bottom" style="background-color:#008080; color:#fff;">
+      <div class="foot_right w-100 w-md-50">
+        <p>Do you have any Emergency? Call these Numbers:</p>
+        <p><i class="fas fa-phone-alt"></i>&nbsp;+91 9947896956 (IND)</p>
+        <p><i class="fas fa-phone-alt"></i>&nbsp;+1 9345834572 (CND)</p>
+        <p><i class="fas fa-phone-alt"></i>&nbsp;+966 994738539 (UAE)</p>
+      </div>
+      <div class="foot_left w-100 w-md-50 mt-4 mt-md-0">
+        <div class="logos d-flex justify-content-center justify-content-md-end">
+          <a href="#" class="text-white mx-2"><i class="fab fa-whatsapp fa-lg"></i></a>
+          <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f fa-lg"></i></a>
+          <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+        </div>
+        <br>
+        <h5 class="text-center text-md-end">M-CARE Multi National Clinic Pvt. Ltd</h5>
+      </div>
+    </footer>
+    
+    <footer class="py-3 text-white text-center" style="background-color:#008080; color:#fff;">
+      <p>&copy; M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
     </footer>
 
     
@@ -368,7 +406,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       // Function to display the SweetAlert toast message every 60 seconds
-      function showAlert() {
+      {% comment %} function showAlert() {
         Swal.fire({
           icon: 'info',
           title: 'Importent!',
@@ -382,7 +420,7 @@
       showAlert();
 
       // Set an interval to display the alert every 60 seconds
-      setInterval(showAlert, 500000);
+      setInterval(showAlert, 500000); {% endcomment %}
 
       // JavaScript function to validate the form
       function validateForm(event) {
