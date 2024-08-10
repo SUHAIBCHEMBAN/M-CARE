@@ -1,29 +1,26 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import StudentForm
-from .models import Course
+from .models import Course, Student
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse
 
 def student_admission(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                student = form.save()
                 mail_subject = 'M-CARE HOSPITAL'
                 message = 'Your Admission Approved'
-                send_mail(mail_subject, message, 'your_email@example.com')
-                return redirect('student_admission_success')
+                recipient_list = [student.email]
+                send_mail(mail_subject, message, 'your_email@example.com', recipient_list)
+                return JsonResponse({'success': True, 'message': 'Your admission is approved!'})
             except ValidationError as e:
-                return render(request, 'admissionform.html', {'error_message': e.message, 'form_data': request.POST})
+                return JsonResponse({'success': False, 'error': e.message}, status=400)
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     else:
         courses = Course.objects.all()
-        course_slots = []
-        for course in courses:
-            available_slots = course.slots - course.student_set.count()
-            course_slots.append((course, available_slots))
-
-    return render(request, 'admissionform.html', {'courses': course_slots})
-
-def student_admission_success(request):
-    return render(request, 'admissionsuccess.html')
+        course_slots = [(course, course.slots - course.student_set.count()) for course in courses]
+        return render(request, 'admissionform.html', {'courses': course_slots})

@@ -304,27 +304,14 @@ def booking_details(request):
 
 # this is cancel_booking vews.py function
 def cancel_booking(request, booking_id):
-    """
-    View function to cancel a specific booking.
-
-    Retrieves the booking object with the given booking ID from the database,
-    deletes it, and returns a JSON response for AJAX requests.
-
-    Parameters:
-    - request: HttpRequest object
-    - booking_id: Integer representing the ID of the booking to be canceled
-
-    Returns:
-    - JsonResponse object indicating success or failure
-    """
     if request.method == 'POST':
         try:
             booking = get_object_or_404(Booking, pk=booking_id)
             booking.delete()
             return JsonResponse({'success': True})
-        except:
-            return JsonResponse({'success': False})
-    return JsonResponse({'success': False})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
     
 
 @login_required
