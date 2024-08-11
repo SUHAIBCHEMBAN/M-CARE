@@ -293,10 +293,6 @@
                             <p class="card-text">{{ booking.booking_date }}</p>
                             <p class="card-text text-success"><i>{{ booking.status }}</i></p>
                         </div>
-
-                        {% comment %} <div class="btns d-flex text-center">
-                        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-cancel btn-sm mt-3">Cancel</a> &nbsp;
-                      </div> {% endcomment %}
                       <form action="{% url 'cancel_booking' booking.id %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-cancel btn-sm mt-3">Cancel</button>

@@ -166,13 +166,8 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div id="error-message" class="text-danger">
-                    {% if error_message %}
-                        <p class='text-danger bold ml-4 mt-3'>{{ error_message }}</p>
-                    {% endif %}
-                </div>
                 <div class="btns">
-                    <button type="submit" class="btn last">Submit</button>
+                    <button type="submit" class="btn last">Register</button>
                     <a href="{% url 'home' %}" class="btn last">Close</a>
                 </div>
             </form>
