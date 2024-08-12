@@ -1,0 +1,48 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore environment variables file
+.env
+
+# Ignore virtual environment directory
+my_venv/
+venv/
+
+# Ignore Django migrations
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/__pycache__/
+*/migrations/*.py
+
+# Ignore database
+db.sqlite3
+db.sqlite3-journal
+
+# Ignore static files
+/staticfiles/
+static/
+media/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore logs
+*.log
+
+# Ignore coverage files
+.coverage
+htmlcov/
+.coverage.*
+
+# Ignore macOS-specific files
+.DS_Store
+
+# Ignore Windows-specific files
+Thumbs.db

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from decouple import config
 from pathlib import Path
 import os
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*$2nk8(m25!!lrtoxmo9^5y*(yoe047yb2ahb%9xz(ifrp@14+'
+SECRET_KEY = config('SECRET_KEY')
 
 
 # ALLOWED_HOSTS = ['54.88.34.113', 'localhost']
@@ -91,10 +92,11 @@ WSGI_APPLICATION = 'mchproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'mcare',
-        'USER':'postgres',
-        'PASSWORD':'1234',
-        'PORT':'5432',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -151,8 +153,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587  
 EMAIL_USE_TLS = True    
-EMAIL_HOST_USER = 'mcareclinic2.0@gmail.com' 
-EMAIL_HOST_PASSWORD =  'vbwa vakq xnsg obbt'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # Media url
 
@@ -161,8 +163,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Razorpay payment settings
 
-RAZORPAY_API_KEY = 'rzp_test_hzVAqG2EQyxAr2'
-RAZORPAY_API_SECRET_KEY = '2uARwYaeo3vfNI2oQUB6DbEX'
+RAZORPAY_API_KEY = config('RAZORPAY_API_KEY')
+RAZORPAY_API_SECRET_KEY = config('RAZORPAY_API_SECRET_KEY')
 
 # Celery settings
 
@@ -186,10 +188,10 @@ CELERY_BEAT_SCHEDULE = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': os.getenv('REDIS_URL', 'redis://127.0.0.1:6379/1'),
+        'LOCATION': config('REDIS_URL'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'IGNORE_EXCEPTIONS': True,  # Useful for development, can ignore cache errors
+            'IGNORE_EXCEPTIONS': True,
         }
     }
 }

@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}M-CARE Multi National Clinic{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'image/M-CARE logo.png' %}"/>
+    <style>
+        .nav-link {
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none; 
+            position: relative; 
+            transition: color 0.3s;   
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff; 
+            transition: width 0.3s; 
+        }
+        
+        .nav-link:hover {
+            color: #fff; 
+        }
+        .nav-link:hover::after {
+            width: 100%; 
+        }
+        .profile {
+            margin-left:10px;
+          }
+    </style>
+  </head>
+  <body>
+    <!-------------Navbar------------------>
+<nav class="navbar navbar-expand-lg sticky-top d-flex"style="background-color:#008080;" height:"5.5rem;">
+    <div class="container">
+      <h1><a class="navbar-brand" href="{% url 'home' %}" style="color:#fff; font-size: 2.5rem;">M-CARE</a></h1>
+      <button class="navbar-toggler  d-flex  border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2"></span>
+        <div class="nav-item" id="profile">
+        {% if user.is_authenticated %}
+          {% if user.userprofile.profile_picture %}
+          <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% endif %}
+        {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+        {% endif %}
+        </div> 
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto" style="text-align: center; color: blue;">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'student_admission' %}">AdmissionOpen</a>
+          </li>
+        </ul>
+      </div>
+      <div class="profile d-flex"><!-- Booking Icon -->
+        <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'booking' %}" style="width: 40px; height: 40px;">
+          <i class="fas fa-calendar-alt" style="font-size: 1.5rem; color:#fff;"></i>
+        </a>
+        {% if user.is_authenticated %}
+          {% if user.userprofile.profile_picture %}
+          <a class="btn btn-dark rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{{ user.userprofile.profile_picture.url }}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'profile' %}" style="width: 40px; height: 40px">
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+          {% endif %}
+        {% else %}
+          <a class="btn btn-light rounded-circle d-flex justify-content-center align-items-center ms-3" href="{% url 'login' %}" style="width: 40px; height: 40px">
+            <img src="{% static 'image/user.jpg' %}" class="rounded-circle" style="width: 40px; height: 40px" />
+          </a>
+        {% endif %}
+        
+      </div>
+    </div>
+  </nav>
+
+    {% block content %}
+    <!-- This is where page-specific content will go -->
+    {% endblock content %}
+
+   <!--------------Footer------------------>
+
+<footer class="p-5 w-100 d-flex flex-wrap justify-content-between align-items-center border-bottom" style="background-color:#008080; color:#fff;">
+    <div class="foot_right w-100 w-md-50">
+      <p>Do you have any Emergency? Call these Numbers:</p>
+      <p><i class="fas fa-phone-alt"></i>&nbsp;+91 9947896956 (IND)</p>
+      <p><i class="fas fa-phone-alt"></i>&nbsp;+1 9345834572 (CND)</p>
+      <p><i class="fas fa-phone-alt"></i>&nbsp;+966 994738539 (UAE)</p>
+    </div>
+    <div class="foot_left w-100 w-md-50 mt-4 mt-md-0">
+      <div class="logos d-flex justify-content-center justify-content-md-end">
+        <a href="#" class="text-white mx-2"><i class="fab fa-whatsapp fa-lg"></i></a>
+        <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f fa-lg"></i></a>
+        <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+      </div>
+      <br>
+      <h5 class="text-center text-md-end">M-CARE Multi National Clinic Pvt. Ltd</h5>
+    </div>
+  </footer>
+  
+  <footer class="py-3 text-white text-center" style="background-color:#008080; color:#fff;">
+    <p>&copy; M-CARE CLINIC 2024 Hospital Management. All rights reserved.</p>
+  </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
